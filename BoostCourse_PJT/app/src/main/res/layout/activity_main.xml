@@ -5,7 +5,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".MainActivity">
+    <RelativeLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_alignParentTop="true">
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="#0054FF"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:text="씨네마천국"
+                android:textColor="#ffffff"
+                android:textSize="24dp"/>
+    </RelativeLayout>
+
     <ScrollView
+            android:layout_below="@+id/rl_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <LinearLayout
@@ -14,31 +36,9 @@
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
             <RelativeLayout
-                    android:id="@+id/rl_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_alignParentTop="true">
-
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="64dp"
-                        android:background="#0054FF"/>
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="8dp"
-                        android:text="씨네마천국"
-                        android:textColor="#ffffff"
-                        android:textSize="24dp"/>
-            </RelativeLayout>
-
-            <RelativeLayout
                     android:id="@+id/rl_movie_detail"
                     android:layout_width="match_parent"
                     android:layout_height="256dp"
-                    android:layout_below="@+id/rl_title"
                     android:background="@drawable/main_act_gradation_blue">
 
                 <ImageView
@@ -97,7 +97,7 @@
                                 android:id="@+id/btn_main_act_thumb_up"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                        android:background="@drawable/selector_thumb_up"/>
+                                android:background="@drawable/selector_thumb_up"/>
                         <TextView
                                 android:id="@+id/txt_main_act_thumb_up"
                                 android:layout_marginLeft="2dp"
@@ -106,7 +106,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="#ffffff"
                                 android:textSize="16dp"
-                                android:text="15"/>
+                                android:text="0"/>
                         <ImageView
                                 android:id="@+id/btn_main_act_thumb_down"
                                 android:layout_marginLeft="24dp"
@@ -122,7 +122,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="#ffffff"
                                 android:textSize="16dp"
-                                android:text="1"/>
+                                android:text="0"/>
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
@@ -353,16 +353,55 @@
                           android:textSize="16dp"
                           android:layout_marginTop="16dp"
                           android:layout_below="@+id/rl_write"/>
+                <Button
+                        android:id="@+id/btn_main_act_detail"
+                        android:background="@drawable/purple_border"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginHorizontal="8dp"
+                        android:textSize="16dp"
+                        android:text="모두 보기"
+                        android:textStyle="bold"
+                        android:textColor="#DA70D6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
             </RelativeLayout>
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="16dp"
-                    android:background="#EAEAEA"/>
 
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:background="#EAEAEA"/>
+                    android:background="#e2e2e2"/>
+            <LinearLayout
+                    android:paddingHorizontal="32dp"
+                    android:paddingVertical="8dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:padding="8dp"
+                        android:src="@drawable/ic_facebook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <ImageView
+                        android:padding="8dp"
+                        android:src="@drawable/ic_kakao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <Button
+                        android:id="@+id/btn_main_act_reserve"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#FF4500"
+                        android:textColor="#fff"
+                        android:text="예매하기"
+                        android:layout_marginVertical="4dp"
+                        android:textStyle="bold"
+                        android:textSize="24dp"/>
+            </LinearLayout>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:background="#e2e2e2"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
