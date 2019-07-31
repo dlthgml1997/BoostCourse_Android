@@ -4,10 +4,10 @@ public class ReviewItem {
 
     String id;
     String time;
-    String rating;
+    Float rating;
     String review;
 
-    public ReviewItem(String id, String time, String rating, String review) {
+    public ReviewItem(String id, String time, Float rating, String review) {
         this.id = id;
         this.time = time;
         this.rating = rating;
@@ -30,11 +30,11 @@ public class ReviewItem {
         this.time = time;
     }
 
-    public String getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
