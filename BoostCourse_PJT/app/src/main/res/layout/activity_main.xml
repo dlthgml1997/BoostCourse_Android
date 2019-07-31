@@ -320,12 +320,12 @@
                     android:layout_height="16dp"
                     android:background="#EAEAEA"/>
             <RelativeLayout
-                    android:layout_marginTop="32dp"
-                    android:layout_marginBottom="16dp"
+                    android:paddingTop="32dp"
                     android:background="#fff"
+                    android:paddingBottom="16dp"
                     android:paddingHorizontal="24dp"
                     android:layout_width="match_parent"
-                    android:layout_height="280dp">
+                    android:layout_height="400dp">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:textColor="#000"
                           android:textStyle="bold"
@@ -349,14 +349,16 @@
                             android:textColor="#DB3A00"
                             android:textSize="16dp"/>
                 </RelativeLayout>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:textSize="16dp"
-                          android:layout_marginTop="16dp"
-                          android:layout_below="@+id/rl_write"/>
+                <ListView
+                        android:id="@+id/lv_main_act_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="16dp"
+                        android:layout_below="@+id/rl_write"/>
                 <Button
+                        android:layout_alignParentBottom="true"
                         android:id="@+id/btn_main_act_detail"
                         android:background="@drawable/purple_border"
-                        android:layout_alignParentBottom="true"
                         android:layout_marginHorizontal="8dp"
                         android:textSize="16dp"
                         android:text="모두 보기"

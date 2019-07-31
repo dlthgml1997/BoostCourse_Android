@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <ImageView
+            android:id="@+id/img_review_item_user"
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
             android:src="@drawable/user1"
@@ -17,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
+                android:id="@+id/txt_review_item_id"
                 android:text="kym71**"
                 android:textColor="#000"
                 android:textStyle="bold"
@@ -28,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             <TextView
+                    android:id="@+id/txt_review_item_time"
                     android:textSize="14dp"
                     android:text="10분전"
                     android:textColor="#a2a2a2"
@@ -36,6 +39,7 @@
                     android:layout_height="wrap_content"/>
 
             <RatingBar
+                    android:id="@+id/rb_review_item_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
                     android:rating="5"
@@ -49,6 +53,7 @@
             />
         </LinearLayout>
         <TextView
+                android:id="@+id/txt_review_item_review"
                 android:text="적당히 재밌다. 오랜만에 잠 안오는 영화 봤네요."
                 android:textColor="#000"
                 android:textStyle="bold"
@@ -66,6 +71,7 @@
                     android:layout_height="wrap_content"/>
 
             <TextView
+                    android:id="@+id/txt_review_item_recommend"
                     android:layout_marginHorizontal="8dp"
                     android:text="0"
                     android:textSize="12dp"
@@ -81,6 +87,7 @@
                       android:layout_height="wrap_content"/>
 
             <TextView
+                    android:id="@+id/txt_review_item_report"
                     android:textSize="12dp"
                     android:text="신고하기"
                     android:layout_marginLeft="16dp"
