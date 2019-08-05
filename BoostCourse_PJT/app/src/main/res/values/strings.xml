@@ -16,7 +16,8 @@
 
         뭉치면 백성, 흩어지면 도적!\n
         망할 세상을 뒤집기 위해, 백성이 주인인 새 세상을 향해 도치를 필두로 한 군도는 백성의 적,
-        조윤과 한 판 승부를 시작하는데...</string>
+        조윤과 한 판 승부를 시작하는데...
+    </string>
     <string name="director_and_actor">감독/출연</string>
     <string name="director">감독</string>
     <string name="actor">출연</string>
@@ -24,6 +25,11 @@
     <string name="write_review">작성하기</string>
     <string name="detail">모두 보기</string>
     <string name="reserve">예매하기</string>
+
+    <!-- activity_write_review.xml -->
+    <string name="enter_rating">평점을 입력해 주세요</string>
+    <string name="save">저 장</string>
+    <string name="cancel">취 소</string>
 
 
 </resources>

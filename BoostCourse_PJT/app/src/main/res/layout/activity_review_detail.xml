@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        tools:context=".ReviewDetailActivity">
+
+
+    <View
+            android:layout_height="12dp"
+            android:layout_width="match_parent"
+            android:background="#e2e2e2"/>
+    <!-- 영화 타이틀 -->
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+                android:id="@+id/txt_write_review_act_movie_title"
+                style="@style/boldDarkGrayStyle"
+                android:textSize="32sp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="8dp"
+                android:text="군도"
+        />
+        <ImageView
+                android:src="@drawable/ic_15"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+    <View
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#e2e2e2"/>
+
+    <!-- 평점 -->
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginVertical="8dp"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/rb_write_review_act_rating"
+                android:numStars="5"
+                android:rating="4.1"
+                android:stepSize="0.1"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:isIndicator="false"
+                android:gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        <TextView
+                android:text="8.2"
+                android:layout_gravity="center_horizontal"
+                android:textSize="16sp"
+                style="@style/regularGrayStyle"/>
+        <TextView
+                android:text="(1,142명 참여)"
+                android:layout_marginHorizontal="8dp"
+                android:layout_gravity="center_horizontal"
+                android:textSize="16sp"
+                style="@style/regularGrayStyle"/>
+    </LinearLayout>
+
+
+    <View
+            android:layout_height="12dp"
+            android:layout_width="match_parent"
+            android:background="#e2e2e2"/>
+
+    <!-- 리스트뷰 -->
+    <RelativeLayout
+            android:paddingTop="32dp"
+            android:background="#fff"
+            android:paddingBottom="16dp"
+            android:paddingHorizontal="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                style="@style/boldBlackStyle"
+                android:textSize="16sp"
+                android:text="@string/review_oneline"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"/>
+
+        <RelativeLayout
+                android:id="@+id/rl_review_detail_act_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView android:layout_width="18dp"
+                       android:layout_height="18dp"
+                       android:layout_toLeftOf="@+id/txt_review_detail_act_write"
+                       android:src="@drawable/ic_review_selected"/>
+            <TextView
+                    android:id="@+id/txt_review_detail_act_write"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/write_review"
+                    android:textStyle="bold"
+                    android:layout_alignParentRight="true"
+                    android:textColor="#DB3A00"
+                    android:textSize="16sp"/>
+        </RelativeLayout>
+        <ListView
+                android:layout_below="@id/rl_review_detail_act_write"
+                android:id="@+id/lv_review_detail_act_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"/>
+    </RelativeLayout>
+
+</LinearLayout>
