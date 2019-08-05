@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView imgThumbUp;
-    ImageView imgThumbDown;
-    TextView txtThumbUp;
-    TextView txtThumbDown;
-    Button btnReserve;
-    Button btnDetail;
-    int count_up = 0;
-    int count_down = 0;
+    private ImageView imgThumbUp;
+    private ImageView imgThumbDown;
+    private TextView txtThumbUp;
+    private TextView txtThumbDown;
+    private Button btnReserve;
+    private Button btnDetail;
+    private int countUp = 0;
+    private int countDown = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +40,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View viewThumbUp) {
                 if(viewThumbUp.isSelected()){
                     viewThumbUp.setSelected(false);
-                    count_up--;
-                    txtThumbUp.setText(String.valueOf(count_up));
+                    countUp--;
+                    txtThumbUp.setText(String.valueOf(countUp));
                 }else if(imgThumbDown.isSelected()){
                     imgThumbDown.setSelected(false);
-                    count_down--;
-                    txtThumbDown.setText(String.valueOf(count_down));
+                    imgThumbUp.setSelected(true);
+                    countDown--;
+                    countUp++;
+                    txtThumbDown.setText(String.valueOf(countDown));
+                    txtThumbUp.setText(String.valueOf(countUp));
                 }else{
                     viewThumbUp.setSelected(true);
-                    count_up++;
-                    txtThumbUp.setText(String.valueOf(count_up));
+                    countUp++;
+                    txtThumbUp.setText(String.valueOf(countUp));
                 }
             }
         });
@@ -59,16 +62,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View viewThumbDown) {
                 if(viewThumbDown.isSelected()){
                     viewThumbDown.setSelected(false);
-                    count_down--;
-                    txtThumbDown.setText(String.valueOf(count_down));
+                    countDown--;
+                    txtThumbDown.setText(String.valueOf(countDown));
                 }else if(imgThumbUp.isSelected()){
+                    imgThumbDown.setSelected(true);
                     imgThumbUp.setSelected(false);
-                    count_up--;
-                    txtThumbUp.setText(String.valueOf(count_up));
+                    countDown++;
+                    countUp--;
+                    txtThumbDown.setText(String.valueOf(countDown));
+                    txtThumbUp.setText(String.valueOf(countUp));
                 }else{
                     viewThumbDown.setSelected(true);
-                    count_down++;
-                    txtThumbDown.setText(String.valueOf(count_down));
+                    countDown++;
+                    txtThumbDown.setText(String.valueOf(countDown));
                 }
             }
         });

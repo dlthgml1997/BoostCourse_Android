@@ -5,29 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".MainActivity">
-    <RelativeLayout
-            android:id="@+id/rl_title"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_alignParentTop="true">
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:background="#0054FF"/>
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
-                android:text="씨네마천국"
-                android:textColor="#ffffff"
-                android:textSize="24dp"/>
-    </RelativeLayout>
-
     <ScrollView
-            android:layout_below="@+id/rl_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <LinearLayout
@@ -35,6 +13,9 @@
                 android:layout_width="wrap_content"
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
+
+            <!-- 영화 포스터 및 좋아요/싫어요 -->
+
             <RelativeLayout
                     android:id="@+id/rl_movie_detail"
                     android:layout_width="match_parent"
@@ -55,13 +36,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                     <TextView
+                            style="@style/boldWhiteStyle"
                             android:id="@+id/txt_movietitle_main"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="군도"
-                            android:textStyle="bold"
-                            android:textColor="#ffffff"
-                            android:textSize="24dp"/>
+                            android:textSize="24sp"/>
                     <ImageView
                             android:layout_marginLeft="8dp"
                             android:layout_width="wrap_content"
@@ -70,21 +48,17 @@
                             android:src="@drawable/ic_15"/>
                     <TextView
                             android:id="@+id/txt_opendate_main"
+                            style="@style/regularWhiteStyle"
                             android:layout_marginTop="8dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16dp"
+                            android:textSize="16sp"
                             android:text="2014.07.23 개봉"
-                            android:textColor="#ffffff"
                             android:layout_below="@+id/txt_movietitle_main"/>
                     <TextView
                             android:id="@+id/txt_movieinfo_main"
+                            style="@style/regularWhiteStyle"
                             android:layout_marginTop="8dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16dp"
+                            android:textSize="16sp"
                             android:text="액션 / 137분"
-                            android:textColor="#ffffff"
                             android:layout_below="@+id/txt_opendate_main"/>
 
                     <LinearLayout
@@ -102,10 +76,8 @@
                                 android:id="@+id/txt_main_act_thumb_up"
                                 android:layout_marginLeft="2dp"
                                 android:inputType="number"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#ffffff"
-                                android:textSize="16dp"
+                                style="@style/regularWhiteStyle"
+                                android:textSize="16sp"
                                 android:text="0"/>
                         <ImageView
                                 android:id="@+id/btn_main_act_thumb_down"
@@ -118,14 +90,13 @@
                                 android:id="@+id/txt_main_act_thumb_down"
                                 android:layout_marginLeft="2dp"
                                 android:inputType="number"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#ffffff"
-                                android:textSize="16dp"
+                                style="@style/regularWhiteStyle"
+                                android:textSize="16sp"
                                 android:text="0"/>
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
+            <!-- 예매율,평점,누적관객수 -->
             <LinearLayout
                     android:id="@+id/ll_movie_detail"
                     android:background="#fff"
@@ -138,23 +109,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                     <TextView
-                            android:textColor="#000"
+                            style="@style/regularBlackStyle"
                             android:layout_alignParentTop="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="예매율"
+                            android:text="@string/advance_rate"
                             android:layout_marginTop="16dp"
                             android:layout_centerHorizontal="true"
-                            android:textSize="16dp"/>
+                            android:textSize="16sp"/>
                     <TextView
-                            android:textColor="#000"
+                            style="@style/regularBlackStyle"
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="16dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="5위 1.8%"
                             android:layout_centerHorizontal="true"
-                            android:textSize="16dp"/>
+                            android:textSize="16sp"/>
                 </RelativeLayout>
                 <View
                         android:layout_width="2dp"
@@ -166,13 +133,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                     <TextView
-                            android:textColor="#000"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/regularBlackStyle"
                             android:layout_marginTop="16dp"
-                            android:text="평점"
+                            android:text="@string/rating"
                             android:layout_centerHorizontal="true"
-                            android:textSize="16dp"/>
+                            android:textSize="16sp"/>
                     <RatingBar
                             android:layout_width="wrap_content"
                             android:layout_height="16dp"
@@ -187,10 +152,9 @@
                             android:layout_alignParentBottom="true"
                     />
                     <TextView
-                            android:textColor="#000"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            style="@style/regularBlackStyle"
                             android:text="8.2"
-                            android:textSize="16dp"
+                            android:textSize="16sp"
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="16dp"
                             android:layout_alignParentRight="true"
@@ -206,23 +170,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                     <TextView
-                            android:textColor="#000"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/regularBlackStyle"
                             android:layout_marginTop="16dp"
-                            android:text="누적관객수"
+                            android:text="@string/number_of_people"
                             android:layout_centerHorizontal="true"
-                            android:textSize="16dp"/>
+                            android:textSize="16sp"/>
                     <TextView
-                            android:textColor="#000"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/regularBlackStyle"
                             android:layout_marginTop="16dp"
                             android:text="839,399"
                             android:layout_marginBottom="16dp"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
-                            android:textSize="16dp"/>
+                            android:textSize="16sp"/>
                 </RelativeLayout>
 
             </LinearLayout>
@@ -231,94 +191,80 @@
                     android:layout_height="16dp"
                     android:background="#e2e2e2"
                     android:layout_below="@id/ll_movie_detail"/>
+            <!-- 줄거리 -->
             <LinearLayout
                     android:paddingHorizontal="16dp"
                     android:orientation="vertical"
                     android:background="#fff"
                     android:layout_width="match_parent" android:layout_height="match_parent">
                 <TextView
-                        android:textColor="#000"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:textSize="16dp"
+                        style="@style/boldBlackStyle"
+                        android:textSize="16sp"
                         android:layout_marginVertical="16dp"
-                        android:textStyle="bold"
-                        android:text="줄거리"/>
+                        android:text="@string/story"/>
                 <TextView
-                        android:textColor="#000"
+                        style="@style/regularBlackStyle"
                         android:layout_marginBottom="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16dp"
-                        android:text="군도, 백성을 구하라!
- 양반과 탐관오리들의 착취가 극에 달했던 조선 철종 13년. 힘 없는 백성의 편이 되어
- 세상을 바로잡고자 하는 의적떼인 군도(群盜), 지리산 추설이 있었다.
-
- 쌍칼 도치 vs 백성의 적 조윤
- 잦은 자연재해, 기근과 관의 횡포까지 겹쳐 백성들의 삶이 날로 피폐해 져 가는 사이,
- 나주 대부호의 서자로 조선 최고의 무관 출신인 조윤은 극악한 수법으로 양민들을 수탈,
- 삼남지방 최고의 대부호로 성장한다. 한편 소, 돼지를 잡아 근근이 살아가던 천한 백정 돌무치는
- 죽어도 잊지 못할 끔찍한 일을 당한 뒤 군도에 합류. 지리산 추설의 신 거성(新 巨星) 도치로 거듭난다.
-
- 뭉치면 백성, 흩어지면 도적!
- 망할 세상을 뒤집기 위해, 백성이 주인인 새 세상을 향해 도치를 필두로 한 군도는 백성의 적,
- 조윤과 한 판 승부를 시작하는데..."/>
+                        android:textSize="16sp"
+                        android:text="@string/story_content"/>
             </LinearLayout>
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
                     android:background="#e2e2e2"/>
+
+            <!-- 감독/출연 -->
+
             <LinearLayout
                     android:paddingHorizontal="16dp"
                     android:orientation="vertical"
                     android:background="#fff"
                     android:layout_width="match_parent" android:layout_height="match_parent">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:textSize="16dp"
-                          android:textColor="#000"
-                          android:layout_marginVertical="16dp"
-                          android:textStyle="bold"
-                          android:text="감독/출연"/>
+                <TextView
+                        style="@style/boldBlackStyle"
+                        android:textSize="16sp"
+                        android:layout_marginVertical="16dp"
+                        android:text="@string/director_and_actor"/>
                 <RelativeLayout android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
                     <TextView
-                            android:textColor="#000"
+                            style="@style/boldBlackStyle"
                             android:id="@+id/txt_director"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="감독"
+                            android:text="@string/director"
                             android:layout_alignParentLeft="true"
-                            android:textStyle="bold"
-                            android:textSize="16dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:textColor="#000"
-                              android:text="윤종빈"
-                              android:layout_toRightOf="@+id/txt_director"
-                              android:layout_marginLeft="16dp"
-                              android:textSize="16dp"/>
+                            android:textSize="16sp"/>
+                    <TextView
+                            style="@style/regularBlackStyle"
+                            android:text="윤종빈"
+                            android:layout_toRightOf="@+id/txt_director"
+                            android:layout_marginLeft="16dp"
+                            android:textSize="16sp"/>
                 </RelativeLayout>
                 <RelativeLayout
                         android:layout_marginVertical="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     <TextView
+                            style="@style/boldBlackStyle"
                             android:id="@+id/txt_actor"
-                            android:textColor="#000"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="출연"
+                            android:text="@string/actor"
                             android:layout_alignParentLeft="true"
-                            android:textStyle="bold"
-                            android:textSize="16dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                              android:textColor="#000"
-                              android:text="하정우(도치),강동원(조윤)"
-                              android:layout_toRightOf="@+id/txt_actor"
-                              android:layout_marginLeft="16dp"
-                              android:textSize="16dp"/>
+                            android:textSize="16sp"/>
+                    <TextView
+                            style="@style/regularBlackStyle"
+                            android:text="하정우(도치),강동원(조윤)"
+                            android:layout_toRightOf="@+id/txt_actor"
+                            android:layout_marginLeft="16dp"
+                            android:textSize="16sp"/>
                 </RelativeLayout>
             </LinearLayout>
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
                     android:background="#EAEAEA"/>
+
+            <!-- 한줄평 -->
+
             <RelativeLayout
                     android:paddingTop="32dp"
                     android:background="#fff"
@@ -326,13 +272,12 @@
                     android:paddingHorizontal="24dp"
                     android:layout_width="match_parent"
                     android:layout_height="400dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:textColor="#000"
-                          android:textStyle="bold"
-                          android:textSize="16dp"
-                          android:text="한줄평"
-                          android:layout_alignParentTop="true"
-                          android:layout_alignParentLeft="true"/>
+                <TextView
+                        style="@style/boldBlackStyle"
+                        android:textSize="16sp"
+                        android:text="@string/review_oneline"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"/>
 
                 <RelativeLayout
                         android:id="@+id/rl_write"
@@ -343,11 +288,11 @@
                     <TextView
                             android:id="@+id/txt_write"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="작성하기"
+                            android:text="@string/write_review"
                             android:textStyle="bold"
                             android:layout_alignParentRight="true"
                             android:textColor="#DB3A00"
-                            android:textSize="16dp"/>
+                            android:textSize="16sp"/>
                 </RelativeLayout>
                 <ListView
                         android:id="@+id/lv_main_act_review"
@@ -360,8 +305,8 @@
                         android:id="@+id/btn_main_act_detail"
                         android:background="@drawable/purple_border"
                         android:layout_marginHorizontal="8dp"
-                        android:textSize="16dp"
-                        android:text="모두 보기"
+                        android:textSize="16sp"
+                        android:text="@string/detail"
                         android:textStyle="bold"
                         android:textColor="#DA70D6"
                         android:layout_width="match_parent"
@@ -372,6 +317,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
                     android:background="#e2e2e2"/>
+
+            <!-- SNS 공유 및 예매하기 버튼 -->
+
             <LinearLayout
                     android:paddingHorizontal="32dp"
                     android:paddingVertical="8dp"
@@ -395,7 +343,7 @@
                         android:layout_height="match_parent"
                         android:background="#FF4500"
                         android:textColor="#fff"
-                        android:text="예매하기"
+                        android:text="@string/reserve"
                         android:layout_marginVertical="4dp"
                         android:textStyle="bold"
                         android:textSize="24dp"/>
