@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#fff"
+        android:background="@color/colorWhite"
         tools:context=".WriteReviewActivity">
     <!-- 영화 타이틀 -->
     <LinearLayout
@@ -29,7 +29,7 @@
     <View
             android:layout_height="1dp"
             android:layout_width="match_parent"
-            android:background="#e2e2e2"/>
+            android:background="@color/colorLightGray"/>
 
     <!-- 평점 -->
     <androidx.appcompat.widget.AppCompatRatingBar
@@ -66,6 +66,7 @@
     <LinearLayout
             android:layout_gravity="right"
             android:orientation="horizontal"
+            android:layout_marginBottom="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <Button
@@ -88,6 +89,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
+    <View android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/colorLightGray"/>
 
 
 </LinearLayout>

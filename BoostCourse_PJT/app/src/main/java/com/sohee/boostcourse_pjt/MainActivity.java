@@ -1,5 +1,6 @@
 package com.sohee.boostcourse_pjt;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgThumbDown;
     private TextView txtThumbUp;
     private TextView txtThumbDown;
+    private TextView btnWriteReview;
     private Button btnReserve;
     private Button btnDetail;
     private int countUp = 0;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private void setOnBtnClickListener() {
         imgThumbUp = (ImageView) findViewById(R.id.btn_main_act_thumb_up);
         imgThumbDown = (ImageView) findViewById(R.id.btn_main_act_thumb_down);
+        btnWriteReview = (TextView) findViewById(R.id.txt_write);
         btnReserve = (Button) findViewById(R.id.btn_main_act_reserve);
         btnDetail = (Button) findViewById(R.id.btn_main_act_detail);
         txtThumbUp = (TextView) findViewById(R.id.txt_main_act_thumb_up);
@@ -86,10 +89,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnWriteReview.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),WriteReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
         btnDetail.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"모두 보기 눌렸습니다.",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(),ReviewDetailActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -133,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             view.setId(item.getId());
             view.setTime(item.getTime());
             view.setRating(item.getRating());
+            view.setReview(item.getReview());
             return view;
         }
     }

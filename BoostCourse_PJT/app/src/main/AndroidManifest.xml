@@ -11,16 +11,16 @@
             android:theme="@style/AppTheme">
         <activity android:name=".WriteReviewActivity"
         android:label="한줄평 작성">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".ReviewDetailActivity"
         android:label="한줄평 목록">
         </activity>
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

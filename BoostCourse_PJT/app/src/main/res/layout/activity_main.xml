@@ -9,7 +9,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <LinearLayout
-                android:background="#fff"
+                android:background="@color/colorWhite"
                 android:layout_width="wrap_content"
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
@@ -99,7 +99,7 @@
             <!-- 예매율,평점,누적관객수 -->
             <LinearLayout
                     android:id="@+id/ll_movie_detail"
-                    android:background="#fff"
+                    android:background="@color/colorWhite"
                     android:layout_below="@+id/rl_movie_detail"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -189,13 +189,13 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:background="#e2e2e2"
+                    android:background="@color/colorLightGray"
                     android:layout_below="@id/ll_movie_detail"/>
             <!-- 줄거리 -->
             <LinearLayout
                     android:paddingHorizontal="16dp"
                     android:orientation="vertical"
-                    android:background="#fff"
+                    android:background="@color/colorWhite"
                     android:layout_width="match_parent" android:layout_height="match_parent">
                 <TextView
                         style="@style/boldBlackStyle"
@@ -211,14 +211,14 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:background="#e2e2e2"/>
+                    android:background="@color/colorLightGray"/>
 
             <!-- 감독/출연 -->
 
             <LinearLayout
                     android:paddingHorizontal="16dp"
                     android:orientation="vertical"
-                    android:background="#fff"
+                    android:background="@color/colorWhite"
                     android:layout_width="match_parent" android:layout_height="match_parent">
                 <TextView
                         style="@style/boldBlackStyle"
@@ -267,7 +267,7 @@
 
             <RelativeLayout
                     android:paddingTop="32dp"
-                    android:background="#fff"
+                    android:background="@color/colorWhite"
                     android:paddingBottom="16dp"
                     android:paddingHorizontal="24dp"
                     android:layout_width="match_parent"
@@ -291,7 +291,7 @@
                             android:text="@string/write_review"
                             android:textStyle="bold"
                             android:layout_alignParentRight="true"
-                            android:textColor="#DB3A00"
+                            android:textColor="@color/colorRed"
                             android:textSize="16sp"/>
                 </RelativeLayout>
                 <ListView
@@ -316,7 +316,7 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:background="#e2e2e2"/>
+                    android:background="@color/colorLightGray"/>
 
             <!-- SNS 공유 및 예매하기 버튼 -->
 
@@ -342,7 +342,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#FF4500"
-                        android:textColor="#fff"
+                        android:textColor="@color/colorWhite"
                         android:text="@string/reserve"
                         android:layout_marginVertical="4dp"
                         android:textStyle="bold"
@@ -351,7 +351,7 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:background="#e2e2e2"/>
+                    android:background="@color/colorLightGray"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
