@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.sohee.boostcourse_pjt.adapter.ReviewAdapter;
 
 import java.util.ArrayList;
 
@@ -56,45 +57,13 @@ public class ReviewDetailActivity extends AppCompatActivity {
     private void setAdapter() {
         ListView reviewListView = (ListView) findViewById(R.id.lv_review_detail_act_review);
         ReviewAdapter adapter = new ReviewAdapter();
-        adapter.addItem(new ReviewItem("shfk***","10분전",(float)4,"재밌어요!"));
-        adapter.addItem(new ReviewItem("dlth***","15분전",(float)3,"그저 그랬어요"));
-        adapter.addItem(new ReviewItem("abcd***","30분전",(float)2,"지루했어요.."));
-        adapter.addItem(new ReviewItem("leees***","40분전",(float)5,"인생 작품입니다."));
-
         reviewListView.setAdapter(adapter);
     }
 
-    class ReviewAdapter extends BaseAdapter {
-        ArrayList<ReviewItem> items = new ArrayList<ReviewItem>();
-        @Override
-        public int getCount() {
-            return items.size();
-        }
-
-        public void addItem(ReviewItem item){
-            items.add(item);
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup viewGroup) {
-            ReviewItemView view = new ReviewItemView(getApplicationContext());
-
-            ReviewItem item = items.get(position);
-            view.setId(item.getId());
-            view.setTime(item.getTime());
-            view.setRating(item.getRating());
-            view.setReview(item.getReview());
-            return view;
-        }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
+
 }

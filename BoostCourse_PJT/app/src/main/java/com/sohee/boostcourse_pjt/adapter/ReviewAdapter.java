@@ -1,8 +1,10 @@
 package com.sohee.boostcourse_pjt.adapter;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import com.sohee.boostcourse_pjt.MainActivity;
 import com.sohee.boostcourse_pjt.ReviewItem;
 import com.sohee.boostcourse_pjt.ReviewItemView;
 
@@ -24,6 +26,9 @@ public class ReviewAdapter extends BaseAdapter {
         return items.get(position);
     }
 
+    public ArrayList<ReviewItem> getItems(){
+        return items;
+    }
     @Override
     public long getItemId(int position) {
         return position;
@@ -31,7 +36,8 @@ public class ReviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        ReviewItemView view = new ReviewItemView(Context());
+        Context context = viewGroup.getContext();
+        ReviewItemView view = new ReviewItemView(context);
 
         ReviewItem item = items.get(position);
         view.setId(item.getId());
