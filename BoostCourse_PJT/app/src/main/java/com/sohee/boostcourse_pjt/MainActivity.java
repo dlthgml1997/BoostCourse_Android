@@ -116,39 +116,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    class ReviewAdapter extends BaseAdapter {
-        ArrayList<ReviewItem> items = new ArrayList<ReviewItem>();
-        @Override
-        public int getCount() {
-            return items.size();
-        }
-
-        public void addItem(ReviewItem item){
-            items.add(item);
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup viewGroup) {
-            ReviewItemView view = new ReviewItemView(getApplicationContext());
-
-            ReviewItem item = items.get(position);
-            view.setId(item.getId());
-            view.setTime(item.getTime());
-            view.setRating(item.getRating());
-            view.setReview(item.getReview());
-            return view;
-        }
-    }
-
 
 }
