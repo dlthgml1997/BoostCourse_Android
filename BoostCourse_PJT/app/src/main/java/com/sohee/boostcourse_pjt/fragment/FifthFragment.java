@@ -11,7 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.sohee.boostcourse_pjt.R;
 
-public class SecondFragment extends Fragment {
+public class FifthFragment extends Fragment {
+
 
     private ImageView imgPoster;
     private TextView txtMovieTitle;
@@ -19,7 +20,7 @@ public class SecondFragment extends Fragment {
     private TextView txtAge;
     private TextView txtDday;
 
-    public SecondFragment() {
+    public FifthFragment() {
         // Required empty public constructor
     }
 
@@ -27,6 +28,7 @@ public class SecondFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_first, container, false);
 
         imgPoster = (ImageView) view.findViewById(R.id.img_first_frag_poster);
@@ -45,10 +47,10 @@ public class SecondFragment extends Fragment {
     }
 
     private void changeMovie() {
-        imgPoster.setImageResource(R.drawable.image2);
-        txtMovieTitle.setText("2. 공 조");
-        txtAge.setText("12세 관람가");
-        txtDday.setText("D-34");
-        txtAdvanced.setText(" 59.6%");
+                imgPoster.setImageResource(R.drawable.image5);
+                txtMovieTitle.setText("럭 키");
+                txtAge.setText("15세 관람가");
+                txtDday.setText("D-1");
+                txtAdvanced.setText(" 8.8%");
     }
 }

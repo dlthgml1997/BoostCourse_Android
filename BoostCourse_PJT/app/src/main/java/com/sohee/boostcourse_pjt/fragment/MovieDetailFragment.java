@@ -1,19 +1,26 @@
-package com.sohee.boostcourse_pjt;
+package com.sohee.boostcourse_pjt.fragment;
 
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import com.sohee.boostcourse_pjt.R;
+import com.sohee.boostcourse_pjt.ReviewDetailActivity;
+import com.sohee.boostcourse_pjt.ReviewItem;
+import com.sohee.boostcourse_pjt.WriteReviewActivity;
 import com.sohee.boostcourse_pjt.adapter.ReviewAdapter;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MovieDetailFragment extends Fragment {
 
-    static int requestCodeForWriteReview = 101;
+//    static int requestCodeForWriteReview = 101;
     private ImageView imgThumbUp;
     private ImageView imgThumbDown;
     private TextView txtThumbUp;
@@ -21,26 +28,36 @@ public class MainActivity extends AppCompatActivity {
     private TextView btnWriteReview;
     private Button btnReserve;
     private Button btnDetail;
+
+    private View view;
+
     private int countUp = 0;
     private int countDown = 0;
+
     public ArrayList<ReviewItem> reviewItems;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = (View) inflater.inflate(R.layout.activity_main, container, false);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         setOnBtnClickListener();
         setAdapter();
     }
 
     private void setOnBtnClickListener() {
-        imgThumbUp = (ImageView) findViewById(R.id.btn_main_act_thumb_up);
-        imgThumbDown = (ImageView) findViewById(R.id.btn_main_act_thumb_down);
-        btnWriteReview = (TextView) findViewById(R.id.txt_write);
-        btnReserve = (Button) findViewById(R.id.btn_main_act_reserve);
-        btnDetail = (Button) findViewById(R.id.btn_main_act_detail);
-        txtThumbUp = (TextView) findViewById(R.id.txt_main_act_thumb_up);
-        txtThumbDown = (TextView) findViewById(R.id.txt_main_act_thumb_down);
+        imgThumbUp = (ImageView) view.findViewById(R.id.btn_main_act_thumb_up);
+        imgThumbDown = (ImageView) view.findViewById(R.id.btn_main_act_thumb_down);
+        btnWriteReview = (TextView) view.findViewById(R.id.txt_write);
+        btnReserve = (Button) view.findViewById(R.id.btn_main_act_reserve);
+        btnDetail = (Button) view.findViewById(R.id.btn_main_act_detail);
+        txtThumbUp = (TextView) view.findViewById(R.id.txt_main_act_thumb_up);
+        txtThumbDown = (TextView) view.findViewById(R.id.txt_main_act_thumb_down);
 
         imgThumbUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,23 +106,23 @@ public class MainActivity extends AppCompatActivity {
         btnReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "예매하기 눌렸습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "예매하기 눌렸습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
         btnWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WriteReviewActivity.class);
+                Intent intent = new Intent(getActivity(), WriteReviewActivity.class);
 
-                startActivityForResult(intent,requestCodeForWriteReview);
+                startActivity(intent);
             }
         });
 
         btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ReviewDetailActivity.class);
+                Intent intent = new Intent(getActivity(), ReviewDetailActivity.class);
                 intent.putExtra("reviewItems", reviewItems);
 
                 startActivity(intent);
@@ -114,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        ListView reviewListView = (ListView) findViewById(R.id.lv_main_act_review);
+        ListView reviewListView = (ListView) view.findViewById(R.id.lv_main_act_review);
 
         ReviewAdapter adapter = new ReviewAdapter();
         adapter.addItem(new ReviewItem("shfk***", "10분전", (float) 4, "재밌어요!"));
@@ -127,15 +144,4 @@ public class MainActivity extends AppCompatActivity {
         reviewItems = adapter.getItems();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            switch (requestCode){
-                case 101:
-                    Toast.makeText(this,"리뷰 저장 눌림",Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    }
 }

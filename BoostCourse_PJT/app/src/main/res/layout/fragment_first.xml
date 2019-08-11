@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
+              android:id="@+id/ll"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="#00ff0000"
-              tools:context=".fragment.FirstFragment">
+              android:background="#00ff0000">
     <LinearLayout
             android:orientation="vertical"
             android:layout_gravity="center"
@@ -16,7 +16,7 @@
             android:layout_height="match_parent">
 
         <ImageView
-                android:id="@+id/img_poster_main"
+                android:id="@+id/img_first_frag_poster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
@@ -25,12 +25,12 @@
                 android:src="@drawable/image1"/>
 
         <TextView
-                style="@style/boldBlackStyle"
-                android:id="@+id/txt_movietitle_main"
+                style="@style/boldWhiteStyle"
+                android:id="@+id/txt_first_frag_title"
                 android:text="1. 군도"
-                android:textSize="24sp"/>
+                android:textSize="16sp"/>
         <View
-                android:layout_marginVertical="16dp"
+                android:layout_marginVertical="8dp"
                 android:background="@drawable/movie_list_gradation"
                 android:layout_width="120dp"
                 android:layout_height="2dp"/>
@@ -42,34 +42,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             <TextView
-                    style="@style/regularBlackStyle"
+                    style="@style/regularWhiteStyle"
                     android:textSize="16sp"
                     android:text="@string/advance_rate"/>
             <TextView
                     android:id="@+id/txt_first_frag_advance_rate"
-                    style="@style/regularBlackStyle"
+                    style="@style/regularWhiteStyle"
                     android:textSize="16sp"
                     android:text=" 61.6%"/>
 
             <TextView
-                    style="@style/regularBlackStyle"
+                    style="@style/regularWhiteStyle"
                     android:textSize="16sp"
                     android:text=" | "/>
             <TextView
                     android:id="@+id/txt_first_frag_age"
-                    style="@style/regularBlackStyle"
+                    style="@style/regularWhiteStyle"
                     android:textSize="16sp"
                     android:text="15세 관람가"/>
 
 
             <TextView
-                    style="@style/regularBlackStyle"
+                    style="@style/regularWhiteStyle"
                     android:textSize="16sp"
                     android:text=" | "/>
 
             <TextView
                     android:id="@+id/txt_first_frag_d_day"
-                    style="@style/regularBlackStyle"
+                    style="@style/regularWhiteStyle"
                     android:textSize="16sp"
                     android:text="D-1"/>
 
@@ -77,7 +77,7 @@
 
         <!-- 예매하기 버튼 -->
         <Button
-                android:id="@+id/btn_main_act_reserve"
+                android:id="@+id/btn_first_frag_more_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
@@ -85,8 +85,9 @@
                 android:background="@drawable/orange_circle_border"
                 android:text="@string/more_info"
                 style="@style/regularWhiteStyle"
-                android:layout_marginVertical="16dp"
-                android:textSize="24dp"/>
+                android:layout_marginVertical="8dp"
+                android:textSize="16sp"
+        />
     </LinearLayout>
 
 </LinearLayout>
