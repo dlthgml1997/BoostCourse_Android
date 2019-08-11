@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="#00ff0000"
+              tools:context=".fragment.FirstFragment">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:background="#00ff0000"
+            android:paddingHorizontal="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:id="@+id/img_poster_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/image1"/>
+
+        <TextView
+                style="@style/boldBlackStyle"
+                android:id="@+id/txt_movietitle_main"
+                android:text="1. 군도"
+                android:textSize="24sp"/>
+        <View
+                android:layout_marginVertical="16dp"
+                android:background="@drawable/movie_list_gradation"
+                android:layout_width="120dp"
+                android:layout_height="2dp"/>
+
+        <!-- 한 줄 설명 -->
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                    style="@style/regularBlackStyle"
+                    android:textSize="16sp"
+                    android:text="@string/advance_rate"/>
+            <TextView
+                    android:id="@+id/txt_first_frag_advance_rate"
+                    style="@style/regularBlackStyle"
+                    android:textSize="16sp"
+                    android:text=" 61.6%"/>
+
+            <TextView
+                    style="@style/regularBlackStyle"
+                    android:textSize="16sp"
+                    android:text=" | "/>
+            <TextView
+                    android:id="@+id/txt_first_frag_age"
+                    style="@style/regularBlackStyle"
+                    android:textSize="16sp"
+                    android:text="15세 관람가"/>
+
+
+            <TextView
+                    style="@style/regularBlackStyle"
+                    android:textSize="16sp"
+                    android:text=" | "/>
+
+            <TextView
+                    android:id="@+id/txt_first_frag_d_day"
+                    style="@style/regularBlackStyle"
+                    android:textSize="16sp"
+                    android:text="D-1"/>
+
+        </LinearLayout>
+
+        <!-- 예매하기 버튼 -->
+        <Button
+                android:id="@+id/btn_main_act_reserve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:layout_marginHorizontal="40dp"
+                android:background="@drawable/orange_circle_border"
+                android:text="@string/more_info"
+                style="@style/regularWhiteStyle"
+                android:layout_marginVertical="16dp"
+                android:textSize="24dp"/>
+    </LinearLayout>
+
+</LinearLayout>

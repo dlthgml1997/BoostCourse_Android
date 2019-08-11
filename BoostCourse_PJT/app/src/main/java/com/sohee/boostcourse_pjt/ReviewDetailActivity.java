@@ -17,10 +17,13 @@ import java.util.ArrayList;
 public class ReviewDetailActivity extends AppCompatActivity {
 
     private TextView btnWriteReview;
+    public ArrayList<ReviewItem> reviewItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_detail);
+
         setOnBtnClickListener();
         setAdapter();
         setToolbar();
@@ -55,8 +58,14 @@ public class ReviewDetailActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
+        reviewItems = getIntent().getParcelableArrayListExtra("reviewItems");
+
         ListView reviewListView = (ListView) findViewById(R.id.lv_review_detail_act_review);
+
         ReviewAdapter adapter = new ReviewAdapter();
+
+        adapter.setItems(reviewItems);
+
         reviewListView.setAdapter(adapter);
     }
 

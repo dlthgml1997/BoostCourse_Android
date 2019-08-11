@@ -1,6 +1,9 @@
 package com.sohee.boostcourse_pjt;
 
-public class ReviewItem {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ReviewItem implements Parcelable {
 
     String id;
     String time;
@@ -13,6 +16,25 @@ public class ReviewItem {
         this.rating = rating;
         this.review = review;
     }
+
+    protected ReviewItem(Parcel in) {
+        id = in.readString();
+        time = in.readString();
+        rating = in.readFloat();
+        review = in.readString();
+    }
+
+    public static final Creator<ReviewItem> CREATOR = new Creator<ReviewItem>() {
+        @Override
+        public ReviewItem createFromParcel(Parcel in) {
+            return new ReviewItem(in);
+        }
+
+        @Override
+        public ReviewItem[] newArray(int size) {
+            return new ReviewItem[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -54,5 +76,18 @@ public class ReviewItem {
                 ", rating='" + rating + '\'' +
                 ", review='" + review + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(time);
+        parcel.writeFloat(rating);
+        parcel.writeString(review);
     }
 }

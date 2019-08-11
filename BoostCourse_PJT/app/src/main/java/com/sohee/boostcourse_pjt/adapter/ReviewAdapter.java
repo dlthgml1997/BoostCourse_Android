@@ -21,6 +21,8 @@ public class ReviewAdapter extends BaseAdapter {
         items.add(item);
     }
 
+    public void setItems(ArrayList<ReviewItem> getItems) {items = getItems;}
+
     @Override
     public Object getItem(int position) {
         return items.get(position);

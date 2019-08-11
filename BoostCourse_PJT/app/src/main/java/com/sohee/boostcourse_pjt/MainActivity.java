@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), WriteReviewActivity.class);
+
                 startActivityForResult(intent,requestCodeForWriteReview);
             }
         });
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ReviewDetailActivity.class);
+                intent.putExtra("reviewItems", reviewItems);
+
                 startActivity(intent);
             }
         });
@@ -112,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setAdapter() {
         ListView reviewListView = (ListView) findViewById(R.id.lv_main_act_review);
+
         ReviewAdapter adapter = new ReviewAdapter();
         adapter.addItem(new ReviewItem("shfk***", "10분전", (float) 4, "재밌어요!"));
         adapter.addItem(new ReviewItem("dlth***", "15분전", (float) 3, "그저 그랬어요"));
