@@ -1,4 +1,6 @@
 <resources>
+
+    <!-- MovieDetailFragment -->
     <string name="app_name">씨네마천국</string>
     <string name="advance_rate">예매율</string>
     <string name="rating">평점</string>
@@ -36,6 +38,16 @@
 
     <!-- 툴바 -->
     <string name="toolbar_movie_list">영화 목록</string>
+
+    <!-- Drawer Layout -->
+    <string name="navigation_drawer_close">R.string.navigation_drawer_close</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="nav_user_name">Mike</string>
+    <string name="nav_user_email">mike.jung.global@gmail.com</string>
+    <string name="menu_setting">사용자 설정</string>
+    <string name="menu_reserve">예매하기</string>
+    <string name="menu_list">영화 목록</string>
+    <string name="menu_API">영화 API</string>
 
 </resources>
 

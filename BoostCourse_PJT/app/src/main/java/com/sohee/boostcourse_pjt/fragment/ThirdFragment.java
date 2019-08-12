@@ -1,6 +1,7 @@
 package com.sohee.boostcourse_pjt.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
@@ -25,13 +27,24 @@ public class ThirdFragment extends Fragment {
     private TextView txtDday;
     private Button btnMoreInfo;
     public MovieListActivity movieListActivity;
-    public MovieDetailFragment movieDetailFragment;
-    public ActionBar actionBar;
 
     public ThirdFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        movieListActivity = (MovieListActivity) getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        movieListActivity = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,10 +57,6 @@ public class ThirdFragment extends Fragment {
         txtAge = (TextView) view.findViewById(R.id.txt_first_frag_age);
         txtDday = (TextView) view.findViewById(R.id.txt_first_frag_d_day);
         btnMoreInfo = (Button) view.findViewById(R.id.btn_first_frag_more_info);
-
-        movieListActivity = new MovieListActivity();
-        movieDetailFragment = new MovieDetailFragment();
-
 
         return view;
     }
@@ -64,13 +73,8 @@ public class ThirdFragment extends Fragment {
         btnMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager manager = getFragmentManager();
-
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.fl_movie_list_act, movieDetailFragment).commit();
-
-                actionBar = movieListActivity.getSupportActionBar();
-                actionBar.setTitle("영화 상세");
+                movieListActivity.onFragmentChange(0);
+                movieListActivity.changeActionBarTitleToMovieDetail();
             }
         });
     }

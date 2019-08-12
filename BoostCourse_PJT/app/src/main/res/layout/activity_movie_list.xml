@@ -8,40 +8,58 @@
         android:layout_height="match_parent"
         tools:context=".MovieListActivity">
 
-    <!-- 툴바 -->
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/toolbar_movie_list_act"
+    <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer_main_act"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:openDrawer="start">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
+            <com.google.android.material.appbar.AppBarLayout
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+                    android:layout_height="wrap_content"
+                    android:theme="@style/AppTheme.AppBarOverlay">
 
-        </com.google.android.material.appbar.AppBarLayout>
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar_movie_list_act"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/colorPrimary"
+                        app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    <!-- 프래그먼트 들어갈 자리 -->
-    <FrameLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:id="@+id/fl_movie_list_act"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- 뷰페이저 -->
-        <androidx.viewpager.widget.ViewPager
-                android:id="@+id/vp_movie_list_act"
-                android:layout_width="match_parent"
+            <!-- 뷰페이저 -->
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vp_movie_list_act"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:layout_centerVertical="true"/>
+
+            <!-- 프레그먼트 -->
+            <FrameLayout
+                    android:id="@+id/fl_movie_list_act"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <com.google.android.material.navigation.NavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:layout_centerVertical="true"/>
-    </FrameLayout>
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                app:headerLayout="@layout/nav_header_main"
+                app:menu="@menu/activity_main_drawer"/>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
 </RelativeLayout>
