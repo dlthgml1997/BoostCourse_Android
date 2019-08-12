@@ -1,23 +1,24 @@
 package com.sohee.boostcourse_pjt;
 
-import android.os.Build;
+import android.view.Menu;
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 import com.sohee.boostcourse_pjt.adapter.MovieListAdapter;
 import com.sohee.boostcourse_pjt.fragment.*;
 
 public class MovieListActivity extends AppCompatActivity {
 
-    FirstFragment firstFragment= new FirstFragment();
+    FirstFragment firstFragment = new FirstFragment();
     SecondFragment secondFragment = new SecondFragment();
     ThirdFragment thirdFragment = new ThirdFragment();
     ForthFragment forthFragment = new ForthFragment();
     FifthFragment fifthFragment = new FifthFragment();
-    MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,34 @@ public class MovieListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_list);
 
         setAdapter();
+        setToolbar();
+    }
+
+
+    private void setToolbar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setLogo(R.drawable.ic_hamburger_menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int curi = item.getItemId();
+        switch (curi)
+        {
+            case R.id.menu_hamberger :
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void changeActionBarTitleToMovieDetail() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("영화 상세");
     }
 
     private void setAdapter() {
@@ -40,15 +69,5 @@ public class MovieListActivity extends AppCompatActivity {
         adapter.addItem(fifthFragment);
 
         pager.setAdapter(adapter);
-    }
-
-    public void setFrag() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            if(!isDestroyed() || !isFinishing()) {
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.add(R.id.fl_movie_list_act, movieDetailFragment).commit();
-            }
-        }
     }
 }

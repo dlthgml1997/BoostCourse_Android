@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import com.sohee.boostcourse_pjt.MovieListActivity;
 import com.sohee.boostcourse_pjt.R;
 
@@ -21,7 +24,9 @@ public class ThirdFragment extends Fragment {
     private TextView txtAge;
     private TextView txtDday;
     private Button btnMoreInfo;
-    private MovieListActivity movieListActivity;
+    public MovieListActivity movieListActivity;
+    public MovieDetailFragment movieDetailFragment;
+    public ActionBar actionBar;
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -39,7 +44,10 @@ public class ThirdFragment extends Fragment {
         txtAge = (TextView) view.findViewById(R.id.txt_first_frag_age);
         txtDday = (TextView) view.findViewById(R.id.txt_first_frag_d_day);
         btnMoreInfo = (Button) view.findViewById(R.id.btn_first_frag_more_info);
+
         movieListActivity = new MovieListActivity();
+        movieDetailFragment = new MovieDetailFragment();
+
 
         return view;
     }
@@ -56,7 +64,13 @@ public class ThirdFragment extends Fragment {
         btnMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                movieListActivity.setFrag();
+                FragmentManager manager = getFragmentManager();
+
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.fl_movie_list_act, movieDetailFragment).commit();
+
+                actionBar = movieListActivity.getSupportActionBar();
+                actionBar.setTitle("영화 상세");
             }
         });
     }

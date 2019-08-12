@@ -10,7 +10,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".MovieListActivity"
-                  android:label="영화 목록">
+                  android:label="영화 목록"
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
