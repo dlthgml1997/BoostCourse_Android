@@ -74,7 +74,6 @@ public class ThirdFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 movieListActivity.onFragmentChange(0);
-                movieListActivity.changeActionBarTitleToMovieDetail();
             }
         });
     }

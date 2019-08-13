@@ -1,5 +1,6 @@
 package com.sohee.boostcourse_pjt.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,17 +10,14 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.sohee.boostcourse_pjt.R;
-import com.sohee.boostcourse_pjt.ReviewDetailActivity;
-import com.sohee.boostcourse_pjt.ReviewItem;
-import com.sohee.boostcourse_pjt.WriteReviewActivity;
+import com.sohee.boostcourse_pjt.*;
 import com.sohee.boostcourse_pjt.adapter.ReviewAdapter;
 
 import java.util.ArrayList;
 
 public class MovieDetailFragment extends Fragment {
 
-//    static int requestCodeForWriteReview = 101;
+    //    static int requestCodeForWriteReview = 101;
     private ImageView imgThumbUp;
     private ImageView imgThumbDown;
     private TextView txtThumbUp;
@@ -33,7 +31,28 @@ public class MovieDetailFragment extends Fragment {
     private int countUp = 0;
     private int countDown = 0;
 
+    protected MovieListActivity movieListActivity;
+
     public ArrayList<ReviewItem> reviewItems;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        movieListActivity = (MovieListActivity) getActivity();
+
+        movieListActivity.setToolbar();
+        movieListActivity.setDrawer();
+
+        movieListActivity.changeActionBarTitleToMovieDetail();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        movieListActivity = null;
+    }
 
     @Nullable
     @Override
@@ -45,6 +64,7 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
         setOnBtnClickListener();
         setAdapter();

@@ -27,7 +27,7 @@
         <TextView
                 style="@style/boldWhiteStyle"
                 android:id="@+id/txt_first_frag_title"
-                android:text="1. 군도"
+                android:text="1. 군 도"
                 android:textSize="16sp"/>
         <View
                 android:layout_marginVertical="8dp"

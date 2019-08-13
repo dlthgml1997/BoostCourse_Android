@@ -38,7 +38,7 @@ public class MovieListActivity extends AppCompatActivity
         setDrawer();
     }
 
-    private void setToolbar() {
+    public void setToolbar() {
         toolbar = findViewById(R.id.toolbar_movie_list_act);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("영화 목록");
@@ -59,7 +59,7 @@ public class MovieListActivity extends AppCompatActivity
         pager.setAdapter(adapter);
     }
 
-    private void setDrawer() {
+    public void setDrawer() {
         drawer = findViewById(R.id.drawer_main_act);
 
         navigationView = findViewById(R.id.nav_view);
@@ -67,6 +67,7 @@ public class MovieListActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
 
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -92,14 +93,12 @@ public class MovieListActivity extends AppCompatActivity
                 break;
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_main_act);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_main_act);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -108,17 +107,18 @@ public class MovieListActivity extends AppCompatActivity
     }
 
     public void changeActionBarTitleToMovieDetail() {
-        setToolbar();
         getSupportActionBar().setTitle("영화 상세");
     }
 
     public void onFragmentChange(int index) {
         switch (index) {
             case 0:
+
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fl_movie_list_act, movieDetailFragment)
                         .commit();
+
                 break;
         }
     }

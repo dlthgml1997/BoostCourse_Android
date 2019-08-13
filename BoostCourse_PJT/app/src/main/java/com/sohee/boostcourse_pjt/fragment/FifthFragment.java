@@ -69,7 +69,7 @@ public class FifthFragment extends Fragment {
 
     private void changeMovie() {
                 imgPoster.setImageResource(R.drawable.image5);
-                txtMovieTitle.setText("럭 키");
+                txtMovieTitle.setText("5. 럭 키");
                 txtAge.setText("15세 관람가");
                 txtDday.setText("D-1");
                 txtAdvanced.setText(" 8.8%");
@@ -80,7 +80,6 @@ public class FifthFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 movieListActivity.onFragmentChange(0);
-                movieListActivity.changeActionBarTitleToMovieDetail();
             }
         });
     }

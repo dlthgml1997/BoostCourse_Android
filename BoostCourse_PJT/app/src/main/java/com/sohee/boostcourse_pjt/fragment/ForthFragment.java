@@ -74,7 +74,6 @@ public class ForthFragment extends Fragment {
             public void onClick(View view) {
 
                 movieListActivity.onFragmentChange(0);
-                movieListActivity.changeActionBarTitleToMovieDetail();
 
             }
         });
