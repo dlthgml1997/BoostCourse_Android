@@ -113,9 +113,9 @@ public class MovieListActivity extends AppCompatActivity
     public void onFragmentChange(int index) {
         switch (index) {
             case 0:
-
                 getSupportFragmentManager()
                         .beginTransaction()
+                        .addToBackStack(null)
                         .replace(R.id.fl_movie_list_act, movieDetailFragment)
                         .commit();
 

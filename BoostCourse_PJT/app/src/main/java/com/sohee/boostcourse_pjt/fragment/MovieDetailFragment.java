@@ -163,4 +163,5 @@ public class MovieDetailFragment extends Fragment {
         reviewItems = new ArrayList<ReviewItem>();
         reviewItems = adapter.getItems();
     }
+
 }
