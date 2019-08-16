@@ -3,14 +3,14 @@ package com.sohee.boostcourse_pjt;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.sohee.boostcourse_pjt.adapter.ReviewAdapter;
+import com.sohee.boostcourse_pjt.fragment.MovieListFragment;
+import com.sohee.boostcourse_pjt.model.MovieItem;
+import com.sohee.boostcourse_pjt.model.ReviewItem;
 
 import java.util.ArrayList;
 
@@ -18,15 +18,24 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
     private TextView btnWriteReview;
     public ArrayList<ReviewItem> reviewItems;
+    MovieListFragment movieListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_detail);
 
+        getFragment();
         setOnBtnClickListener();
         setAdapter();
         setToolbar();
+    }
+
+
+    private void getFragment() {
+
+//        movieListFragment = MovieListFragment.getInstance();
+
     }
 
     private void setOnBtnClickListener() {
@@ -44,6 +53,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
     private void setToolbar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
 
 
     @Override

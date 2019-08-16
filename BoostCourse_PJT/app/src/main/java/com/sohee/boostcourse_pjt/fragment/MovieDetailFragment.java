@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.sohee.boostcourse_pjt.*;
 import com.sohee.boostcourse_pjt.adapter.ReviewAdapter;
+import com.sohee.boostcourse_pjt.model.ReviewItem;
 
 import java.util.ArrayList;
 

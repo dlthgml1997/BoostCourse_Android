@@ -13,11 +13,14 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.sohee.boostcourse_pjt.adapter.MovieListAdapter;
 import com.sohee.boostcourse_pjt.fragment.*;
+import com.sohee.boostcourse_pjt.model.MovieItem;
+
+import java.util.List;
 
 public class MovieListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    protected FirstFragment firstFragment = new FirstFragment();
+    protected MovieListFragment movieListFragment = new MovieListFragment();
     protected SecondFragment secondFragment = new SecondFragment();
     protected ThirdFragment thirdFragment = new ThirdFragment();
     protected ForthFragment forthFragment = new ForthFragment();
@@ -28,6 +31,8 @@ public class MovieListActivity extends AppCompatActivity
     protected NavigationView navigationView;
     protected DrawerLayout drawer;
 
+    private List<MovieItem> movieItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,10 @@ public class MovieListActivity extends AppCompatActivity
         setAdapter();
         setToolbar();
         setDrawer();
+    }
+
+
+    private void addMovieItem() {
     }
 
     public void setToolbar() {
@@ -48,13 +57,21 @@ public class MovieListActivity extends AppCompatActivity
         ViewPager pager = (ViewPager) findViewById(R.id.vp_movie_list_act);
         pager.setOffscreenPageLimit(3);
 
+
+        movieItems.add(new MovieItem(R.drawable.image1, "1. 군 도", "61.6%", "15세 관람가", "D-1"));
+        movieItems.add(new MovieItem(R.drawable.image2, "2. 군 도", "61.6%", "15세 관람가", "D-1"));
+        movieItems.add(new MovieItem(R.drawable.image3, "3. 군 도", "61.6%", "15세 관람가", "D-1"));
+        movieItems.add(new MovieItem(R.drawable.image4, "4. 군 도", "61.6%", "15세 관람가", "D-1"));
+        movieItems.add(new MovieItem(R.drawable.image5, "5. 군 도", "61.6%", "15세 관람가", "D-1"));
+
         MovieListAdapter adapter = new MovieListAdapter(getSupportFragmentManager());
 
-        adapter.addItem(firstFragment);
-        adapter.addItem(secondFragment);
-        adapter.addItem(thirdFragment);
-        adapter.addItem(forthFragment);
-        adapter.addItem(fifthFragment);
+
+        for (int i = 0; i <= movieItems.size(); i++) {
+            MovieListFragment fragment = MovieListFragment.getInstance(movieItems.get(i));
+            fragment.getArguments();
+            adapter.addItem(fragment);
+        }
 
         pager.setAdapter(adapter);
     }

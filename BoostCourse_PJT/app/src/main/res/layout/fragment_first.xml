@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:id="@+id/ll"
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:background="#00ff0000">
     <LinearLayout
             android:orientation="vertical"
-            android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:background="#00ff0000"
-            android:paddingHorizontal="16dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         <ImageView
@@ -21,7 +19,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
                 android:src="@drawable/image1"/>
 
         <TextView
@@ -38,7 +35,6 @@
         <!-- 한 줄 설명 -->
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             <TextView
@@ -78,10 +74,10 @@
         <!-- 예매하기 버튼 -->
         <Button
                 android:id="@+id/btn_first_frag_more_info"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:layout_marginHorizontal="40dp"
+                android:layout_gravity="center_horizontal"
                 android:background="@drawable/orange_circle_border"
                 android:text="@string/more_info"
                 style="@style/regularWhiteStyle"

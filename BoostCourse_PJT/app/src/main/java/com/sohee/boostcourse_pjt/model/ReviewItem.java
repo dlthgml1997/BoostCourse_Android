@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt;
+package com.sohee.boostcourse_pjt.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
