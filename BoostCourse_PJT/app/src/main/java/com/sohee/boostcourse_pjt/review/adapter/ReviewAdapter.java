@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import com.sohee.boostcourse_pjt.model.ReviewItem;
-import com.sohee.boostcourse_pjt.ReviewItemView;
+import com.sohee.boostcourse_pjt.review.ReviewItemView;
 
 import java.util.ArrayList;
 

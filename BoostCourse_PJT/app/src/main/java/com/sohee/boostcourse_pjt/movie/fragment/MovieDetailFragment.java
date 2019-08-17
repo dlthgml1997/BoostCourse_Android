@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.sohee.boostcourse_pjt.*;
+import com.sohee.boostcourse_pjt.activity.MovieListActivity;
+import com.sohee.boostcourse_pjt.activity.ReviewDetailActivity;
+import com.sohee.boostcourse_pjt.activity.WriteReviewActivity;
 import com.sohee.boostcourse_pjt.adapter.ReviewAdapter;
 import com.sohee.boostcourse_pjt.model.ReviewItem;
 
@@ -18,7 +21,8 @@ import java.util.ArrayList;
 
 public class MovieDetailFragment extends Fragment {
 
-    //    static int requestCodeForWriteReview = 101;
+    private onReplaceFragmentListener mListener;
+
     private ImageView imgThumbUp;
     private ImageView imgThumbDown;
     private TextView txtThumbUp;
@@ -40,12 +44,11 @@ public class MovieDetailFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        movieListActivity = (MovieListActivity) getActivity();
+        mListener = (onReplaceFragmentListener) context;
 
-        movieListActivity.setToolbar();
-        movieListActivity.setDrawer();
-
-        movieListActivity.changeActionBarTitleToMovieDetail();
+        mListener.setToolbar();
+        mListener.setDrawer();
+        mListener.changeActionBarTitleToMovieDetail();
     }
 
     @Override
@@ -58,7 +61,7 @@ public class MovieDetailFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = (View) inflater.inflate(R.layout.activity_main, container, false);
+        view = (View) inflater.inflate(R.layout.fragment_movie_detail, container, false);
         return view;
     }
 
@@ -163,6 +166,12 @@ public class MovieDetailFragment extends Fragment {
 
         reviewItems = new ArrayList<ReviewItem>();
         reviewItems = adapter.getItems();
+    }
+
+    public interface onReplaceFragmentListener {
+        void changeActionBarTitleToMovieDetail();
+        void setDrawer();
+        void setToolbar();
     }
 
 }

@@ -4,34 +4,43 @@ package com.sohee.boostcourse_pjt.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sohee.boostcourse_pjt.MovieListActivity;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.model.MovieItem;
 
 public class MovieListFragment extends Fragment {
 
     private Button btnMoreInfo;
-    private TextView title;
-    private MovieListActivity movieListActivity;
+    private ImageView imgPoster;
+    private TextView txtTitle;
+    private TextView txtAge;
+    private TextView txtDday;
+    private TextView txtAdvanced;
+
     private MovieItem item;
 
+    private onFragmentChangeListener onFragmentChangeListener;
 
     public MovieListFragment() {
         // Required empty public constructor
     }
 
     public static MovieListFragment getInstance(MovieItem movieitem) {
+
         Bundle bundle = new Bundle();
         bundle.putParcelable("movieItem", movieitem);
+
         MovieListFragment fragment = new MovieListFragment();
         fragment.setArguments(bundle);
+
         return fragment;
     }
 
@@ -39,25 +48,29 @@ public class MovieListFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        movieListActivity = (MovieListActivity) getActivity();
+        onFragmentChangeListener = (onFragmentChangeListener) context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
 
-        movieListActivity = null;
+        onFragmentChangeListener = null;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = (View) inflater.inflate(R.layout.fragment_first, container, false);
+        View view = (View) inflater.inflate(R.layout.fragment_movie_list, container, false);
 
         btnMoreInfo = (Button) view.findViewById(R.id.btn_first_frag_more_info);
-        title = (TextView) view.findViewById(R.id.txt_first_frag_title);
+        imgPoster = (ImageView) view.findViewById(R.id.img_first_frag_poster);
+        txtTitle = (TextView) view.findViewById(R.id.txt_first_frag_title);
+        txtAdvanced = (TextView) view.findViewById(R.id.txt_first_frag_advance_rate);
+        txtAge = (TextView) view.findViewById(R.id.txt_first_frag_age);
+        txtDday = (TextView) view.findViewById(R.id.txt_first_frag_d_day);
+        btnMoreInfo = (Button) view.findViewById(R.id.btn_first_frag_more_info);
 
         setOnBtnClickListener();
 
@@ -65,20 +78,34 @@ public class MovieListFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        item = getArguments();
+        setContent();
+    }
 
+    public void setContent() {
+
+        item = getArguments().getParcelable("movieItem");
+
+        imgPoster.setImageResource(item.getPoster());
+        txtTitle.setText(item.getTitle());
+        txtAge.setText(item.getAge());
+        txtDday.setText(item.getD_day());
+        txtAdvanced.setText(item.getAdvance_rate());
     }
 
     private void setOnBtnClickListener() {
         btnMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                movieListActivity.onFragmentChange(0);
+                onFragmentChangeListener.onFragmentChange();
             }
         });
+    }
+
+    public interface onFragmentChangeListener{
+        public void onFragmentChange();
     }
 
 }

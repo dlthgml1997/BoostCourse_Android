@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt;
+package com.sohee.boostcourse_pjt.activity;
 
 import android.content.Intent;
 import android.view.MenuItem;
@@ -7,9 +7,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.adapter.ReviewAdapter;
-import com.sohee.boostcourse_pjt.fragment.MovieListFragment;
-import com.sohee.boostcourse_pjt.model.MovieItem;
+import com.sohee.boostcourse_pjt.movie.fragment.MovieListFragment;
 import com.sohee.boostcourse_pjt.model.ReviewItem;
 
 import java.util.ArrayList;
@@ -34,7 +34,6 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
     private void getFragment() {
 
-//        movieListFragment = MovieListFragment.getInstance();
 
     }
 
@@ -44,7 +43,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
         btnWriteReview.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),WriteReviewActivity.class);
+                Intent intent = new Intent(getApplicationContext(), WriteReviewActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,5 +1,7 @@
 package com.sohee.boostcourse_pjt.adapter;
 
+import android.view.ViewGroup;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -13,8 +15,8 @@ public class MovieListAdapter extends FragmentStatePagerAdapter {
         super(fm);
     }
 
-    public void addItem(Fragment Item){
-        MovieListItems.add(Item);
+    public void addItem(Fragment item){
+        MovieListItems.add(item);
     }
 
     @Override
@@ -26,4 +28,5 @@ public class MovieListAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return MovieListItems.size();
     }
+
 }
