@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt.movie;
+package com.sohee.boostcourse_pjt.ui.movie;
 
 import android.content.Intent;
 import android.util.Log;
@@ -19,19 +19,18 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
-import com.sohee.boostcourse_pjt.AppHelper;
-import com.sohee.boostcourse_pjt.MovieList;
+import com.sohee.boostcourse_pjt.network.AppHelper;
+import com.sohee.boostcourse_pjt.ui.movie.item.getMovieListResponse;
 import com.sohee.boostcourse_pjt.R;
-import com.sohee.boostcourse_pjt.movie.adapter.MovieListAdapter;
-import com.sohee.boostcourse_pjt.movie.fragment.*;
-import com.sohee.boostcourse_pjt.movie.item.MovieItem;
-import com.sohee.boostcourse_pjt.review.ReviewDetailActivity;
-import com.sohee.boostcourse_pjt.review.WriteReviewActivity;
-import com.sohee.boostcourse_pjt.review.model.ReviewItem;
+import com.sohee.boostcourse_pjt.ui.movie.adapter.MovieListAdapter;
+import com.sohee.boostcourse_pjt.ui.movie.fragment.*;
+import com.sohee.boostcourse_pjt.ui.movie.item.MovieItem;
+import com.sohee.boostcourse_pjt.ui.review.ReviewDetailActivity;
+import com.sohee.boostcourse_pjt.ui.review.WriteReviewActivity;
+import com.sohee.boostcourse_pjt.ui.review.model.ReviewItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("MovieList", "응답 -> " + response);
+                        Log.d("getMovieListResponse", "응답 -> " + response);
 
                         processResponse(response);
                     }
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("MovieList", "에러 -> " + error);
+                        Log.d("getMovieListResponse", "에러 -> " + error);
                     }
                 }
 
@@ -98,17 +97,17 @@ public class MainActivity extends AppCompatActivity
         request.setShouldCache(false);
 
         AppHelper.requestQueue.add(request);
-        Log.d("MovieList", "요청 보냄.");
+        Log.d("getMovieListResponse", "요청 보냄.");
     }
 
 
     private void processResponse(String response) {
         Gson gson = new Gson();
-        MovieList movieList = gson.fromJson(response, MovieList.class);
+        getMovieListResponse getMovieListResponse = gson.fromJson(response, getMovieListResponse.class);
 
-        Log.d("MovieList",movieList.result.toString());
-        if (movieList != null) {
-            movieItems = movieList.result;
+        Log.d("getMovieListResponse", getMovieListResponse.result.toString());
+        if (getMovieListResponse != null) {
+            movieItems = getMovieListResponse.result;
             setAdapter(movieItems);
         }
     }

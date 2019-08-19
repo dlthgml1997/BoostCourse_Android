@@ -1,7 +1,6 @@
-package com.sohee.boostcourse_pjt.movie.fragment;
+package com.sohee.boostcourse_pjt.ui.movie.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.sohee.boostcourse_pjt.*;
-import com.sohee.boostcourse_pjt.movie.MainActivity;
-import com.sohee.boostcourse_pjt.review.ReviewDetailActivity;
-import com.sohee.boostcourse_pjt.review.WriteReviewActivity;
-import com.sohee.boostcourse_pjt.review.adapter.ReviewAdapter;
-import com.sohee.boostcourse_pjt.review.model.ReviewItem;
+import com.sohee.boostcourse_pjt.ui.review.adapter.ReviewAdapter;
+import com.sohee.boostcourse_pjt.ui.review.model.ReviewItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MovieDetailFragment extends Fragment {
 

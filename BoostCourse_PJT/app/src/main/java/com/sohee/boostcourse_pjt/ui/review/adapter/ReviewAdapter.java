@@ -1,11 +1,11 @@
-package com.sohee.boostcourse_pjt.review.adapter;
+package com.sohee.boostcourse_pjt.ui.review.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import com.sohee.boostcourse_pjt.review.model.ReviewItem;
-import com.sohee.boostcourse_pjt.review.view.ReviewItemView;
+import com.sohee.boostcourse_pjt.ui.review.model.ReviewItem;
+import com.sohee.boostcourse_pjt.ui.review.view.ReviewItemView;
 
 import java.util.ArrayList;
 

@@ -11,14 +11,8 @@
             android:roundIcon="@drawable/ic_app"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".VolleyActivity">
-        </activity>
-        <activity android:name=".ServerActivity">
-        </activity>
-        <activity android:name=".ThreadActivity">
-        </activity>
         <activity
-                android:name=".movie.MainActivity"
+                android:name=".ui.movie.MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,10 +21,10 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".review.WriteReviewActivity"
+                android:name=".ui.review.WriteReviewActivity"
                 android:label="한줄평 작성"/>
         <activity
-                android:name=".review.ReviewDetailActivity"
+                android:name=".ui.review.ReviewDetailActivity"
                 android:label="한줄평 목록"/>
     </application>
 

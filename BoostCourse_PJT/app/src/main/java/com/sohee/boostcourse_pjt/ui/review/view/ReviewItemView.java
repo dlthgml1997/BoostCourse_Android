@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt.review.view;
+package com.sohee.boostcourse_pjt.ui.review.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

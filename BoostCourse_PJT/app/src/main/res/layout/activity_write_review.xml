@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/colorWhite"
-        tools:context=".review.WriteReviewActivity">
+        tools:context=".ui.review.WriteReviewActivity">
     <!-- 영화 타이틀 -->
     <LinearLayout
             android:orientation="horizontal"

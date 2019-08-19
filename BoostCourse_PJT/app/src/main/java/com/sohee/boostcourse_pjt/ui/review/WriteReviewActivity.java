@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt.review;
+package com.sohee.boostcourse_pjt.ui.review;
 
 import android.content.Intent;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.sohee.boostcourse_pjt.R;
-import com.sohee.boostcourse_pjt.movie.fragment.MovieDetailFragment;
+import com.sohee.boostcourse_pjt.ui.movie.fragment.MovieDetailFragment;
 
 public class WriteReviewActivity extends AppCompatActivity {
 

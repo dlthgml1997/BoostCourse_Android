@@ -1,7 +1,5 @@
-package com.sohee.boostcourse_pjt.movie.adapter;
+package com.sohee.boostcourse_pjt.ui.movie.adapter;
 
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;

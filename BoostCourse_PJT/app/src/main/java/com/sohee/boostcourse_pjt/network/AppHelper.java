@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt;
+package com.sohee.boostcourse_pjt.network;
 
 import com.android.volley.RequestQueue;
 

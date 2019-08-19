@@ -1,9 +1,8 @@
-package com.sohee.boostcourse_pjt.movie.fragment;
+package com.sohee.boostcourse_pjt.ui.movie.fragment;
 
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,23 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.sohee.boostcourse_pjt.AppHelper;
-import com.sohee.boostcourse_pjt.MovieList;
+import com.sohee.boostcourse_pjt.network.AppHelper;
 import com.sohee.boostcourse_pjt.R;
-import com.sohee.boostcourse_pjt.movie.item.MovieItem;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import com.sohee.boostcourse_pjt.ui.movie.item.MovieItem;
 
 public class MovieListFragment extends Fragment {
 

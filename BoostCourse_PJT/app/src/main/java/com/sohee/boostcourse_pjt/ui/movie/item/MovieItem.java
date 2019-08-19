@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt.movie.item;
+package com.sohee.boostcourse_pjt.ui.movie.item;
 
 import android.os.Parcel;
 import android.os.Parcelable;

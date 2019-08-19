@@ -1,10 +1,8 @@
-package com.sohee.boostcourse_pjt;
-
-import com.sohee.boostcourse_pjt.movie.item.MovieItem;
+package com.sohee.boostcourse_pjt.ui.movie.item;
 
 import java.util.ArrayList;
 
-public class MovieList {
+public class getMovieListResponse {
     String message;
     int code;
     String resultType;
