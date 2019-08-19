@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:background="@drawable/movie_list_gradation"
         android:layout_height="match_parent"
-        tools:context=".movie.MovieListActivity">
+        tools:context=".movie.MainActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer_main_act"

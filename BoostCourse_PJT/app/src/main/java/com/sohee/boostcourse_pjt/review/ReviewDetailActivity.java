@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt.activity;
+package com.sohee.boostcourse_pjt.review;
 
 import android.content.Intent;
 import android.view.MenuItem;
@@ -8,9 +8,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.sohee.boostcourse_pjt.R;
-import com.sohee.boostcourse_pjt.adapter.ReviewAdapter;
+import com.sohee.boostcourse_pjt.review.adapter.ReviewAdapter;
 import com.sohee.boostcourse_pjt.movie.fragment.MovieListFragment;
-import com.sohee.boostcourse_pjt.model.ReviewItem;
+import com.sohee.boostcourse_pjt.review.model.ReviewItem;
 
 import java.util.ArrayList;
 

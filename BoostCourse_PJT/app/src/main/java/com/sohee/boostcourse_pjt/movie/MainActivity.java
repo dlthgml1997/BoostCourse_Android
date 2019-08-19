@@ -15,10 +15,14 @@ import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.movie.adapter.MovieListAdapter;
 import com.sohee.boostcourse_pjt.movie.fragment.*;
 import com.sohee.boostcourse_pjt.movie.item.MovieItem;
+import com.sohee.boostcourse_pjt.review.ReviewDetailActivity;
+import com.sohee.boostcourse_pjt.review.WriteReviewActivity;
+import com.sohee.boostcourse_pjt.review.model.ReviewItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MovieListActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MovieDetailFragment.onReplaceFragmentListener, MovieListFragment.onFragmentChangeListener {
 
     protected MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
@@ -27,10 +31,11 @@ public class MovieListActivity extends AppCompatActivity
     protected NavigationView navigationView;
     protected DrawerLayout drawer;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_list);
+        setContentView(R.layout.activity_main);
 
         setAdapter();
         setToolbar();
@@ -85,7 +90,7 @@ public class MovieListActivity extends AppCompatActivity
 
             case R.id.nav_menu_list:
 
-                Intent intent = new Intent(getApplicationContext(), MovieListActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 //추가함
                 finish();
@@ -127,5 +132,20 @@ public class MovieListActivity extends AppCompatActivity
                 .addToBackStack(null)
                 .replace(R.id.fl_movie_list_act, movieDetailFragment)
                 .commit();
+    }
+
+    @Override
+    public void startWriteReviewAct() {
+        Intent intent = new Intent(getApplicationContext(), WriteReviewActivity.class);
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void startReviewDetailAct(ArrayList<ReviewItem> reviewItems) {
+        Intent intent = new Intent(getApplicationContext(), ReviewDetailActivity.class);
+        intent.putExtra("reviewItems", reviewItems);
+
+        startActivity(intent);
     }
 }

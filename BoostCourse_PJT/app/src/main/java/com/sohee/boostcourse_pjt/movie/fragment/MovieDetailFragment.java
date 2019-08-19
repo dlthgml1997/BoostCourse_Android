@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt.fragment;
+package com.sohee.boostcourse_pjt.movie.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,13 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.sohee.boostcourse_pjt.*;
-import com.sohee.boostcourse_pjt.activity.MovieListActivity;
-import com.sohee.boostcourse_pjt.activity.ReviewDetailActivity;
-import com.sohee.boostcourse_pjt.activity.WriteReviewActivity;
-import com.sohee.boostcourse_pjt.adapter.ReviewAdapter;
-import com.sohee.boostcourse_pjt.model.ReviewItem;
+import com.sohee.boostcourse_pjt.movie.MainActivity;
+import com.sohee.boostcourse_pjt.review.ReviewDetailActivity;
+import com.sohee.boostcourse_pjt.review.WriteReviewActivity;
+import com.sohee.boostcourse_pjt.review.adapter.ReviewAdapter;
+import com.sohee.boostcourse_pjt.review.model.ReviewItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieDetailFragment extends Fragment {
 
@@ -36,9 +37,16 @@ public class MovieDetailFragment extends Fragment {
     private int countUp = 0;
     private int countDown = 0;
 
-    protected MovieListActivity movieListActivity;
+    private ArrayList<ReviewItem> reviewItems;
 
-    public ArrayList<ReviewItem> reviewItems;
+    public MovieDetailFragment(){
+
+    }
+
+    public static MovieDetailFragment newInstance(){
+        MovieDetailFragment fragment = new MovieDetailFragment();
+        return fragment;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -54,8 +62,7 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
-        movieListActivity = null;
+        mListener = null;
     }
 
     @Nullable
@@ -137,19 +144,14 @@ public class MovieDetailFragment extends Fragment {
         btnWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), WriteReviewActivity.class);
-
-                startActivity(intent);
+                mListener.startWriteReviewAct();
             }
         });
 
         btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ReviewDetailActivity.class);
-                intent.putExtra("reviewItems", reviewItems);
-
-                startActivity(intent);
+                mListener.startReviewDetailAct(reviewItems);
             }
         });
     }
@@ -170,8 +172,14 @@ public class MovieDetailFragment extends Fragment {
 
     public interface onReplaceFragmentListener {
         void changeActionBarTitleToMovieDetail();
+
         void setDrawer();
+
         void setToolbar();
+
+        void startWriteReviewAct();
+
+        void startReviewDetailAct(ArrayList<ReviewItem> reviewItems);
     }
 
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.sohee.boostcourse_pjt">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
             android:allowBackup="true"
             android:icon="@drawable/ic_app"
@@ -9,9 +11,15 @@
             android:roundIcon="@drawable/ic_app"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".VolleyActivity">
+        </activity>
+        <activity android:name=".ServerActivity">
+        </activity>
+        <activity android:name=".ThreadActivity">
+        </activity>
         <activity
-                android:theme="@style/AppTheme.NoActionBar"
-                android:name=".MovieListActivity">
+                android:name=".movie.MainActivity"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -19,11 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".WriteReviewActivity"
+                android:name=".review.WriteReviewActivity"
                 android:label="한줄평 작성"/>
         <activity
-                android:name=".ReviewDetailActivity"
-                android:label="한줄평 목록" />
+                android:name=".review.ReviewDetailActivity"
+                android:label="한줄평 목록"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt.adapter;
+package com.sohee.boostcourse_pjt.movie.adapter;
 
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;

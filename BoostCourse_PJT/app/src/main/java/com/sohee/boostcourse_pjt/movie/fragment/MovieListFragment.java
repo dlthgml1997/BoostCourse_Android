@@ -1,8 +1,9 @@
-package com.sohee.boostcourse_pjt.fragment;
+package com.sohee.boostcourse_pjt.movie.fragment;
 
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,8 +14,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.sohee.boostcourse_pjt.AppHelper;
+import com.sohee.boostcourse_pjt.MovieList;
 import com.sohee.boostcourse_pjt.R;
-import com.sohee.boostcourse_pjt.model.MovieItem;
+import com.sohee.boostcourse_pjt.movie.item.MovieItem;
+import com.sohee.boostcourse_pjt.network.Network;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MovieListFragment extends Fragment {
 
@@ -29,11 +42,13 @@ public class MovieListFragment extends Fragment {
 
     private onFragmentChangeListener onFragmentChangeListener;
 
+    private String baseUrl = Network.baseUrl;
+
     public MovieListFragment() {
         // Required empty public constructor
     }
 
-    public static MovieListFragment getInstance(MovieItem movieitem) {
+    public static MovieListFragment newInstance(MovieItem movieitem) {
 
         Bundle bundle = new Bundle();
         bundle.putParcelable("movieItem", movieitem);
@@ -82,7 +97,53 @@ public class MovieListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setContent();
+        getMovieListResponse();
     }
+
+    private void getMovieListResponse() {
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                baseUrl+"/movie/readMovieList?type=1",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("MovieList", "응답 -> " + response);
+
+                        processResponse(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("MovieList","에러 -> " + error);
+                    }
+                }
+
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+        //매번 받은 결과를 그대로 보여주세요
+        request.setShouldCache(false);
+
+        AppHelper.requestQueue.add(request);
+        Log.d("MovieList","요청 보냄.");
+    }
+
+
+    private void processResponse(String response) {
+        Gson gson = new Gson();
+        MovieList movieList = gson.fromJson(response, MovieList.class);
+
+        if (movieList != null) {
+
+        }
+    }
+
 
     public void setContent() {
 
@@ -104,7 +165,7 @@ public class MovieListFragment extends Fragment {
         });
     }
 
-    public interface onFragmentChangeListener{
+    public interface onFragmentChangeListener {
         public void onFragmentChange();
     }
 

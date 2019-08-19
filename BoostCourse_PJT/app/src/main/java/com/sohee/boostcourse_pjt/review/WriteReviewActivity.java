@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt.activity;
+package com.sohee.boostcourse_pjt.review;
 
 import android.content.Intent;
 import android.view.View;
