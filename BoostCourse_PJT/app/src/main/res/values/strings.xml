@@ -2,7 +2,7 @@
 
     <!-- MovieDetailFragment -->
     <string name="app_name">씨네마천국</string>
-    <string name="advance_rate">예매율</string>
+    <string name="reservation_grade">예매율</string>
     <string name="rating">평점</string>
     <string name="number_of_people">누적관객수</string>
     <string name="story">줄거리</string>

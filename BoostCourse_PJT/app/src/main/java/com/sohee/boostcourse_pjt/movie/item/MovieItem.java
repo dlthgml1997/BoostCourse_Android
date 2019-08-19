@@ -5,27 +5,64 @@ import android.os.Parcelable;
 
 public class MovieItem implements Parcelable {
 
-    int poster;
+
+    int id;
     String title;
-    String age;
-    String advance_rate;
-    String d_day;
+    String title_eng;
+    String date;
+    Float user_rating;
+    Float audience_rating;
+    Float reviewer_rating;
+    Float reservation_rate;
+    int reservation_grade;
+    int grade;
+    String thumb;
+    String image;
 
-
-    public MovieItem(int poster, String title, String advance_rate, String age, String d_day) {
-        this.poster = poster;
+    public MovieItem(int id, String image, String title, String title_eng, Float audience_rating, String date, Float user_rating, Float reviewer_rating, Float reservation_rate, int reservation_grade, int grade, String thumb) {
+        this.id = id;
+        this.image = image;
         this.title = title;
-        this.advance_rate = advance_rate;
-        this.age = age;
-        this.d_day = d_day;
+        this.title_eng = title_eng;
+        this.date = date;
+        this.user_rating = user_rating;
+        this.audience_rating = audience_rating;
+        this.reviewer_rating = reviewer_rating;
+        this.reservation_rate = reservation_rate;
+        this.reservation_grade = reservation_grade;
+        this.grade = grade;
+        this.thumb = thumb;
     }
 
     protected MovieItem(Parcel in) {
+        id = in.readInt();
+        image = in.readString();
         title = in.readString();
-        age = in.readString();
-        poster = in.readInt();
-        advance_rate = in.readString();
-        d_day = in.readString();
+        title_eng = in.readString();
+        date = in.readString();
+        if (in.readByte() == 0) {
+            user_rating = null;
+        } else {
+            user_rating = in.readFloat();
+        }
+        if (in.readByte() == 0) {
+            reviewer_rating = null;
+        } else {
+            reviewer_rating = in.readFloat();
+        }
+        if (in.readByte() == 0) {
+            reservation_rate = null;
+        } else {
+            reservation_rate = in.readFloat();
+        }
+        if (in.readByte() == 0) {
+            audience_rating = null;
+        } else {
+            audience_rating = in.readFloat();
+        }
+        reservation_grade = in.readInt();
+        grade = in.readInt();
+        thumb = in.readString();
 
     }
 
@@ -41,26 +78,45 @@ public class MovieItem implements Parcelable {
         }
     };
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }
-
     @Override
     public String toString() {
         return "MovieItem{" +
-                "title='" + title + '\'' +
-                ", age='" + age + '\'' +
-                ", poster='" + poster + '\'' +
-                ", advance_rate='" + advance_rate + '\'' +
-                ", d_day='" + d_day + '\'' +
+                "id=" + id + '\'' +
+                "image='" + image + '\'' +
+                ", title='" + title + '\'' +
+                ", title_eng='" + title_eng + '\'' +
+                ", date='" + date + '\'' +
+                ", user_rating=" + user_rating +
+                ", reviewer_rating=" + reviewer_rating +
+                ", reservation_rate=" + reservation_rate +
+                ", reservation_grade=" + reservation_grade +
+                ", grade=" + grade +
+                ", thumb='" + thumb + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Float getAudienceRating() {
+        return audience_rating;
+    }
+
+    public void setAudienceRating(Float audience_rating) {
+        this.audience_rating = audience_rating;
     }
 
     public String getTitle() {
@@ -71,35 +127,107 @@ public class MovieItem implements Parcelable {
         this.title = title;
     }
 
-    public String getAge() {
-        return age;
+    public String getTitle_eng() {
+        return title_eng;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setTitle_eng(String title_eng) {
+        this.title_eng = title_eng;
     }
 
-    public int getPoster() {
-        return poster;
+    public String getDate() {
+        return date;
     }
 
-    public void setPoster(int poster) {
-        this.poster = poster;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getAdvance_rate() {
-        return advance_rate;
+    public Float getUser_rating() {
+        return user_rating;
     }
 
-    public void setAdvance_rate(String advance_rate) {
-        this.advance_rate = advance_rate;
+    public void setUser_rating(Float user_rating) {
+        this.user_rating = user_rating;
     }
 
-    public String getD_day() {
-        return d_day;
+    public Float getReviewer_rating() {
+        return reviewer_rating;
     }
 
-    public void setD_day(String d_day) {
-        this.d_day = d_day;
+    public void setReviewer_rating(Float reviewer_rating) {
+        this.reviewer_rating = reviewer_rating;
+    }
+
+    public Float getReservation_rate() {
+        return reservation_rate;
+    }
+
+    public void setReservation_rate(Float reservation_rate) {
+        this.reservation_rate = reservation_rate;
+    }
+
+    public int getReservation_grade() {
+        return reservation_grade;
+    }
+
+    public void setReservation_grade(int reservation_grade) {
+        this.reservation_grade = reservation_grade;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
+
+    public String getThumb() {
+        return thumb;
+    }
+
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(image);
+        parcel.writeString(title);
+        parcel.writeString(title_eng);
+        parcel.writeString(date);
+        if (user_rating == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeFloat(user_rating);
+        }
+        if (reviewer_rating == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeFloat(reviewer_rating);
+        }
+        if (audience_rating == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeFloat(audience_rating);
+        }
+        if (reservation_rate == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeFloat(reservation_rate);
+        }
+        parcel.writeInt(reservation_grade);
+        parcel.writeInt(grade);
+        parcel.writeString(thumb);
     }
 }

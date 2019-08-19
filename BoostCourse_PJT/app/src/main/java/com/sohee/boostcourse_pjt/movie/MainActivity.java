@@ -1,6 +1,7 @@
 package com.sohee.boostcourse_pjt.movie;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -10,7 +11,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.sohee.boostcourse_pjt.AppHelper;
+import com.sohee.boostcourse_pjt.MovieList;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.movie.adapter.MovieListAdapter;
 import com.sohee.boostcourse_pjt.movie.fragment.*;
@@ -20,7 +30,9 @@ import com.sohee.boostcourse_pjt.review.WriteReviewActivity;
 import com.sohee.boostcourse_pjt.review.model.ReviewItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MovieDetailFragment.onReplaceFragmentListener, MovieListFragment.onFragmentChangeListener {
@@ -31,15 +43,74 @@ public class MainActivity extends AppCompatActivity
     protected NavigationView navigationView;
     protected DrawerLayout drawer;
 
+    private String baseUrl = AppHelper.baseUrl;
+    private ArrayList<MovieItem> movieItems = new ArrayList<MovieItem>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setAdapter();
+        getrequestQueue();
+        getMovieListResponse();
+
+        //setAdapter();
         setToolbar();
         setDrawer();
+    }
+
+
+    private void getrequestQueue() {
+        if (AppHelper.requestQueue == null) {
+            AppHelper.requestQueue = Volley.newRequestQueue(getApplicationContext());
+        }
+    }
+
+    private void getMovieListResponse() {
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                baseUrl + "/movie/readMovieList?type=1",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("MovieList", "응답 -> " + response);
+
+                        processResponse(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("MovieList", "에러 -> " + error);
+                    }
+                }
+
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+        //매번 받은 결과를 그대로 보여주세요
+        request.setShouldCache(false);
+
+        AppHelper.requestQueue.add(request);
+        Log.d("MovieList", "요청 보냄.");
+    }
+
+
+    private void processResponse(String response) {
+        Gson gson = new Gson();
+        MovieList movieList = gson.fromJson(response, MovieList.class);
+
+        Log.d("MovieList",movieList.result.toString());
+        if (movieList != null) {
+            movieItems = movieList.result;
+            setAdapter(movieItems);
+        }
     }
 
     public void setToolbar() {
@@ -48,21 +119,15 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle("영화 목록");
     }
 
-    private void setAdapter() {
+    private void setAdapter(ArrayList<MovieItem> movieItems) {
         ViewPager pager = (ViewPager) findViewById(R.id.vp_movie_list_act);
         pager.setOffscreenPageLimit(3);
-
-        ArrayList<MovieItem> movieItems = new ArrayList<MovieItem>();
-        movieItems.add(new MovieItem(R.drawable.image1, "1. 군 도", "61.6%", "15세 관람가", "D-1"));
-        movieItems.add(new MovieItem(R.drawable.image2, "2. 공 조", "59.6", "12세 관람가", "D-1"));
-        movieItems.add(new MovieItem(R.drawable.image3, "3. 더 킹", "61.6%", "19세 관람가", "D-1"));
-        movieItems.add(new MovieItem(R.drawable.image4, "4. 레지던트 이블", "61.6%", "15세 관람가", "D-1"));
-        movieItems.add(new MovieItem(R.drawable.image5, "5. 럭 키", "61.6%", "12세 관람가", "D-1"));
 
         MovieListAdapter adapter = new MovieListAdapter(getSupportFragmentManager());
 
         for (int i = 0; i < movieItems.size(); i++) {
             MovieListFragment fragment = MovieListFragment.newInstance(movieItems.get(i));
+            Log.d("메롱",movieItems.get(i).toString());
             adapter.addItem(fragment);
         }
 

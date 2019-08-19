@@ -19,13 +19,16 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.AppHelper;
 import com.sohee.boostcourse_pjt.MovieList;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.movie.item.MovieItem;
-import com.sohee.boostcourse_pjt.network.Network;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +45,7 @@ public class MovieListFragment extends Fragment {
 
     private onFragmentChangeListener onFragmentChangeListener;
 
-    private String baseUrl = Network.baseUrl;
+    private String baseUrl = AppHelper.baseUrl;
 
     public MovieListFragment() {
         // Required empty public constructor
@@ -97,63 +100,17 @@ public class MovieListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setContent();
-        getMovieListResponse();
-    }
-
-    private void getMovieListResponse() {
-        StringRequest request = new StringRequest(
-                Request.Method.GET,
-                baseUrl+"/movie/readMovieList?type=1",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("MovieList", "응답 -> " + response);
-
-                        processResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("MovieList","에러 -> " + error);
-                    }
-                }
-
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-
-                return params;
-            }
-        };
-        //매번 받은 결과를 그대로 보여주세요
-        request.setShouldCache(false);
-
-        AppHelper.requestQueue.add(request);
-        Log.d("MovieList","요청 보냄.");
-    }
-
-
-    private void processResponse(String response) {
-        Gson gson = new Gson();
-        MovieList movieList = gson.fromJson(response, MovieList.class);
-
-        if (movieList != null) {
-
-        }
     }
 
 
     public void setContent() {
 
         item = getArguments().getParcelable("movieItem");
-
-        imgPoster.setImageResource(item.getPoster());
+        Glide.with(getContext()).load(item.getImage()).into(imgPoster);
         txtTitle.setText(item.getTitle());
-        txtAge.setText(item.getAge());
-        txtDday.setText(item.getD_day());
-        txtAdvanced.setText(item.getAdvance_rate());
+        txtAge.setText(" "+item.getGrade()+"세 관람가");
+        txtDday.setText(item.getDate());
+        txtAdvanced.setText(item.getReservation_grade()+"%");
     }
 
     private void setOnBtnClickListener() {

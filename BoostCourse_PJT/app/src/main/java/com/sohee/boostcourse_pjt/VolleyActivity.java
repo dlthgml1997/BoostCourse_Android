@@ -83,7 +83,7 @@ public class VolleyActivity extends AppCompatActivity {
         MovieList movieList=gson.fromJson(response,MovieList.class);
 
         if(movieList != null){
-            int countMovie = movieList.dailyBox.size();
+            int countMovie = movieList.result.size();
             println("cc");
         }
     }
