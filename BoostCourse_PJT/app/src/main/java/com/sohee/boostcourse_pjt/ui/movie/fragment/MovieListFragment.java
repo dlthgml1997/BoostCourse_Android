@@ -33,6 +33,8 @@ public class MovieListFragment extends Fragment {
 
     private String baseUrl = AppHelper.baseUrl;
 
+    private int id;
+
     public MovieListFragment() {
         // Required empty public constructor
     }
@@ -90,26 +92,29 @@ public class MovieListFragment extends Fragment {
 
 
     public void setContent() {
-
         item = getArguments().getParcelable("movieItem");
-        Glide.with(getContext()).load(item.getImage()).into(imgPoster);
-        txtTitle.setText(item.getTitle());
-        txtAge.setText(" "+item.getGrade()+"세 관람가");
-        txtDday.setText(item.getDate());
-        txtAdvanced.setText(item.getReservation_grade()+"%");
+        if (item != null) {
+            Glide.with(getContext()).load(item.getImage()).into(imgPoster);
+            txtTitle.setText(item.getTitle());
+            txtAge.setText(" " + item.getGrade() + "세 관람가");
+            txtDday.setText(item.getDate());
+            txtAdvanced.setText(item.getReservation_rate() + "%");
+
+            id = item.getId();
+        }
     }
 
     private void setOnBtnClickListener() {
         btnMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onFragmentChangeListener.onFragmentChange();
+                onFragmentChangeListener.onFragmentChange(id);
             }
         });
     }
 
     public interface onFragmentChangeListener {
-        public void onFragmentChange();
+        public void onFragmentChange(int id);
     }
 
 }

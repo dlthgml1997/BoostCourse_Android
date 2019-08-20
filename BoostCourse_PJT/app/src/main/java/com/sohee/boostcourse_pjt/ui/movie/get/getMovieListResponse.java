@@ -1,4 +1,6 @@
-package com.sohee.boostcourse_pjt.ui.movie.item;
+package com.sohee.boostcourse_pjt.ui.movie.get;
+
+import com.sohee.boostcourse_pjt.ui.movie.item.MovieItem;
 
 import java.util.ArrayList;
 

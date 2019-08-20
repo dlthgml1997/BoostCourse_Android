@@ -37,14 +37,15 @@
                         android:layout_height="match_parent">
                     <TextView
                             style="@style/boldWhiteStyle"
-                            android:id="@+id/txt_movietitle_main"
+                            android:id="@+id/txt_movie_detail_movietitle"
                             android:text="군도"
                             android:textSize="24sp"/>
                     <ImageView
+                            android:id="@+id/img_movie_detail_frag_grade"
                             android:layout_marginLeft="8dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/txt_movietitle_main"
+                            android:layout_toRightOf="@+id/txt_movie_detail_movietitle"
                             android:src="@drawable/ic_15"/>
                     <TextView
                             android:id="@+id/txt_opendate_main"
@@ -52,7 +53,7 @@
                             android:layout_marginTop="8dp"
                             android:textSize="16sp"
                             android:text="2014.07.23 개봉"
-                            android:layout_below="@+id/txt_movietitle_main"/>
+                            android:layout_below="@+id/txt_movie_detail_movietitle"/>
                     <TextView
                             android:id="@+id/txt_movieinfo_main"
                             style="@style/regularWhiteStyle"
@@ -116,6 +117,7 @@
                             android:layout_centerHorizontal="true"
                             android:textSize="16sp"/>
                     <TextView
+                            android:id="@+id/txt_movie_detail_frag_reservation_rate"
                             style="@style/regularBlackStyle"
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="16dp"
@@ -139,6 +141,7 @@
                             android:layout_centerHorizontal="true"
                             android:textSize="16sp"/>
                     <RatingBar
+                            android:id="@+id/rb_movie_detail_frag_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="16dp"
                             android:rating="4.2"
@@ -152,6 +155,7 @@
                             android:layout_alignParentBottom="true"
                     />
                     <TextView
+                            android:id="@+id/txt_movie_detail_frag_rating"
                             style="@style/regularBlackStyle"
                             android:text="8.2"
                             android:textSize="16sp"
@@ -176,6 +180,7 @@
                             android:layout_centerHorizontal="true"
                             android:textSize="16sp"/>
                     <TextView
+                            android:id="@+id/txt_movie_detail_frag_audience"
                             style="@style/regularBlackStyle"
                             android:layout_marginTop="16dp"
                             android:text="839,399"
@@ -203,6 +208,7 @@
                         android:layout_marginVertical="16dp"
                         android:text="@string/story"/>
                 <TextView
+                        android:id="@+id/txt_movie_detail_frag_synopsis"
                         style="@style/regularBlackStyle"
                         android:layout_marginBottom="16dp"
                         android:textSize="16sp"
@@ -234,6 +240,7 @@
                             android:layout_alignParentLeft="true"
                             android:textSize="16sp"/>
                     <TextView
+                            android:id="@+id/txt_movie_detail_frag_director"
                             style="@style/regularBlackStyle"
                             android:text="윤종빈"
                             android:layout_toRightOf="@+id/txt_director"
@@ -251,6 +258,7 @@
                             android:layout_alignParentLeft="true"
                             android:textSize="16sp"/>
                     <TextView
+                            android:id="@+id/txt_movie_detail_frag_actor"
                             style="@style/regularBlackStyle"
                             android:text="하정우(도치),강동원(조윤)"
                             android:layout_toRightOf="@+id/txt_actor"

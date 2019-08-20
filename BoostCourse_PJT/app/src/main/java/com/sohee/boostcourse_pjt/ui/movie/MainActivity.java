@@ -20,7 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.network.AppHelper;
-import com.sohee.boostcourse_pjt.ui.movie.item.getMovieListResponse;
+import com.sohee.boostcourse_pjt.ui.movie.get.getMovieListResponse;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.ui.movie.adapter.MovieListAdapter;
 import com.sohee.boostcourse_pjt.ui.movie.fragment.*;
@@ -36,8 +36,6 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MovieDetailFragment.onReplaceFragmentListener, MovieListFragment.onFragmentChangeListener {
 
-    protected MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
-
     protected Toolbar toolbar;
     protected NavigationView navigationView;
     protected DrawerLayout drawer;
@@ -51,16 +49,15 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getrequestQueue();
+        getRequestQueue();
         getMovieListResponse();
 
-        //setAdapter();
         setToolbar();
         setDrawer();
     }
 
 
-    private void getrequestQueue() {
+    private void getRequestQueue() {
         if (AppHelper.requestQueue == null) {
             AppHelper.requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
@@ -126,7 +123,6 @@ public class MainActivity extends AppCompatActivity
 
         for (int i = 0; i < movieItems.size(); i++) {
             MovieListFragment fragment = MovieListFragment.newInstance(movieItems.get(i));
-            Log.d("메롱",movieItems.get(i).toString());
             adapter.addItem(fragment);
         }
 
@@ -189,7 +185,9 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void onFragmentChange() {
+    public void onFragmentChange(int id) {
+
+        MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(id);
 
         getSupportFragmentManager()
                 .beginTransaction()
