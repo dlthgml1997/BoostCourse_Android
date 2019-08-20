@@ -7,12 +7,14 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.sohee.boostcourse_pjt.R;
+import org.w3c.dom.Text;
 
 public class ReviewItemView extends LinearLayout {
     TextView txtId;
     TextView txtTime;
     RatingBar txtRating;
     TextView txtReview;
+    TextView txtRecommend;
 
     public ReviewItemView(Context context) {
         super(context);
@@ -31,6 +33,11 @@ public class ReviewItemView extends LinearLayout {
         txtTime = (TextView) findViewById(R.id.txt_review_item_time);
         txtRating = (RatingBar) findViewById(R.id.rb_review_item_rating);
         txtReview = (TextView) findViewById(R.id.txt_review_item_review);
+        txtRecommend = (TextView) findViewById(R.id.txt_review_item_recommend);
+    }
+
+    public void setRecommend(String recommend) {
+        txtRecommend.setText(recommend);
     }
 
     public void setId(String id) {

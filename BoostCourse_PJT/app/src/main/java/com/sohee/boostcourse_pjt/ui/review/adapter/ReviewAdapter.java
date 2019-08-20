@@ -41,10 +41,11 @@ public class ReviewAdapter extends BaseAdapter {
         ReviewItemView view = new ReviewItemView(context);
 
         ReviewItem item = items.get(position);
-        view.setId(item.getId());
+        view.setId(item.getWriter());
         view.setTime(item.getTime());
         view.setRating(item.getRating());
-        view.setReview(item.getReview());
+        view.setReview(item.getContents());
+        view.setRecommend(item.getRecommend()+"");
         return view;
     }
 }

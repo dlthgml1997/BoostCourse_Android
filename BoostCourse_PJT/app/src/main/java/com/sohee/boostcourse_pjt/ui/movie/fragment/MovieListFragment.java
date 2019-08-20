@@ -1,6 +1,5 @@
 package com.sohee.boostcourse_pjt.ui.movie.fragment;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;

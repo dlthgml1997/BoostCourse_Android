@@ -5,23 +5,39 @@ import android.os.Parcelable;
 
 public class ReviewItem implements Parcelable {
 
-    String id;
-    String time;
-    Float rating;
-    String review;
+    int total;
 
-    public ReviewItem(String id, String time, Float rating, String review) {
-        this.id = id;
+    String writer;
+    int review_id;
+    String writer_image;
+    String time;
+    String time_stamp;
+    Float rating;
+    String contents;
+    int recommend;
+
+    public ReviewItem(int total, String writer, int review_id, String writer_image, String time, String time_stamp, Float rating, String contents, int recommend) {
+        this.total = total;
+        this.writer = writer;
+        this.review_id = review_id;
+        this.writer_image = writer_image;
         this.time = time;
+        this.time_stamp = time_stamp;
         this.rating = rating;
-        this.review = review;
+        this.contents = contents;
+        this.recommend = recommend;
     }
 
     protected ReviewItem(Parcel in) {
-        id = in.readString();
+        total = in.readInt();
+        writer = in.readString();
+        review_id=in.readInt();
+        writer_image=in.readString();
         time = in.readString();
+        time_stamp = in.readString();
         rating = in.readFloat();
-        review = in.readString();
+        contents = in.readString();
+        recommend = in.readInt();
     }
 
     public static final Creator<ReviewItem> CREATOR = new Creator<ReviewItem>() {
@@ -36,12 +52,56 @@ public class ReviewItem implements Parcelable {
         }
     };
 
-    public String getId() {
-        return id;
+    public int getTotal() {
+        return total;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public int getReview_id() {
+        return review_id;
+    }
+
+    public void setReview_id(int review_id) {
+        this.review_id = review_id;
+    }
+
+    public String getWriter_image() {
+        return writer_image;
+    }
+
+    public void setWriter_image(String writer_image) {
+        this.writer_image = writer_image;
+    }
+
+    public String getTime_stamp() {
+        return time_stamp;
+    }
+
+    public void setTime_stamp(String time_stamp) {
+        this.time_stamp = time_stamp;
+    }
+
+    public int getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(int recommend) {
+        this.recommend = recommend;
+    }
+
+    public static Creator<ReviewItem> getCREATOR() {
+        return CREATOR;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
     }
 
     public String getTime() {
@@ -60,21 +120,21 @@ public class ReviewItem implements Parcelable {
         this.rating = rating;
     }
 
-    public String getReview() {
-        return review;
+    public String getContents() {
+        return contents;
     }
 
-    public void setReview(String review) {
-        this.review = review;
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 
     @Override
     public String toString() {
         return "ReviewItem{" +
-                "id='" + id + '\'' +
+                "writer='" + writer + '\'' +
                 ", time='" + time + '\'' +
                 ", rating='" + rating + '\'' +
-                ", review='" + review + '\'' +
+                ", contents='" + contents + '\'' +
                 '}';
     }
 
@@ -85,9 +145,9 @@ public class ReviewItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
+        parcel.writeString(writer);
         parcel.writeString(time);
         parcel.writeFloat(rating);
-        parcel.writeString(review);
+        parcel.writeString(contents);
     }
 }

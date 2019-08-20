@@ -23,6 +23,7 @@ import com.sohee.boostcourse_pjt.network.AppHelper;
 import com.sohee.boostcourse_pjt.ui.movie.get.getMovieDetailResponse;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
 import com.sohee.boostcourse_pjt.ui.review.adapter.ReviewAdapter;
+import com.sohee.boostcourse_pjt.ui.review.get.getReviewListResponse;
 import com.sohee.boostcourse_pjt.ui.review.model.ReviewItem;
 
 import java.util.ArrayList;
@@ -132,9 +133,9 @@ public class MovieDetailFragment extends Fragment {
 
         getRequestQueue();
         getMovieDetailResponse(id);
+        getReviewItemLimitResponse(id);
 
         setOnBtnClickListener();
-        setAdapter();
     }
 
     private void getRequestQueue() {
@@ -289,18 +290,60 @@ public class MovieDetailFragment extends Fragment {
         });
     }
 
-    private void setAdapter() {
+    private void getReviewItemLimitResponse(int id){
+        this.id = id;
+
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                AppHelper.baseUrl + "movie/readCommentList?id=" + id+"&limit=2",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("getReviewLimitRes", "응답 -> " + response);
+
+                        processReviewResponse(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("getReviewLimitRes", "에러 -> " + error);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                return params;
+            }
+        };
+
+        request.setShouldCache(false);
+        AppHelper.requestQueue.add(request);
+        Log.d("getReviewLimitRes", "요청 보냄.");
+    }
+
+    private void processReviewResponse(String response) {
+        Gson gson = new Gson();
+        getReviewListResponse getMovieListResponse = gson.fromJson(response, getReviewListResponse.class);
+
+        Log.d("getReviewLimitRes", getMovieListResponse.result.toString());
+        if (getMovieListResponse != null) {
+            reviewItems = getMovieListResponse.result;
+            setAdapter(reviewItems);
+        }
+    }
+
+    private void setAdapter(ArrayList<ReviewItem> reviewItems) {
         ListView reviewListView = (ListView) view.findViewById(R.id.lv_main_act_review);
 
         ReviewAdapter adapter = new ReviewAdapter();
-        adapter.addItem(new ReviewItem("shfk***", "10분전", (float) 4, "재밌어요!"));
-        adapter.addItem(new ReviewItem("dlth***", "15분전", (float) 3, "그저 그랬어요"));
-        adapter.addItem(new ReviewItem("abcd***", "30분전", (float) 2, "지루했어요.."));
-        adapter.addItem(new ReviewItem("leees***", "40분전", (float) 5, "인생 작품입니다."));
-        reviewListView.setAdapter(adapter);
+        for (int i = 0; i < reviewItems.size(); i++) {
+            adapter.addItem(reviewItems.get(i));
+        }
 
-        reviewItems = new ArrayList<ReviewItem>();
-        reviewItems = adapter.getItems();
+        reviewListView.setAdapter(adapter);
     }
 
     public interface onReplaceFragmentListener {

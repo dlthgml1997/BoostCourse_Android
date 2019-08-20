@@ -18,7 +18,6 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
     private TextView btnWriteReview;
     public ArrayList<ReviewItem> reviewItems;
-    MovieListFragment movieListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
