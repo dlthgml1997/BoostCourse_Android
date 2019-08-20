@@ -35,8 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MovieDetailFragment extends Fragment implements AdapterView.OnItemClickListener {
-
+public class MovieDetailFragment extends Fragment  {
+//implements AdapterView.OnItemClickListener
     private onReplaceFragmentListener mListener;
 
     private ImageView imgThumbUp;
@@ -436,64 +436,8 @@ public class MovieDetailFragment extends Fragment implements AdapterView.OnItemC
         }
 
         reviewListView.setAdapter(adapter);
-        reviewListView.setOnItemClickListener(this);
 
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-        TextView btnRecommend = (TextView) view.findViewById(R.id.txt_review_item_recommend_btn);
-        btnRecommend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getIncreaseRecommendRes(reviewItems.get(i));
-            }
-        });
-    }
-
-    private void getIncreaseRecommendRes(ReviewItem reviewItem) {
-
-        StringRequest request = new StringRequest(
-                Request.Method.GET,
-                AppHelper.baseUrl + "movie/increaseRecommend?review_id=" + reviewItem.getReview_id() + "&writer=" + reviewItem.getWriter(),
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("getReviewRes", "응답 -> " + response);
-
-                        processRecommendResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("getReviewRes", "에러 -> " + error);
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                return params;
-            }
-        };
-
-        request.setShouldCache(false);
-        AppHelper.requestQueue.add(request);
-        Log.d("getReviewRes", "요청 보냄.");
-    }
-
-    private void processRecommendResponse(String response) {
-        Gson gson = new Gson();
-        getStatusResponse getStatusResponse = gson.fromJson(response, getStatusResponse.class);
-
-        Log.d("getReviewRes", getStatusResponse.getCode() + "");
-        if (getStatusResponse.getCode() == 200) {
-
-            adapter.notifyDataSetChanged();
-        }
     }
 
     public void startWriteReviewAct(MovieDetailItem item) {

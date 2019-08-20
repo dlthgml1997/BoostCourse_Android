@@ -29,6 +29,8 @@ public class ReviewItemView extends LinearLayout {
     RatingBar txtRating;
     TextView txtReview;
     TextView txtRecommend;
+    TextView btnRecommend;
+
 
     public ReviewItemView(Context context) {
         super(context);
@@ -49,9 +51,13 @@ public class ReviewItemView extends LinearLayout {
         txtRating = (RatingBar) findViewById(R.id.rb_review_item_rating);
         txtReview = (TextView) findViewById(R.id.txt_review_item_review);
         txtRecommend = (TextView) findViewById(R.id.txt_review_item_recommend);
+        btnRecommend =(TextView) findViewById(R.id.txt_review_item_recommend_btn);
 
     }
 
+    public TextView getBtnRecommend() {
+        return btnRecommend;
+    }
 
     public void setRecommend(String recommend) {
         txtRecommend.setText(recommend);
@@ -72,5 +78,6 @@ public class ReviewItemView extends LinearLayout {
     public void setReview(String review) {
         txtReview.setText(review);
     }
+
 
 }
