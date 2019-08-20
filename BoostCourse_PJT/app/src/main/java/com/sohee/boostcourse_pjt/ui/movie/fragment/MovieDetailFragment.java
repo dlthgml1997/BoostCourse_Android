@@ -24,7 +24,7 @@ import com.sohee.boostcourse_pjt.ui.movie.get.getMovieDetailResponse;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
 import com.sohee.boostcourse_pjt.ui.review.adapter.ReviewAdapter;
 import com.sohee.boostcourse_pjt.ui.review.get.getReviewListResponse;
-import com.sohee.boostcourse_pjt.ui.review.model.ReviewItem;
+import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -278,14 +278,14 @@ public class MovieDetailFragment extends Fragment {
         btnWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.startWriteReviewAct();
+                mListener.startWriteReviewAct(item);
             }
         });
 
         btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.startReviewDetailAct(reviewItems);
+                mListener.startReviewDetailAct(item);
             }
         });
     }
@@ -353,9 +353,9 @@ public class MovieDetailFragment extends Fragment {
 
         void setToolbar();
 
-        void startWriteReviewAct();
+        void startWriteReviewAct(MovieDetailItem item);
 
-        void startReviewDetailAct(ArrayList<ReviewItem> reviewItems);
+        void startReviewDetailAct(MovieDetailItem item);
     }
 
 }

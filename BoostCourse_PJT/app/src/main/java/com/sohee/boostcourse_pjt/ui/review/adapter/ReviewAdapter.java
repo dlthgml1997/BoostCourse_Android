@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import com.sohee.boostcourse_pjt.ui.review.model.ReviewItem;
+import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 import com.sohee.boostcourse_pjt.ui.review.view.ReviewItemView;
 
 import java.util.ArrayList;

@@ -22,6 +22,7 @@
                 android:text="군도"
         />
         <ImageView
+                android:id="@+id/img_write_review_act_grade"
                 android:src="@drawable/ic_15"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

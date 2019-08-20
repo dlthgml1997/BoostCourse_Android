@@ -1,8 +1,11 @@
 package com.sohee.boostcourse_pjt.ui.movie.item;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class MovieDetailItem {
+public class MovieDetailItem implements Parcelable {
 
     String title;
     int id;
@@ -26,6 +29,59 @@ public class MovieDetailItem {
     String actor;
     int like;
     int dislike;
+
+    protected MovieDetailItem(Parcel in) {
+        title = in.readString();
+        id = in.readInt();
+        date = in.readString();
+        if (in.readByte() == 0) {
+            user_rating = null;
+        } else {
+            user_rating = in.readFloat();
+        }
+        if (in.readByte() == 0) {
+            audience_rating = null;
+        } else {
+            audience_rating = in.readFloat();
+        }
+        if (in.readByte() == 0) {
+            reviewer_rating = null;
+        } else {
+            reviewer_rating = in.readFloat();
+        }
+        if (in.readByte() == 0) {
+            reservation_rate = null;
+        } else {
+            reservation_rate = in.readFloat();
+        }
+        reservation_grade = in.readInt();
+        grade = in.readInt();
+        thumb = in.readString();
+        image = in.readString();
+        photos = in.readString();
+        videos = in.readString();
+        outlinks = in.readString();
+        genre = in.readString();
+        duration = in.readInt();
+        audience = in.readInt();
+        synopsis = in.readString();
+        director = in.readString();
+        actor = in.readString();
+        like = in.readInt();
+        dislike = in.readInt();
+    }
+
+    public static final Creator<MovieDetailItem> CREATOR = new Creator<MovieDetailItem>() {
+        @Override
+        public MovieDetailItem createFromParcel(Parcel in) {
+            return new MovieDetailItem(in);
+        }
+
+        @Override
+        public MovieDetailItem[] newArray(int size) {
+            return new MovieDetailItem[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -201,5 +257,56 @@ public class MovieDetailItem {
 
     public void setDislike(int dislike) {
         this.dislike = dislike;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeInt(id);
+        parcel.writeString(date);
+        if (user_rating == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeFloat(user_rating);
+        }
+        if (audience_rating == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeFloat(audience_rating);
+        }
+        if (reviewer_rating == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeFloat(reviewer_rating);
+        }
+        if (reservation_rate == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeFloat(reservation_rate);
+        }
+        parcel.writeInt(reservation_grade);
+        parcel.writeInt(grade);
+        parcel.writeString(thumb);
+        parcel.writeString(image);
+        parcel.writeString(photos);
+        parcel.writeString(videos);
+        parcel.writeString(outlinks);
+        parcel.writeString(genre);
+        parcel.writeInt(duration);
+        parcel.writeInt(audience);
+        parcel.writeString(synopsis);
+        parcel.writeString(director);
+        parcel.writeString(actor);
+        parcel.writeInt(like);
+        parcel.writeInt(dislike);
     }
 }

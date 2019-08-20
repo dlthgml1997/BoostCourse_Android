@@ -1,7 +1,7 @@
 package com.sohee.boostcourse_pjt.ui.review.get;
 
 
-import com.sohee.boostcourse_pjt.ui.review.model.ReviewItem;
+import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 
 import java.util.ArrayList;
 

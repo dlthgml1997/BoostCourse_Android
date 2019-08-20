@@ -1,9 +1,12 @@
 package com.sohee.boostcourse_pjt.ui.movie;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,10 +27,10 @@ import com.sohee.boostcourse_pjt.ui.movie.get.getMovieListResponse;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.ui.movie.adapter.MovieListAdapter;
 import com.sohee.boostcourse_pjt.ui.movie.fragment.*;
+import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieItem;
 import com.sohee.boostcourse_pjt.ui.review.ReviewDetailActivity;
 import com.sohee.boostcourse_pjt.ui.review.WriteReviewActivity;
-import com.sohee.boostcourse_pjt.ui.review.model.ReviewItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity
 
     private String baseUrl = AppHelper.baseUrl;
     private ArrayList<MovieItem> movieItems = new ArrayList<MovieItem>();
+    private MovieListAdapter adapter;
 
 
     @Override
@@ -97,7 +101,6 @@ public class MainActivity extends AppCompatActivity
         Log.d("getMovieListResponse", "요청 보냄.");
     }
 
-
     private void processResponse(String response) {
         Gson gson = new Gson();
         getMovieListResponse getMovieListResponse = gson.fromJson(response, getMovieListResponse.class);
@@ -119,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         ViewPager pager = (ViewPager) findViewById(R.id.vp_movie_list_act);
         pager.setOffscreenPageLimit(3);
 
-        MovieListAdapter adapter = new MovieListAdapter(getSupportFragmentManager());
+        adapter = new MovieListAdapter(getSupportFragmentManager());
 
         for (int i = 0; i < movieItems.size(); i++) {
             MovieListFragment fragment = MovieListFragment.newInstance(movieItems.get(i));
@@ -197,17 +200,29 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void startWriteReviewAct() {
+    public void startWriteReviewAct(MovieDetailItem item) {
         Intent intent = new Intent(getApplicationContext(), WriteReviewActivity.class);
+        intent.putExtra("MovieDetailItem", item);
+
+        startActivityForResult(intent, 101);
+    }
+
+    @Override
+    public void startReviewDetailAct(MovieDetailItem item) {
+        Intent intent = new Intent(getApplicationContext(), ReviewDetailActivity.class);
+        intent.putExtra("MovieDetailItem", item);
 
         startActivity(intent);
     }
 
     @Override
-    public void startReviewDetailAct(ArrayList<ReviewItem> reviewItems) {
-        Intent intent = new Intent(getApplicationContext(), ReviewDetailActivity.class);
-        intent.putExtra("reviewItems", reviewItems);
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        startActivity(intent);
+        if (resultCode == RESULT_OK) {
+//            if (requestCode == 101) {
+                getMovieListResponse();
+//            }
+        }
     }
 }
