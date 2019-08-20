@@ -11,25 +11,29 @@ import java.util.ArrayList;
 
 public class ReviewAdapter extends BaseAdapter {
     ArrayList<ReviewItem> items = new ArrayList<ReviewItem>();
+
     @Override
     public int getCount() {
         return items.size();
     }
 
-    public void addItem(ReviewItem item){
+    public void addItem(ReviewItem item) {
         items.add(item);
     }
 
-    public void setItems(ArrayList<ReviewItem> getItems) {items = getItems;}
+    public void setItems(ArrayList<ReviewItem> getItems) {
+        items = getItems;
+    }
 
     @Override
     public Object getItem(int position) {
         return items.get(position);
     }
 
-    public ArrayList<ReviewItem> getItems(){
+    public ArrayList<ReviewItem> getItems() {
         return items;
     }
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -45,7 +49,8 @@ public class ReviewAdapter extends BaseAdapter {
         view.setTime(item.getTime());
         view.setRating(item.getRating());
         view.setReview(item.getContents());
-        view.setRecommend(item.getRecommend()+"");
+        view.setRecommend(item.getRecommend() + "");
+
         return view;
     }
 }

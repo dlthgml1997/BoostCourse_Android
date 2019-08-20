@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.android.volley.AuthFailureError;
@@ -16,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.network.AppHelper;
@@ -40,6 +40,8 @@ public class ReviewDetailActivity extends AppCompatActivity {
     private RatingBar ratingBarAudience;
     private TextView txtRateAudience;
     private TextView txtAudienceCount;
+
+    private ReviewAdapter adapter;
 
 
     @Override
@@ -140,13 +142,14 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
         ListView reviewListView = (ListView) findViewById(R.id.lv_review_detail_act_review);
 
-        ReviewAdapter adapter = new ReviewAdapter();
+        adapter = new ReviewAdapter();
 
         this.reviewItems = reviewItems;
 
         adapter.setItems(reviewItems);
 
         reviewListView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     private void setOnBtnClickListener() {
@@ -157,7 +160,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), WriteReviewActivity.class);
                 intent.putExtra("MovieDetailItem", item);
-                startActivity(intent);
+                startActivityForResult(intent, 1004);
             }
         });
     }
@@ -170,6 +173,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
+                setResult(RESULT_OK);
                 finish();
                 return true;
             }
@@ -180,7 +184,20 @@ public class ReviewDetailActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        setResult(RESULT_OK);
         finish();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1004) {
+                getReviewItemLimitResponse(item.getId());
+            }
+        }
     }
 
 }

@@ -1,6 +1,6 @@
-package com.sohee.boostcourse_pjt.ui.review.item;
+package com.sohee.boostcourse_pjt.ui.review.get;
 
-public class CreateCommentItem {
+public class getStatusResponse {
     String message;
     int code;
     String resultType;

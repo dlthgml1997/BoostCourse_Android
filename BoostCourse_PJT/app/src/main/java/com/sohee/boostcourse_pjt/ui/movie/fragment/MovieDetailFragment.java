@@ -1,6 +1,8 @@
 package com.sohee.boostcourse_pjt.ui.movie.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,15 +24,18 @@ import com.sohee.boostcourse_pjt.*;
 import com.sohee.boostcourse_pjt.network.AppHelper;
 import com.sohee.boostcourse_pjt.ui.movie.get.getMovieDetailResponse;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
+import com.sohee.boostcourse_pjt.ui.review.ReviewDetailActivity;
+import com.sohee.boostcourse_pjt.ui.review.WriteReviewActivity;
 import com.sohee.boostcourse_pjt.ui.review.adapter.ReviewAdapter;
 import com.sohee.boostcourse_pjt.ui.review.get.getReviewListResponse;
+import com.sohee.boostcourse_pjt.ui.review.get.getStatusResponse;
 import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MovieDetailFragment extends Fragment {
+public class MovieDetailFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private onReplaceFragmentListener mListener;
 
@@ -53,6 +58,8 @@ public class MovieDetailFragment extends Fragment {
     private TextView txtSynopsis;
     private TextView txtDirector;
     private TextView txtActor;
+
+    private ReviewAdapter adapter;
 
     private View view;
 
@@ -133,9 +140,82 @@ public class MovieDetailFragment extends Fragment {
 
         getRequestQueue();
         getMovieDetailResponse(id);
-        getReviewItemLimitResponse(id);
+        getReviewItemResponse(id);
 
         setOnBtnClickListener();
+    }
+
+    private void getLikeResponse(int id,String like) {
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                AppHelper.baseUrl + "movie/increaseLikeDisLike?id="+id+"&likeyn="+like,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("LikeResponse", "응답 -> " + response);
+
+                        processLikeResponse(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("LikeResponse", "에러 -> " + error);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                return params;
+            }
+        };
+
+        request.setShouldCache(false);
+        AppHelper.requestQueue.add(request);
+        Log.d("LikeResponse", "요청 보냄.");
+    }
+
+    private void getDisLikeResponse(int id,String dislike) {
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                AppHelper.baseUrl + "movie/increaseLikeDisLike?id="+id+"&dislikeyn="+dislike,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("LikeResponse", "응답 -> " + response);
+
+                        processLikeResponse(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("LikeResponse", "에러 -> " + error);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                return params;
+            }
+        };
+
+        request.setShouldCache(false);
+        AppHelper.requestQueue.add(request);
+        Log.d("LikeResponse", "요청 보냄.");
+    }
+
+    private void processLikeResponse(String response) {
+        Gson gson = new Gson();
+        getStatusResponse getStatusResponse = gson.fromJson(response, getStatusResponse.class);
+
+        if (getStatusResponse.getCode() == 200) {
+            Log.d("LikeResponse",getStatusResponse.getMessage());
+        }
     }
 
     private void getRequestQueue() {
@@ -243,6 +323,11 @@ public class MovieDetailFragment extends Fragment {
                     countUp++;
                     txtThumbUp.setText(String.valueOf(countUp));
                 }
+                if(viewThumbUp.isSelected()) {
+                    getLikeResponse(id, "Y");
+                }else{
+                    getLikeResponse(id, "N");
+                }
             }
         });
 
@@ -265,7 +350,14 @@ public class MovieDetailFragment extends Fragment {
                     countDown++;
                     txtThumbDown.setText(String.valueOf(countDown));
                 }
+
+                if(viewThumbDown.isSelected()) {
+                    getDisLikeResponse(id, "Y");
+                }else{
+                    getDisLikeResponse(id, "N");
+                }
             }
+
         });
 
         btnReserve.setOnClickListener(new View.OnClickListener() {
@@ -278,24 +370,24 @@ public class MovieDetailFragment extends Fragment {
         btnWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.startWriteReviewAct(item);
+                startWriteReviewAct(item);
             }
         });
 
         btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.startReviewDetailAct(item);
+                startReviewDetailAct(item);
             }
         });
     }
 
-    private void getReviewItemLimitResponse(int id){
+    private void getReviewItemResponse(int id) {
         this.id = id;
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
-                AppHelper.baseUrl + "movie/readCommentList?id=" + id+"&limit=2",
+                AppHelper.baseUrl + "movie/readCommentList?id=" + id + "&limit=2",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -335,15 +427,100 @@ public class MovieDetailFragment extends Fragment {
         }
     }
 
-    private void setAdapter(ArrayList<ReviewItem> reviewItems) {
+    private void setAdapter(final ArrayList<ReviewItem> reviewItems) {
         ListView reviewListView = (ListView) view.findViewById(R.id.lv_main_act_review);
 
-        ReviewAdapter adapter = new ReviewAdapter();
+        adapter = new ReviewAdapter();
         for (int i = 0; i < reviewItems.size(); i++) {
             adapter.addItem(reviewItems.get(i));
         }
 
         reviewListView.setAdapter(adapter);
+        reviewListView.setOnItemClickListener(this);
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+        TextView btnRecommend = (TextView) view.findViewById(R.id.txt_review_item_recommend_btn);
+        btnRecommend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getIncreaseRecommendRes(reviewItems.get(i));
+            }
+        });
+    }
+
+    private void getIncreaseRecommendRes(ReviewItem reviewItem) {
+
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                AppHelper.baseUrl + "movie/increaseRecommend?review_id=" + reviewItem.getReview_id() + "&writer=" + reviewItem.getWriter(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("getReviewRes", "응답 -> " + response);
+
+                        processRecommendResponse(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("getReviewRes", "에러 -> " + error);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                return params;
+            }
+        };
+
+        request.setShouldCache(false);
+        AppHelper.requestQueue.add(request);
+        Log.d("getReviewRes", "요청 보냄.");
+    }
+
+    private void processRecommendResponse(String response) {
+        Gson gson = new Gson();
+        getStatusResponse getStatusResponse = gson.fromJson(response, getStatusResponse.class);
+
+        Log.d("getReviewRes", getStatusResponse.getCode() + "");
+        if (getStatusResponse.getCode() == 200) {
+
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void startWriteReviewAct(MovieDetailItem item) {
+        Intent intent = new Intent(getContext(), WriteReviewActivity.class);
+        intent.putExtra("MovieDetailItem", item);
+
+        startActivityForResult(intent, 101);
+    }
+
+    public void startReviewDetailAct(MovieDetailItem item) {
+        Intent intent = new Intent(getContext(), ReviewDetailActivity.class);
+        intent.putExtra("MovieDetailItem", item);
+
+        startActivityForResult(intent, 102);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 101) {
+                getReviewItemResponse(id);
+            } else if (requestCode == 102) {
+                getReviewItemResponse(id);
+            }
+        }
     }
 
     public interface onReplaceFragmentListener {
@@ -352,10 +529,6 @@ public class MovieDetailFragment extends Fragment {
         void setDrawer();
 
         void setToolbar();
-
-        void startWriteReviewAct(MovieDetailItem item);
-
-        void startReviewDetailAct(MovieDetailItem item);
     }
 
 }

@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.network.AppHelper;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
-import com.sohee.boostcourse_pjt.ui.review.item.CreateCommentItem;
+import com.sohee.boostcourse_pjt.ui.review.get.getStatusResponse;
 import com.sohee.boostcourse_pjt.ui.review.item.WriteReviewItem;
 
 import java.text.SimpleDateFormat;
@@ -143,13 +143,14 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     private void processReviewResponse(String response) {
         Gson gson = new Gson();
-        CreateCommentItem createCommentItem = gson.fromJson(response, CreateCommentItem.class);
+        getStatusResponse getStatusResponse = gson.fromJson(response, getStatusResponse.class);
 
-        if(createCommentItem.getCode() == 200){
+        if(getStatusResponse.getCode() == 200){
 
-            Log.d("getReviewRes", createCommentItem.getResult());
+            Log.d("getReviewRes", getStatusResponse.getResult());
             Intent resultIntent = new Intent();
             setResult(RESULT_OK,resultIntent);
+            finish();
         }
     }
 
@@ -168,7 +169,6 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getCreateCommentResponse(id);
-                finish();
             }
         });
     }

@@ -2,12 +2,26 @@ package com.sohee.boostcourse_pjt.ui.review.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.R;
-import org.w3c.dom.Text;
+import com.sohee.boostcourse_pjt.network.AppHelper;
+import com.sohee.boostcourse_pjt.ui.review.get.getReviewListResponse;
+import com.sohee.boostcourse_pjt.ui.review.get.getStatusResponse;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReviewItemView extends LinearLayout {
     TextView txtId;
@@ -29,12 +43,15 @@ public class ReviewItemView extends LinearLayout {
     private void init(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.list_item_review, this, true);
+
         txtId = (TextView) findViewById(R.id.txt_review_item_id);
         txtTime = (TextView) findViewById(R.id.txt_review_item_time);
         txtRating = (RatingBar) findViewById(R.id.rb_review_item_rating);
         txtReview = (TextView) findViewById(R.id.txt_review_item_review);
         txtRecommend = (TextView) findViewById(R.id.txt_review_item_recommend);
+
     }
+
 
     public void setRecommend(String recommend) {
         txtRecommend.setText(recommend);
