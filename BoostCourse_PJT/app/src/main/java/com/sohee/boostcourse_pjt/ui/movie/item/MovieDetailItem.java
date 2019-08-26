@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 public class MovieDetailItem implements Parcelable {
 
-    String title;
+    int _id;
     int id;
+    String title;
     String date;
     Float user_rating;
     Float audience_rating;
@@ -30,7 +31,33 @@ public class MovieDetailItem implements Parcelable {
     int like;
     int dislike;
 
-    protected MovieDetailItem(Parcel in) {
+    public MovieDetailItem(int _id,int id, String title, String date, Float user_rating, Float audience_rating, Float reviewer_rating, Float reservation_rate, int reservation_grade, int grade, String thumb, String image, String photos, String videos, String outlinks, String genre, int duration, int audience, String synopsis, String director, String actor, int like, int dislike) {
+        this.id = id;
+        this.title = title;
+        this.date = date;
+        this.user_rating = user_rating;
+        this.audience_rating = audience_rating;
+        this.reviewer_rating = reviewer_rating;
+        this.reservation_rate = reservation_rate;
+        this.reservation_grade = reservation_grade;
+        this.grade = grade;
+        this.thumb = thumb;
+        this.image = image;
+        this.photos = photos;
+        this.videos = videos;
+        this.outlinks = outlinks;
+        this.genre = genre;
+        this.duration = duration;
+        this.audience = audience;
+        this.synopsis = synopsis;
+        this.director = director;
+        this.actor = actor;
+        this.like = like;
+        this.dislike = dislike;
+    }
+
+    public MovieDetailItem(Parcel in) {
+        _id = in.readInt();
         title = in.readString();
         id = in.readInt();
         date = in.readString();

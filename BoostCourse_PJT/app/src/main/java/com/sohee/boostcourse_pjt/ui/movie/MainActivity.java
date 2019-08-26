@@ -62,14 +62,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setDB() {
-
         DBHelper.openDatabase(getApplicationContext(), "movie");
         DBHelper.createTable("outline");
+        //DBHelper.createTable("inline");
     }
 
     private void selectOutlineData() {
-        movieItems = DBHelper.selectTable("outline");
-        Log.d("DBHelper",movieItems.toString());
+        movieItems = (ArrayList<MovieItem>) DBHelper.selectTable("outline");
+        Log.d("DBHelper", movieItems.toString());
         setAdapter(movieItems);
     }
 
@@ -123,11 +123,11 @@ public class MainActivity extends AppCompatActivity
         GetMovieListResponse getMovieListResponse = gson.fromJson(response, GetMovieListResponse.class);
 
         if (getMovieListResponse != null) {
-                Log.d("GetMovieListResponse", getMovieListResponse.result.toString());
-                movieItems = getMovieListResponse.result;
-                setAdapter(movieItems);
-                DBHelper.insertData(movieItems, "outline");
-            }
+            Log.d("GetMovieListResponse", getMovieListResponse.result.toString());
+            movieItems = getMovieListResponse.result;
+            setAdapter(movieItems);
+            DBHelper.insertData(movieItems, "outline");
+        }
     }
 
     public void setToolbar() {
@@ -216,7 +216,6 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.fl_movie_list_act, movieDetailFragment)
                 .commit();
     }
-
 
 
 }
