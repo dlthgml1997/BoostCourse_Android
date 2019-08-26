@@ -22,6 +22,8 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.*;
 import com.sohee.boostcourse_pjt.network.AppHelper;
+import com.sohee.boostcourse_pjt.network.DBHelper;
+import com.sohee.boostcourse_pjt.network.NetworkStatus;
 import com.sohee.boostcourse_pjt.ui.movie.get.GetMovieDetailResponse;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
 import com.sohee.boostcourse_pjt.ui.review.ReviewDetailActivity;
@@ -36,7 +38,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MovieDetailFragment extends Fragment {
-    //implements AdapterView.OnItemClickListener
     private onReplaceFragmentListener mListener;
 
     private ImageView imgThumbUp;
@@ -70,6 +71,9 @@ public class MovieDetailFragment extends Fragment {
 
     private int id;
     private MovieDetailItem item;
+    private ArrayList<MovieDetailItem> DetailItems;
+
+    private int status;
 
     public MovieDetailFragment() {
 
@@ -226,36 +230,42 @@ public class MovieDetailFragment extends Fragment {
 
     private void getMovieDetailResponse(int id) {
         this.id = id;
+        status = NetworkStatus.getConnectivityStatus(getContext());
+        if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+            StringRequest request = new StringRequest(
+                    Request.Method.GET,
+                    AppHelper.baseUrl + "movie/readMovie?id=" + id,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("GetMovieDetailResponse", "응답 -> " + response);
 
-        StringRequest request = new StringRequest(
-                Request.Method.GET,
-                AppHelper.baseUrl + "movie/readMovie?id=" + id,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("GetMovieDetailResponse", "응답 -> " + response);
+                            processResponse(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("GetMovieDetailResponse", "에러 -> " + error);
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
 
-                        processResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("GetMovieDetailResponse", "에러 -> " + error);
-                    }
+                    return params;
                 }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
+            };
 
-                return params;
-            }
-        };
-
-        request.setShouldCache(false);
-        AppHelper.requestQueue.add(request);
-        Log.d("GetMovieDetailResponse", "요청 보냄.");
+            request.setShouldCache(false);
+            AppHelper.requestQueue.add(request);
+            Log.d("GetMovieDetailResponse", "요청 보냄.");
+        }else {
+            DetailItems = (ArrayList<MovieDetailItem>) DBHelper.selectTable("inline");
+            Log.d("DBHelper", DetailItems.toString());
+            setContent(DetailItems.get(0));
+        }
     }
 
     private void processResponse(String response) {
@@ -266,6 +276,8 @@ public class MovieDetailFragment extends Fragment {
         if (getMovieDetailResponse != null) {
             item = getMovieDetailResponse.result.get(0);
             setContent(item);
+
+            DBHelper.insertInlineData(getMovieDetailResponse.result,"inline");
         }
     }
 

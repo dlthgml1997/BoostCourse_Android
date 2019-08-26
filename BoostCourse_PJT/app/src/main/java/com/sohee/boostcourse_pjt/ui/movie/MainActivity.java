@@ -1,7 +1,6 @@
 package com.sohee.boostcourse_pjt.ui.movie;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity
     private void setDB() {
         DBHelper.openDatabase(getApplicationContext(), "movie");
         DBHelper.createTable("outline");
-        //DBHelper.createTable("inline");
+        DBHelper.createTable("inline");
     }
 
     private void selectOutlineData() {
@@ -126,7 +125,8 @@ public class MainActivity extends AppCompatActivity
             Log.d("GetMovieListResponse", getMovieListResponse.result.toString());
             movieItems = getMovieListResponse.result;
             setAdapter(movieItems);
-            DBHelper.insertData(movieItems, "outline");
+
+            DBHelper.insertOutlineData(movieItems, "outline");
         }
     }
 
