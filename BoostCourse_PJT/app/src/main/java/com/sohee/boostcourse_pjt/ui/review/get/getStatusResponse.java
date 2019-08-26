@@ -1,6 +1,6 @@
 package com.sohee.boostcourse_pjt.ui.review.get;
 
-public class getStatusResponse {
+public class GetStatusResponse {
     String message;
     int code;
     String resultType;

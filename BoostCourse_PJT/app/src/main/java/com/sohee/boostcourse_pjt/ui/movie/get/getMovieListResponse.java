@@ -4,7 +4,7 @@ import com.sohee.boostcourse_pjt.ui.movie.item.MovieItem;
 
 import java.util.ArrayList;
 
-public class getMovieListResponse {
+public class GetMovieListResponse {
     String message;
     int code;
     String resultType;

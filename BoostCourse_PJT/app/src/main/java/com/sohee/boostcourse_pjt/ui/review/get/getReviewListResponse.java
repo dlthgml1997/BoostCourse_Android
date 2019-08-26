@@ -5,7 +5,7 @@ import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 
 import java.util.ArrayList;
 
-public class getReviewListResponse {
+public class GetReviewListResponse {
     String message;
     int code;
     String resultType;

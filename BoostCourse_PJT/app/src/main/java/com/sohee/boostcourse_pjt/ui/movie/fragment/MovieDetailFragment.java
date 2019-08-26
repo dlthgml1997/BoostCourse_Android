@@ -22,21 +22,21 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.*;
 import com.sohee.boostcourse_pjt.network.AppHelper;
-import com.sohee.boostcourse_pjt.ui.movie.get.getMovieDetailResponse;
+import com.sohee.boostcourse_pjt.ui.movie.get.GetMovieDetailResponse;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
 import com.sohee.boostcourse_pjt.ui.review.ReviewDetailActivity;
 import com.sohee.boostcourse_pjt.ui.review.WriteReviewActivity;
 import com.sohee.boostcourse_pjt.ui.review.adapter.ReviewAdapter;
-import com.sohee.boostcourse_pjt.ui.review.get.getReviewListResponse;
-import com.sohee.boostcourse_pjt.ui.review.get.getStatusResponse;
+import com.sohee.boostcourse_pjt.ui.review.get.GetReviewListResponse;
+import com.sohee.boostcourse_pjt.ui.review.get.GetStatusResponse;
 import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MovieDetailFragment extends Fragment  {
-//implements AdapterView.OnItemClickListener
+public class MovieDetailFragment extends Fragment {
+    //implements AdapterView.OnItemClickListener
     private onReplaceFragmentListener mListener;
 
     private ImageView imgThumbUp;
@@ -145,10 +145,10 @@ public class MovieDetailFragment extends Fragment  {
         setOnBtnClickListener();
     }
 
-    private void getLikeResponse(int id,String like) {
+    private void getLikeResponse(int id, String like) {
         StringRequest request = new StringRequest(
                 Request.Method.GET,
-                AppHelper.baseUrl + "movie/increaseLikeDisLike?id="+id+"&likeyn="+like,
+                AppHelper.baseUrl + "movie/increaseLikeDisLike?id=" + id + "&likeyn=" + like,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -177,10 +177,10 @@ public class MovieDetailFragment extends Fragment  {
         Log.d("LikeResponse", "요청 보냄.");
     }
 
-    private void getDisLikeResponse(int id,String dislike) {
+    private void getDisLikeResponse(int id, String dislike) {
         StringRequest request = new StringRequest(
                 Request.Method.GET,
-                AppHelper.baseUrl + "movie/increaseLikeDisLike?id="+id+"&dislikeyn="+dislike,
+                AppHelper.baseUrl + "movie/increaseLikeDisLike?id=" + id + "&dislikeyn=" + dislike,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -211,10 +211,10 @@ public class MovieDetailFragment extends Fragment  {
 
     private void processLikeResponse(String response) {
         Gson gson = new Gson();
-        getStatusResponse getStatusResponse = gson.fromJson(response, getStatusResponse.class);
+        GetStatusResponse getStatusResponse = gson.fromJson(response, GetStatusResponse.class);
 
         if (getStatusResponse.getCode() == 200) {
-            Log.d("LikeResponse",getStatusResponse.getMessage());
+            Log.d("LikeResponse", getStatusResponse.getMessage());
         }
     }
 
@@ -233,7 +233,7 @@ public class MovieDetailFragment extends Fragment  {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("getMovieDetailResponse", "응답 -> " + response);
+                        Log.d("GetMovieDetailResponse", "응답 -> " + response);
 
                         processResponse(response);
                     }
@@ -241,7 +241,7 @@ public class MovieDetailFragment extends Fragment  {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("getMovieDetailResponse", "에러 -> " + error);
+                        Log.d("GetMovieDetailResponse", "에러 -> " + error);
                     }
                 }
         ) {
@@ -255,14 +255,14 @@ public class MovieDetailFragment extends Fragment  {
 
         request.setShouldCache(false);
         AppHelper.requestQueue.add(request);
-        Log.d("getMovieDetailResponse", "요청 보냄.");
+        Log.d("GetMovieDetailResponse", "요청 보냄.");
     }
 
     private void processResponse(String response) {
         Gson gson = new Gson();
-        getMovieDetailResponse getMovieDetailResponse = gson.fromJson(response, getMovieDetailResponse.class);
+        GetMovieDetailResponse getMovieDetailResponse = gson.fromJson(response, GetMovieDetailResponse.class);
 
-        Log.d("getMovieListResponse", getMovieDetailResponse.result.toString());
+        Log.d("GetMovieListResponse", getMovieDetailResponse.result.toString());
         if (getMovieDetailResponse != null) {
             item = getMovieDetailResponse.result.get(0);
             setContent(item);
@@ -323,9 +323,9 @@ public class MovieDetailFragment extends Fragment  {
                     countUp++;
                     txtThumbUp.setText(String.valueOf(countUp));
                 }
-                if(viewThumbUp.isSelected()) {
+                if (viewThumbUp.isSelected()) {
                     getLikeResponse(id, "Y");
-                }else{
+                } else {
                     getLikeResponse(id, "N");
                 }
             }
@@ -351,9 +351,9 @@ public class MovieDetailFragment extends Fragment  {
                     txtThumbDown.setText(String.valueOf(countDown));
                 }
 
-                if(viewThumbDown.isSelected()) {
+                if (viewThumbDown.isSelected()) {
                     getDisLikeResponse(id, "Y");
-                }else{
+                } else {
                     getDisLikeResponse(id, "N");
                 }
             }
@@ -418,7 +418,7 @@ public class MovieDetailFragment extends Fragment  {
 
     private void processReviewResponse(String response) {
         Gson gson = new Gson();
-        getReviewListResponse getMovieListResponse = gson.fromJson(response, getReviewListResponse.class);
+        GetReviewListResponse getMovieListResponse = gson.fromJson(response, GetReviewListResponse.class);
 
         Log.d("getReviewLimitRes", getMovieListResponse.result.toString());
         if (getMovieListResponse != null) {
@@ -459,9 +459,7 @@ public class MovieDetailFragment extends Fragment  {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 101) {
-                getReviewItemResponse(id);
-            } else if (requestCode == 102) {
+            if (requestCode == 101 || requestCode == 102) {
                 getReviewItemResponse(id);
             }
         }

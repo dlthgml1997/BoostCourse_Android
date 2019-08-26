@@ -2,26 +2,11 @@ package com.sohee.boostcourse_pjt.ui.review.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.R;
-import com.sohee.boostcourse_pjt.network.AppHelper;
-import com.sohee.boostcourse_pjt.ui.review.get.getReviewListResponse;
-import com.sohee.boostcourse_pjt.ui.review.get.getStatusResponse;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ReviewItemView extends LinearLayout {
     TextView txtId;

@@ -20,7 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.network.AppHelper;
-import com.sohee.boostcourse_pjt.ui.movie.get.getMovieListResponse;
+import com.sohee.boostcourse_pjt.ui.movie.get.GetMovieListResponse;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.ui.movie.adapter.MovieListAdapter;
 import com.sohee.boostcourse_pjt.ui.movie.fragment.*;
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("getMovieListResponse", "응답 -> " + response);
+                        Log.d("GetMovieListResponse", "응답 -> " + response);
 
                         processResponse(response);
                     }
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("getMovieListResponse", "에러 -> " + error);
+                        Log.d("GetMovieListResponse", "에러 -> " + error);
                     }
                 }
 
@@ -92,15 +92,15 @@ public class MainActivity extends AppCompatActivity
         request.setShouldCache(false);
 
         AppHelper.requestQueue.add(request);
-        Log.d("getMovieListResponse", "요청 보냄.");
+        Log.d("GetMovieListResponse", "요청 보냄.");
     }
 
     private void processResponse(String response) {
         Gson gson = new Gson();
-        getMovieListResponse getMovieListResponse = gson.fromJson(response, getMovieListResponse.class);
+        GetMovieListResponse getMovieListResponse = gson.fromJson(response, GetMovieListResponse.class);
 
-        Log.d("getMovieListResponse", getMovieListResponse.result.toString());
         if (getMovieListResponse != null) {
+            Log.d("GetMovieListResponse", getMovieListResponse.result.toString());
             movieItems = getMovieListResponse.result;
             setAdapter(movieItems);
         }

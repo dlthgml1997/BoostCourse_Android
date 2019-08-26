@@ -22,7 +22,7 @@ import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.network.AppHelper;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
 import com.sohee.boostcourse_pjt.ui.review.adapter.ReviewAdapter;
-import com.sohee.boostcourse_pjt.ui.review.get.getReviewListResponse;
+import com.sohee.boostcourse_pjt.ui.review.get.GetReviewListResponse;
 import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 
 import java.util.ArrayList;
@@ -129,7 +129,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
     private void processReviewResponse(String response) {
         Gson gson = new Gson();
-        getReviewListResponse getMovieListResponse = gson.fromJson(response, getReviewListResponse.class);
+        GetReviewListResponse getMovieListResponse = gson.fromJson(response, GetReviewListResponse.class);
 
         Log.d("getReviewRes", getMovieListResponse.result.toString());
         if (getMovieListResponse != null) {

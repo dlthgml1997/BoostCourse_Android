@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.network.AppHelper;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
-import com.sohee.boostcourse_pjt.ui.review.get.getStatusResponse;
+import com.sohee.boostcourse_pjt.ui.review.get.GetStatusResponse;
 import com.sohee.boostcourse_pjt.ui.review.item.WriteReviewItem;
 
 import java.text.SimpleDateFormat;
@@ -143,7 +143,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     private void processReviewResponse(String response) {
         Gson gson = new Gson();
-        getStatusResponse getStatusResponse = gson.fromJson(response, getStatusResponse.class);
+        GetStatusResponse getStatusResponse = gson.fromJson(response, GetStatusResponse.class);
 
         if(getStatusResponse.getCode() == 200){
 

@@ -12,7 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.network.AppHelper;
-import com.sohee.boostcourse_pjt.ui.review.get.getStatusResponse;
+import com.sohee.boostcourse_pjt.ui.review.get.GetStatusResponse;
 import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 import com.sohee.boostcourse_pjt.ui.review.view.ReviewItemView;
 
@@ -76,7 +76,7 @@ public class ReviewAdapter extends BaseAdapter {
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
-                AppHelper.baseUrl + "movie/increaseRecommend?review_id=1" + review_id + "&writer="+writer,
+                AppHelper.baseUrl + "movie/increaseRecommend?review_id=" + review_id + "&writer="+writer,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -107,7 +107,7 @@ public class ReviewAdapter extends BaseAdapter {
 
     private void processRecommendResponse(String response) {
         Gson gson = new Gson();
-        getStatusResponse getStatusResponse = gson.fromJson(response, getStatusResponse.class);
+        GetStatusResponse getStatusResponse = gson.fromJson(response, GetStatusResponse.class);
 
         Log.d("getReviewRes", getStatusResponse.getCode()+"");
         if(getStatusResponse.getCode() == 200){
