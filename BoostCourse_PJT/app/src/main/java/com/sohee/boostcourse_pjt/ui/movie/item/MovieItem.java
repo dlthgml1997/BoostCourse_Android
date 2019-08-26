@@ -6,6 +6,7 @@ import android.os.Parcelable;
 public class MovieItem implements Parcelable {
 
 
+    int _id;
     int id;
     String title;
     String title_eng;
@@ -19,7 +20,7 @@ public class MovieItem implements Parcelable {
     String thumb;
     String image;
 
-    public MovieItem(int id, String image, String title, String title_eng, Float audience_rating, String date, Float user_rating, Float reviewer_rating, Float reservation_rate, int reservation_grade, int grade, String thumb) {
+    public MovieItem(int _id,int id, String image, String title, String title_eng, Float audience_rating, String date, Float user_rating, Float reviewer_rating, Float reservation_rate, int reservation_grade, int grade, String thumb) {
         this.id = id;
         this.image = image;
         this.title = title;
@@ -35,6 +36,7 @@ public class MovieItem implements Parcelable {
     }
 
     protected MovieItem(Parcel in) {
+        _id = in.readInt();
         id = in.readInt();
         image = in.readString();
         title = in.readString();

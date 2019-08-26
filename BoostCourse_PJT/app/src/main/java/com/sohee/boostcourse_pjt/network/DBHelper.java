@@ -1,8 +1,12 @@
 package com.sohee.boostcourse_pjt.network;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import com.sohee.boostcourse_pjt.ui.movie.item.MovieItem;
+
+import java.util.ArrayList;
 
 public class DBHelper {
     private static final String TAG = "DBHelper";
@@ -19,6 +23,7 @@ public class DBHelper {
             "    user_rating float, " +
             "    audience_rating float, " +
             "    reviewer_rating float, " +
+            "    reservation_rate float, " +
             "    reservation_grade integer, " +
             "    grade integer, " +
             "    thumb text, " +
@@ -27,13 +32,21 @@ public class DBHelper {
 
     private static String createTableInlineSql = "create table if not exists outline"
             + "(" +
-            "    _id integer PRIMARY KEY autoincrement, " + ;
+            "    _id integer PRIMARY KEY autoincrement, ";
+
+
+    /*
+     * 디비를 엽니다.
+     */
 
     public static void openDatabase(Context context, String databaseName) {
         println("openDatabase() 호출 됨.");
 
+
+
         try {
             database = context.openOrCreateDatabase(databaseName, Context.MODE_PRIVATE, null);
+
             if (database != null) {
                 println("데이터베이스 " + databaseName + " 오픈됨.");
             }
@@ -41,6 +54,11 @@ public class DBHelper {
             e.printStackTrace();
         }
     }
+
+
+    /*
+     * 테이블을 생성합니다.
+     */
 
     public static void createTable(String tableName) {
         println("createTable 호출됨 : " + tableName);
@@ -53,6 +71,75 @@ public class DBHelper {
         } else {
             println("먼저 데이터베이스를 오픈하세요.");
         }
+    }
+
+    /*
+     * 오프라인시 데이터를 디비에서 불러옵니다.
+     */
+    public static ArrayList<MovieItem> selectTable(String tableName) {
+        println("selectData() 호출됨.");
+        Cursor cursor;
+        ArrayList<MovieItem> items = null;
+        if (database != null) {
+            switch (tableName) {
+                default:
+                case "outline":
+                    String sql =
+                            "select id, title, title_eng, date_value, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image from "
+                                    + tableName;
+
+                    cursor = database.rawQuery(sql, null);
+
+                    println("조회된 데이터 개수 : " + cursor.getCount());
+
+                    int i = 0;
+                    items = new ArrayList<MovieItem>();
+                    while (cursor.moveToNext()) {
+                        int id = cursor.getInt(cursor.getInt(0));
+                        String title = cursor.getString(1);
+                        String title_eng = cursor.getString(2);
+                        String date = cursor.getString(3);
+                        Float user_rating = cursor.getFloat(4);
+                        Float audience_rating = cursor.getFloat(5);
+                        Float reviewer_rating = cursor.getFloat(6);
+                        Float reservation_rate = cursor.getFloat(7);
+                        int reservation_grade = cursor.getInt(8);
+                        int grade = cursor.getInt(9);
+                        String thumb = cursor.getString(10);
+                        String image = cursor.getString(11);
+
+                        MovieItem movieItem = new MovieItem(i, id, image, title, title_eng, audience_rating, date, user_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb);
+
+                        items.add(movieItem);
+                        i++;
+                    }
+
+                    println("#" + i + " ->" + items.toString());
+                    cursor.close();
+            }
+
+
+        }
+        return items;
+    }
+
+
+    /*
+     * 서버 통신 시에 데이터를 디비에 넣습니다.
+     */
+    public static void insertData(ArrayList<MovieItem> items, String tableName) {
+        if (tableName.equals("outline")) {
+            for (int i = 0; i < items.size(); i++) {
+                String sql = "insert into outline(id, title, title_eng, date_value, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image) " +
+                        "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                Object[] params = {items.get(i).getId(), items.get(i).getTitle(),items.get(i).getTitle_eng(),items.get(i).getDate(),items.get(i).getUser_rating(),items.get(i).getAudienceRating(),items.get(i).getReviewer_rating(),items.get(i).getReservation_rate(),items.get(i).getReservation_grade(),items.get(i).getGrade(),items.get(i).getThumb(),items.get(i).getImage()};
+
+                if (database != null) {
+                    database.execSQL(sql, params);
+                }
+            }
+        }
+        Log.d(TAG, "데이터를 넣었습니다.");
     }
 
     public static void println(String data) {

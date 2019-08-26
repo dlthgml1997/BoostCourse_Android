@@ -1,6 +1,7 @@
 package com.sohee.boostcourse_pjt.ui.movie;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
@@ -20,6 +21,8 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.network.AppHelper;
+import com.sohee.boostcourse_pjt.network.DBHelper;
+import com.sohee.boostcourse_pjt.network.NetworkStatus;
 import com.sohee.boostcourse_pjt.ui.movie.get.GetMovieListResponse;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.ui.movie.adapter.MovieListAdapter;
@@ -41,11 +44,15 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<MovieItem> movieItems = new ArrayList<MovieItem>();
     private MovieListAdapter adapter;
 
+    private int status;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setDB();
 
         getRequestQueue();
         getMovieListResponse();
@@ -54,6 +61,17 @@ public class MainActivity extends AppCompatActivity
         setDrawer();
     }
 
+    private void setDB() {
+
+        DBHelper.openDatabase(getApplicationContext(), "movie");
+        DBHelper.createTable("outline");
+    }
+
+    private void selectOutlineData() {
+        movieItems = DBHelper.selectTable("outline");
+        Log.d("DBHelper",movieItems.toString());
+        setAdapter(movieItems);
+    }
 
     private void getRequestQueue() {
         if (AppHelper.requestQueue == null) {
@@ -62,37 +80,42 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getMovieListResponse() {
-        StringRequest request = new StringRequest(
-                Request.Method.GET,
-                baseUrl + "/movie/readMovieList?type=1",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("GetMovieListResponse", "응답 -> " + response);
+        status = NetworkStatus.getConnectivityStatus(getApplicationContext());
+        if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+            StringRequest request = new StringRequest(
+                    Request.Method.GET,
+                    baseUrl + "/movie/readMovieList?type=1",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("GetMovieListResponse", "응답 -> " + response);
 
-                        processResponse(response);
+                            processResponse(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("GetMovieListResponse", "에러 -> " + error);
+                        }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("GetMovieListResponse", "에러 -> " + error);
-                    }
+
+            ) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    return params;
                 }
+            };
+            //매번 받은 결과를 그대로 보여주세요
+            request.setShouldCache(false);
 
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-
-                return params;
-            }
-        };
-        //매번 받은 결과를 그대로 보여주세요
-        request.setShouldCache(false);
-
-        AppHelper.requestQueue.add(request);
-        Log.d("GetMovieListResponse", "요청 보냄.");
+            AppHelper.requestQueue.add(request);
+            Log.d("GetMovieListResponse", "요청 보냄.");
+        } else {
+            selectOutlineData();
+        }
     }
 
     private void processResponse(String response) {
@@ -100,10 +123,11 @@ public class MainActivity extends AppCompatActivity
         GetMovieListResponse getMovieListResponse = gson.fromJson(response, GetMovieListResponse.class);
 
         if (getMovieListResponse != null) {
-            Log.d("GetMovieListResponse", getMovieListResponse.result.toString());
-            movieItems = getMovieListResponse.result;
-            setAdapter(movieItems);
-        }
+                Log.d("GetMovieListResponse", getMovieListResponse.result.toString());
+                movieItems = getMovieListResponse.result;
+                setAdapter(movieItems);
+                DBHelper.insertData(movieItems, "outline");
+            }
     }
 
     public void setToolbar() {
@@ -194,4 +218,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
 }
+
+
