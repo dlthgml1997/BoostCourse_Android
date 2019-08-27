@@ -121,12 +121,15 @@ public class MainActivity extends AppCompatActivity
         Gson gson = new Gson();
         GetMovieListResponse getMovieListResponse = gson.fromJson(response, GetMovieListResponse.class);
 
-        if (getMovieListResponse != null) {
-            Log.d("GetMovieListResponse", getMovieListResponse.result.toString());
-            movieItems = getMovieListResponse.result;
-            setAdapter(movieItems);
+        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+            if (getMovieListResponse != null) {
+                Log.d("GetMovieListResponse", getMovieListResponse.result.toString());
+                movieItems = getMovieListResponse.result;
+                setAdapter(movieItems);
 
-            DBHelper.insertOutlineData(movieItems, "outline");
+                if (DBHelper.selectTable("outline").size() < getMovieListResponse.result.size())
+                    DBHelper.insertOutlineData(movieItems);
+            }
         }
     }
 
@@ -206,9 +209,9 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void onFragmentChange(int id) {
+    public void onFragmentChange(int id,String title) {
 
-        MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(id);
+        MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(id,title);
 
         getSupportFragmentManager()
                 .beginTransaction()

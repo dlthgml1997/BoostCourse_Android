@@ -35,7 +35,7 @@ public class DBHelper {
             + "(" +
             "    _id integer PRIMARY KEY autoincrement, " +
             "    id integer, " +
-            "    title text, " +
+            "    title text UNIQUE, " +
             "    date_value text, " +
             "    user_rating float, " +
             "    audience_rating float, " +
@@ -85,6 +85,8 @@ public class DBHelper {
         println("createTable 호출됨 : " + tableName);
 
         if (database != null) {
+            //필요시 테이블 삭제
+//            database.execSQL("drop table if exists " + tableName);
             switch (tableName) {
                 default:
                 case "outline":
@@ -121,7 +123,7 @@ public class DBHelper {
 
                     cursor = database.rawQuery(sql, null);
 
-                    println("조회된 데이터 개수 : " + cursor.getCount());
+                    println("outline 조회된 데이터 개수 : " + cursor.getCount());
 
                     ArrayList<MovieItem> items = new ArrayList<MovieItem>();
 
@@ -151,53 +153,50 @@ public class DBHelper {
                     return items;
 
                 case "inline":
-                    try {
-                        sql =
-                                "select id, title, title_eng, date_value, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image, photos, videos, outlinks, genre, duration, audience, synopsis, director, actor, like_vakue, duslike from "
-                                        + tableName;
+                    sql = "select id, title, date_value, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image, photos, videos, outlinks, genre, duration, audience, synopsis, director, actor, like_value, dislike from "
+                            + tableName;
 
-                        cursor = database.rawQuery(sql, null);
 
-                        println("조회된 데이터 개수 : " + cursor.getCount());
+                    cursor = database.rawQuery(sql, null);
 
-                        ArrayList<MovieDetailItem> DetailItems = new ArrayList<MovieDetailItem>();
+                    println("inline 조회된 데이터 개수 : " + cursor.getCount());
 
-                        i = 0;
-                        while (cursor.moveToNext()) {
-                            int id = cursor.getInt(cursor.getInt(0));
-                            String title = cursor.getString(1);
-                            String date = cursor.getString(2);
-                            Float user_rating = cursor.getFloat(3);
-                            Float audience_rating = cursor.getFloat(4);
-                            Float reviewer_rating = cursor.getFloat(5);
-                            Float reservation_rate = cursor.getFloat(6);
-                            int reservation_grade = cursor.getInt(7);
-                            int grade = cursor.getInt(8);
-                            String thumb = cursor.getString(9);
-                            String image = cursor.getString(10);
-                            String photos = cursor.getString(11);
-                            String videos = cursor.getString(12);
-                            String outlinks = cursor.getString(13);
-                            String genre = cursor.getString(14);
-                            int duration = cursor.getInt(15);
-                            int audience = cursor.getInt(16);
-                            String synopsis = cursor.getString(17);
-                            String director = cursor.getString(18);
-                            String actor = cursor.getString(19);
-                            int like = cursor.getInt(20);
-                            int dislike = cursor.getInt(21);
+                    ArrayList<MovieDetailItem> DetailItems = new ArrayList<MovieDetailItem>();
 
-                            MovieDetailItem movieDetailItem = new MovieDetailItem(i, id, title, date, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image, photos, videos, outlinks, genre, duration, audience, synopsis, director, actor, like, dislike);
-                            DetailItems.add(movieDetailItem);
-                            i++;
-                        }
+                    i = 0;
+                    while (cursor.moveToNext()) {
+                        int id = cursor.getInt(cursor.getInt(0));
+                        String title = cursor.getString(1);
+                        String date = cursor.getString(2);
+                        Float user_rating = cursor.getFloat(3);
+                        Float audience_rating = cursor.getFloat(4);
+                        Float reviewer_rating = cursor.getFloat(5);
+                        Float reservation_rate = cursor.getFloat(6);
+                        int reservation_grade = cursor.getInt(7);
+                        int grade = cursor.getInt(8);
+                        String thumb = cursor.getString(9);
+                        String image = cursor.getString(10);
+                        String photos = cursor.getString(11);
+                        String videos = cursor.getString(12);
+                        String outlinks = cursor.getString(13);
+                        String genre = cursor.getString(14);
+                        int duration = cursor.getInt(15);
+                        int audience = cursor.getInt(16);
+                        String synopsis = cursor.getString(17);
+                        String director = cursor.getString(18);
+                        String actor = cursor.getString(19);
+                        int like = cursor.getInt(20);
+                        int dislike = cursor.getInt(21);
 
-                        println("#" + i + " ->" + DetailItems.toString());
-                        cursor.close();
-                        return DetailItems;
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        MovieDetailItem movieDetailItem = new MovieDetailItem(i, id, title, date, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image, photos, videos, outlinks, genre, duration, audience, synopsis, director, actor, like, dislike);
+
+                        DetailItems.add(movieDetailItem);
+                        i++;
                     }
+
+                    println("#" + i + " ->" + DetailItems.toString());
+                    cursor.close();
+                    return DetailItems;
             }
 
 
@@ -210,7 +209,7 @@ public class DBHelper {
      * 서버 통신 시에 데이터를 디비에 넣습니다.
      * 영화 목록
      */
-    public static void insertOutlineData(ArrayList<MovieItem> items, String tableName) {
+    public static void insertOutlineData(ArrayList<MovieItem> items) {
         for (int i = 0; i < items.size(); i++) {
             String sql = "insert into outline(id, title, title_eng, date_value, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image) " +
                     "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -227,17 +226,22 @@ public class DBHelper {
      * 서버 통신 시에 데이터를 디비에 넣습니다.
      * 영화 상세
      */
-    public static void insertInlineData(ArrayList<MovieDetailItem> items, String tableName) {
-        for (int i = 0; i < items.size(); i++) {
-            String sql = "insert into outline(id, title, date, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image, photos, videos, outlinks, genre, duration, audience, synopsis, director, actor,like_value, dislike) " +
-                    "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            Object[] params = {items.get(i).getId(), items.get(i).getTitle(), items.get(i).getDate(), items.get(i).getUser_rating(), items.get(i).getAudience_rating(), items.get(i).getReviewer_rating(), items.get(i).getReservation_rate(), items.get(i).getReservation_grade(), items.get(i).getGrade(), items.get(i).getThumb(), items.get(i).getImage(), items.get(i).getPhotos(), items.get(i).getVideos(), items.get(i).getOutlinks(), items.get(i).getGenre(), items.get(i).getDuration(), items.get(i).getAudience(), items.get(i).getSynopsis(), items.get(i).getDirector(), items.get(i).getActor(), items.get(i).getLike(), items.get(i).getDislike()};
+    public static void insertInlineData(MovieDetailItem item) {
+        try {
+//        for (int i = 0; i < items.size(); i++) {
+            String sql = "insert into inline(id, title, date_value, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image, photos, videos, outlinks, genre, duration, audience, synopsis, director, actor,like_value, dislike) " +
+                    "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+            Object[] params = {item.getId(), item.getTitle(), item.getDate(), item.getUser_rating(), item.getAudience_rating(), item.getReviewer_rating(), item.getReservation_rate(), item.getReservation_grade(), item.getGrade(), item.getThumb(), item.getImage(), item.getPhotos(), item.getVideos(), item.getOutlinks(), item.getGenre(), item.getDuration(), item.getAudience(), item.getSynopsis(), item.getDirector(), item.getActor(), item.getLike(), item.getDislike()};
+
 
             if (database != null) {
                 database.execSQL(sql, params);
             }
+//        }
+            Log.d(TAG, "inline 데이터를 넣었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        Log.d(TAG, "inline 데이터를 넣었습니다.");
     }
 
     public static void println(String data) {

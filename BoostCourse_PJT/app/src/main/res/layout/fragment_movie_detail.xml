@@ -24,8 +24,8 @@
 
                 <ImageView
                         android:id="@+id/img_poster_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="160dp"
+                        android:layout_height="320dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="8dp"
                         android:src="@drawable/image11"/>
@@ -43,8 +43,8 @@
                     <ImageView
                             android:id="@+id/img_movie_detail_frag_grade"
                             android:layout_marginLeft="8dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:layout_toRightOf="@+id/txt_movie_detail_movietitle"
                             android:src="@drawable/ic_15"/>
                     <TextView

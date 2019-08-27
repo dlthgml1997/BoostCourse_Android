@@ -122,6 +122,10 @@ public class MovieDetailItem implements Parcelable {
         return id;
     }
 
+    public int get_Id() {
+        return _id;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

@@ -70,6 +70,7 @@ public class MovieDetailFragment extends Fragment {
     private ArrayList<ReviewItem> reviewItems;
 
     private int id;
+    private String title;
     private MovieDetailItem item;
     private ArrayList<MovieDetailItem> DetailItems;
 
@@ -79,10 +80,11 @@ public class MovieDetailFragment extends Fragment {
 
     }
 
-    public static MovieDetailFragment newInstance(int id) {
+    public static MovieDetailFragment newInstance(int id, String title) {
 
         Bundle bundle = new Bundle();
         bundle.putInt("id", id);
+        bundle.putString("title", title);
 
         MovieDetailFragment fragment = new MovieDetailFragment();
         fragment.setArguments(bundle);
@@ -141,9 +143,10 @@ public class MovieDetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         id = getArguments().getInt("id");
+        title = getArguments().getString("title");
 
         getRequestQueue();
-        getMovieDetailResponse(id);
+        getMovieDetailResponse(id, title);
         getReviewItemResponse(id);
 
         setOnBtnClickListener();
@@ -228,8 +231,10 @@ public class MovieDetailFragment extends Fragment {
         }
     }
 
-    private void getMovieDetailResponse(int id) {
+    private void getMovieDetailResponse(int id, String title) {
         this.id = id;
+        this.title = title;
+        Log.d("DBHelper",title);
         status = NetworkStatus.getConnectivityStatus(getContext());
         if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
             StringRequest request = new StringRequest(
@@ -261,10 +266,17 @@ public class MovieDetailFragment extends Fragment {
             request.setShouldCache(false);
             AppHelper.requestQueue.add(request);
             Log.d("GetMovieDetailResponse", "요청 보냄.");
-        }else {
+        } else {
             DetailItems = (ArrayList<MovieDetailItem>) DBHelper.selectTable("inline");
-            Log.d("DBHelper", DetailItems.toString());
-            setContent(DetailItems.get(0));
+
+            if (DetailItems != null) {
+                for (int i = 0; i < DetailItems.size(); i++) {
+                    if (DetailItems.get(i).getTitle().equals(title)) {
+                        Log.d("DBHelper",DetailItems.get(i).getTitle());
+                        setContent(DetailItems.get(i));
+                    }
+                }
+            }
         }
     }
 
@@ -272,12 +284,14 @@ public class MovieDetailFragment extends Fragment {
         Gson gson = new Gson();
         GetMovieDetailResponse getMovieDetailResponse = gson.fromJson(response, GetMovieDetailResponse.class);
 
-        Log.d("GetMovieListResponse", getMovieDetailResponse.result.toString());
-        if (getMovieDetailResponse != null) {
-            item = getMovieDetailResponse.result.get(0);
-            setContent(item);
+        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+            if (getMovieDetailResponse != null) {
+                Log.d("GetMovieListResponse", getMovieDetailResponse.result.toString());
+                item = getMovieDetailResponse.result.get(0);
+                setContent(item);
 
-            DBHelper.insertInlineData(getMovieDetailResponse.result,"inline");
+                DBHelper.insertInlineData(item);
+            }
         }
     }
 

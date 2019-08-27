@@ -33,6 +33,7 @@ public class MovieListFragment extends Fragment {
     private String baseUrl = AppHelper.baseUrl;
 
     private int id;
+    private String title;
 
     public MovieListFragment() {
         // Required empty public constructor
@@ -100,6 +101,7 @@ public class MovieListFragment extends Fragment {
             txtAdvanced.setText(item.getReservation_rate() + "%");
 
             id = item.getId();
+            title = item.getTitle();
         }
     }
 
@@ -107,13 +109,13 @@ public class MovieListFragment extends Fragment {
         btnMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onFragmentChangeListener.onFragmentChange(id);
+                onFragmentChangeListener.onFragmentChange(id,title);
             }
         });
     }
 
     public interface onFragmentChangeListener {
-        public void onFragmentChange(int id);
+        public void onFragmentChange(int id, String title);
     }
 
 }
