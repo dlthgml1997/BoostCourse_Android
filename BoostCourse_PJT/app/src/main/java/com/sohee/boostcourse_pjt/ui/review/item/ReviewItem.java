@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 public class ReviewItem implements Parcelable {
 
+    int _id;
+    String movie_title;
     int total;
 
     String writer;
@@ -16,7 +18,9 @@ public class ReviewItem implements Parcelable {
     String contents;
     int recommend;
 
-    public ReviewItem(int total, String writer, int review_id, String writer_image, String time, String time_stamp, Float rating, String contents, int recommend) {
+    public ReviewItem(int _id, String movie_title, int total, String writer, int review_id, String writer_image, String time, String time_stamp, Float rating, String contents, int recommend) {
+        this._id = _id;
+        this.movie_title = movie_title;
         this.total = total;
         this.writer = writer;
         this.review_id = review_id;
@@ -29,10 +33,12 @@ public class ReviewItem implements Parcelable {
     }
 
     protected ReviewItem(Parcel in) {
+        _id = in.readInt();
+        movie_title = in.readString();
         total = in.readInt();
         writer = in.readString();
-        review_id=in.readInt();
-        writer_image=in.readString();
+        review_id = in.readInt();
+        writer_image = in.readString();
         time = in.readString();
         time_stamp = in.readString();
         rating = in.readFloat();
@@ -51,6 +57,18 @@ public class ReviewItem implements Parcelable {
             return new ReviewItem[size];
         }
     };
+
+    public int get_Id() {
+        return _id;
+    }
+
+    public String getMovieTitle() {
+        return movie_title;
+    }
+
+    public void setMovieTitle(String movie_title) {
+        this.movie_title = movie_title;
+    }
 
     public int getTotal() {
         return total;
@@ -131,10 +149,17 @@ public class ReviewItem implements Parcelable {
     @Override
     public String toString() {
         return "ReviewItem{" +
-                "writer='" + writer + '\'' +
+                "_id=" + _id +
+                ", movie_title='" + movie_title + '\'' +
+                ", total=" + total +
+                ", writer='" + writer + '\'' +
+                ", review_id=" + review_id +
+                ", writer_image='" + writer_image + '\'' +
                 ", time='" + time + '\'' +
-                ", rating='" + rating + '\'' +
+                ", time_stamp='" + time_stamp + '\'' +
+                ", rating=" + rating +
                 ", contents='" + contents + '\'' +
+                ", recommend=" + recommend +
                 '}';
     }
 
@@ -145,9 +170,16 @@ public class ReviewItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(_id);
+        parcel.writeString(movie_title);
+        parcel.writeInt(total);
         parcel.writeString(writer);
+        parcel.writeInt(review_id);
+        parcel.writeString(writer_image);
         parcel.writeString(time);
+        parcel.writeString(time_stamp);
         parcel.writeFloat(rating);
         parcel.writeString(contents);
+        parcel.writeInt(recommend);
     }
 }

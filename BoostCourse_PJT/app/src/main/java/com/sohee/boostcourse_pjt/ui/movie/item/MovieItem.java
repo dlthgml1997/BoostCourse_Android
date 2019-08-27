@@ -35,6 +35,25 @@ public class MovieItem implements Parcelable {
         this.thumb = thumb;
     }
 
+    @Override
+    public String toString() {
+        return "MovieItem{" +
+                "_id=" + _id +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", title_eng='" + title_eng + '\'' +
+                ", date='" + date + '\'' +
+                ", user_rating=" + user_rating +
+                ", audience_rating=" + audience_rating +
+                ", reviewer_rating=" + reviewer_rating +
+                ", reservation_rate=" + reservation_rate +
+                ", reservation_grade=" + reservation_grade +
+                ", grade=" + grade +
+                ", thumb='" + thumb + '\'' +
+                ", image='" + image + '\'' +
+                '}';
+    }
+
     protected MovieItem(Parcel in) {
         _id = in.readInt();
         id = in.readInt();
@@ -79,23 +98,6 @@ public class MovieItem implements Parcelable {
             return new MovieItem[size];
         }
     };
-
-    @Override
-    public String toString() {
-        return "MovieItem{" +
-                "id=" + id + '\'' +
-                "image='" + image + '\'' +
-                ", title='" + title + '\'' +
-                ", title_eng='" + title_eng + '\'' +
-                ", date='" + date + '\'' +
-                ", user_rating=" + user_rating +
-                ", reviewer_rating=" + reviewer_rating +
-                ", reservation_rate=" + reservation_rate +
-                ", reservation_grade=" + reservation_grade +
-                ", grade=" + grade +
-                ", thumb='" + thumb + '\'' +
-                '}';
-    }
 
     public int getId() {
         return id;

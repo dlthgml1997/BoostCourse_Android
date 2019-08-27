@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RatingBar;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +17,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.network.AppHelper;
+import com.sohee.boostcourse_pjt.network.DBHelper;
+import com.sohee.boostcourse_pjt.network.NetworkStatus;
+import com.sohee.boostcourse_pjt.ui.movie.fragment.MovieDetailFragment;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
 import com.sohee.boostcourse_pjt.ui.review.adapter.ReviewAdapter;
 import com.sohee.boostcourse_pjt.ui.review.get.GetReviewListResponse;
@@ -43,13 +43,20 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
     private ReviewAdapter adapter;
 
+    private int status;
+
+    private String title;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_detail);
 
-        item = getIntent().getParcelableExtra("MovieDetailItem");
+        item = getIntent().getExtras().getParcelable("MovieDetailItem");
+        title = getIntent().getStringExtra("title");
+
+        status = NetworkStatus.getConnectivityStatus(getApplicationContext());
 
         txtTitle = findViewById(R.id.txt_review_detail_title);
         imgGrade = findViewById(R.id.img_review_detail_act_grade);
@@ -67,6 +74,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
     }
 
     private void setContent(MovieDetailItem item) {
+        Log.d("DBHelper", item.toString());
         txtTitle.setText(item.getTitle());
         switch (item.getGrade()) {
             default:
@@ -95,46 +103,67 @@ public class ReviewDetailActivity extends AppCompatActivity {
     }
 
     private void getReviewItemLimitResponse(int id) {
+        status = NetworkStatus.getConnectivityStatus(getApplicationContext());
+        if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
 
-        StringRequest request = new StringRequest(
-                Request.Method.GET,
-                AppHelper.baseUrl + "movie/readCommentList?id=" + id + "&startIndex=0&length=20",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("getReviewRes", "응답 -> " + response);
+            StringRequest request = new StringRequest(
+                    Request.Method.GET,
+                    AppHelper.baseUrl + "movie/readCommentList?id=" + id + "&startIndex=0&length=20",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("getReviewRes", "응답 -> " + response);
 
-                        processReviewResponse(response);
+                            processReviewResponse(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("getReviewRes", "에러 -> " + error);
+                        }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("getReviewRes", "에러 -> " + error);
+            ) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+
+                    return params;
+                }
+            };
+
+            request.setShouldCache(false);
+            AppHelper.requestQueue.add(request);
+            Log.d("getReviewRes", "요청 보냄.");
+        } else {
+            reviewItems = (ArrayList<ReviewItem>) DBHelper.selectTable("review");
+            if (reviewItems != null) {
+                Log.d("DBHelper", reviewItems.toString());
+                for (int i = 0; i < reviewItems.size(); i++) {
+                    if (reviewItems.get(i).getMovieTitle().equals(title + "detail")) {
+                        setAdapter(reviewItems);
                     }
                 }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                return params;
             }
-        };
-
-        request.setShouldCache(false);
-        AppHelper.requestQueue.add(request);
-        Log.d("getReviewRes", "요청 보냄.");
+        }
     }
 
     private void processReviewResponse(String response) {
         Gson gson = new Gson();
-        GetReviewListResponse getMovieListResponse = gson.fromJson(response, GetReviewListResponse.class);
+        GetReviewListResponse getReviewListResponse = gson.fromJson(response, GetReviewListResponse.class);
 
-        Log.d("getReviewRes", getMovieListResponse.result.toString());
-        if (getMovieListResponse != null) {
-            reviewItems = getMovieListResponse.result;
-            setAdapter(reviewItems);
+        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+            if (getReviewListResponse != null) {
+                Log.d("getReviewRes", getReviewListResponse.result.toString());
+
+                reviewItems = getReviewListResponse.result;
+
+                    for (int i = 0; i < getReviewListResponse.result.size(); i++) {
+                            reviewItems.get(i).setMovieTitle(title + "detail");
+                    }
+                    DBHelper.insertReviewData(reviewItems);
+                }
+                setAdapter(reviewItems);
         }
     }
 
@@ -158,9 +187,13 @@ public class ReviewDetailActivity extends AppCompatActivity {
         btnWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WriteReviewActivity.class);
-                intent.putExtra("MovieDetailItem", item);
-                startActivityForResult(intent, 1004);
+                if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+                    Intent intent = new Intent(getApplicationContext(), WriteReviewActivity.class);
+                    intent.putExtra("MovieDetailItem", item);
+                    startActivityForResult(intent, 1004);
+                } else {
+                    Toast.makeText(getApplicationContext(), "인터넷 연결을 확인하세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

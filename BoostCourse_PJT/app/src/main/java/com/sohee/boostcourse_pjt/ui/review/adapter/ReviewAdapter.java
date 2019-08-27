@@ -56,7 +56,6 @@ public class ReviewAdapter extends BaseAdapter {
         ReviewItemView view = new ReviewItemView(context);
 
         final ReviewItem item = items.get(position);
-        view.setId(item.getWriter());
         view.setTime(item.getTime());
         view.setRating(item.getRating());
         view.setReview(item.getContents());

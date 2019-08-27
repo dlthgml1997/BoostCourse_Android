@@ -2,6 +2,7 @@ package com.sohee.boostcourse_pjt.ui.movie.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;

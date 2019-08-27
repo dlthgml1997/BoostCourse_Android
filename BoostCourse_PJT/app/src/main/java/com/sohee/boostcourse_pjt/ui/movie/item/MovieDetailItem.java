@@ -3,11 +3,9 @@ package com.sohee.boostcourse_pjt.ui.movie.item;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 
 public class MovieDetailItem implements Parcelable {
 
-    int _id;
     int id;
     String title;
     String date;
@@ -31,7 +29,7 @@ public class MovieDetailItem implements Parcelable {
     int like;
     int dislike;
 
-    public MovieDetailItem(int _id,int id, String title, String date, Float user_rating, Float audience_rating, Float reviewer_rating, Float reservation_rate, int reservation_grade, int grade, String thumb, String image, String photos, String videos, String outlinks, String genre, int duration, int audience, String synopsis, String director, String actor, int like, int dislike) {
+    public MovieDetailItem(int id, String title, String date, Float user_rating, Float audience_rating, Float reviewer_rating, Float reservation_rate, int reservation_grade, int grade, String thumb, String image, String photos, String videos, String outlinks, String genre, int duration, int audience, String synopsis, String director, String actor, int like, int dislike) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -57,7 +55,6 @@ public class MovieDetailItem implements Parcelable {
     }
 
     public MovieDetailItem(Parcel in) {
-        _id = in.readInt();
         title = in.readString();
         id = in.readInt();
         date = in.readString();
@@ -98,6 +95,34 @@ public class MovieDetailItem implements Parcelable {
         dislike = in.readInt();
     }
 
+    @Override
+    public String toString() {
+        return "MovieDetailItem{" +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", user_rating=" + user_rating +
+                ", audience_rating=" + audience_rating +
+                ", reviewer_rating=" + reviewer_rating +
+                ", reservation_rate=" + reservation_rate +
+                ", reservation_grade=" + reservation_grade +
+                ", grade=" + grade +
+                ", thumb='" + thumb + '\'' +
+                ", image='" + image + '\'' +
+                ", photos='" + photos + '\'' +
+                ", videos='" + videos + '\'' +
+                ", outlinks='" + outlinks + '\'' +
+                ", genre='" + genre + '\'' +
+                ", duration=" + duration +
+                ", audience=" + audience +
+                ", synopsis='" + synopsis + '\'' +
+                ", director='" + director + '\'' +
+                ", actor='" + actor + '\'' +
+                ", like=" + like +
+                ", dislike=" + dislike +
+                '}';
+    }
+
     public static final Creator<MovieDetailItem> CREATOR = new Creator<MovieDetailItem>() {
         @Override
         public MovieDetailItem createFromParcel(Parcel in) {
@@ -120,10 +145,6 @@ public class MovieDetailItem implements Parcelable {
 
     public int getId() {
         return id;
-    }
-
-    public int get_Id() {
-        return _id;
     }
 
     public void setId(int id) {

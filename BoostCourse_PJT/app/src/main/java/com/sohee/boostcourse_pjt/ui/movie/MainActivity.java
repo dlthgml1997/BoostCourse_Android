@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity
         DBHelper.openDatabase(getApplicationContext(), "movie");
         DBHelper.createTable("outline");
         DBHelper.createTable("inline");
+        DBHelper.createTable("review");
     }
 
     private void selectOutlineData() {

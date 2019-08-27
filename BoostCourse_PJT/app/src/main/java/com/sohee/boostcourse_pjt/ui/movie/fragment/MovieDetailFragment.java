@@ -234,7 +234,7 @@ public class MovieDetailFragment extends Fragment {
     private void getMovieDetailResponse(int id, String title) {
         this.id = id;
         this.title = title;
-        Log.d("DBHelper",title);
+        Log.d("DBHelper", title);
         status = NetworkStatus.getConnectivityStatus(getContext());
         if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
             StringRequest request = new StringRequest(
@@ -272,8 +272,9 @@ public class MovieDetailFragment extends Fragment {
             if (DetailItems != null) {
                 for (int i = 0; i < DetailItems.size(); i++) {
                     if (DetailItems.get(i).getTitle().equals(title)) {
-                        Log.d("DBHelper",DetailItems.get(i).getTitle());
-                        setContent(DetailItems.get(i));
+                        Log.d("DBHelper", DetailItems.get(i).getTitle());
+                        item = DetailItems.get(i);
+                        setContent(item);
                     }
                 }
             }
@@ -396,7 +397,11 @@ public class MovieDetailFragment extends Fragment {
         btnWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startWriteReviewAct(item);
+                if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+                    startWriteReviewAct(item);
+                } else {
+                    Toast.makeText(getContext(), "인터넷 연결을 확인하세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -411,51 +416,69 @@ public class MovieDetailFragment extends Fragment {
     private void getReviewItemResponse(int id) {
         this.id = id;
 
-        StringRequest request = new StringRequest(
-                Request.Method.GET,
-                AppHelper.baseUrl + "movie/readCommentList?id=" + id + "&limit=2",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("getReviewLimitRes", "응답 -> " + response);
+        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+            StringRequest request = new StringRequest(
+                    Request.Method.GET,
+                    AppHelper.baseUrl + "movie/readCommentList?id=" + id + "&limit=2",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("getReviewLimitRes", "응답 -> " + response);
 
-                        processReviewResponse(response);
+                            processReviewResponse(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("getReviewLimitRes", "에러 -> " + error);
+                        }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("getReviewLimitRes", "에러 -> " + error);
+            ) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+
+                    return params;
+                }
+            };
+
+            request.setShouldCache(false);
+            AppHelper.requestQueue.add(request);
+            Log.d("getReviewLimitRes", "요청 보냄.");
+        } else {
+            reviewItems = (ArrayList<ReviewItem>) DBHelper.selectTable("review");
+            if (reviewItems != null) {
+                for (int i = 0; i < reviewItems.size(); i++) {
+                    if (reviewItems.get(i).getMovieTitle().equals(title)) {
+                        setAdapter(reviewItems);
                     }
                 }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                return params;
             }
-        };
-
-        request.setShouldCache(false);
-        AppHelper.requestQueue.add(request);
-        Log.d("getReviewLimitRes", "요청 보냄.");
+        }
     }
 
     private void processReviewResponse(String response) {
         Gson gson = new Gson();
-        GetReviewListResponse getMovieListResponse = gson.fromJson(response, GetReviewListResponse.class);
+        GetReviewListResponse getReviewListResponse = gson.fromJson(response, GetReviewListResponse.class);
+        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
 
-        Log.d("getReviewLimitRes", getMovieListResponse.result.toString());
-        if (getMovieListResponse != null) {
-            reviewItems = getMovieListResponse.result;
-            setAdapter(reviewItems);
+            if (getReviewListResponse != null) {
+                Log.d("getReviewLimitRes", getReviewListResponse.result.toString());
+
+                reviewItems = getReviewListResponse.result;
+                for (int i = 0; i < getReviewListResponse.result.size(); i++) {
+                    reviewItems.get(i).setMovieTitle(title);
+                }
+                setAdapter(reviewItems);
+
+                DBHelper.insertReviewData(reviewItems);
+            }
         }
     }
 
     private void setAdapter(final ArrayList<ReviewItem> reviewItems) {
         ListView reviewListView = (ListView) view.findViewById(R.id.lv_main_act_review);
-
         adapter = new ReviewAdapter();
         for (int i = 0; i < reviewItems.size(); i++) {
             adapter.addItem(reviewItems.get(i));
@@ -467,15 +490,20 @@ public class MovieDetailFragment extends Fragment {
     }
 
     public void startWriteReviewAct(MovieDetailItem item) {
-        Intent intent = new Intent(getContext(), WriteReviewActivity.class);
-        intent.putExtra("MovieDetailItem", item);
+        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+            Intent intent = new Intent(getContext(), WriteReviewActivity.class);
+            intent.putExtra("MovieDetailItem", item);
 
-        startActivityForResult(intent, 101);
+            startActivityForResult(intent, 101);
+        } else {
+            Toast.makeText(getActivity(), "인터넷을 연결해주세요.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void startReviewDetailAct(MovieDetailItem item) {
         Intent intent = new Intent(getContext(), ReviewDetailActivity.class);
         intent.putExtra("MovieDetailItem", item);
+        intent.putExtra("title",title);
 
         startActivityForResult(intent, 102);
     }
