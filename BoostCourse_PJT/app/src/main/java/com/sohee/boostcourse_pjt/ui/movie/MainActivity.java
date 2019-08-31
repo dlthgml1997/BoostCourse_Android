@@ -3,14 +3,18 @@ package com.sohee.boostcourse_pjt.ui.movie;
 import android.content.Intent;
 import android.util.Log;
 import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -21,7 +25,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.network.AppHelper;
 import com.sohee.boostcourse_pjt.network.DBHelper;
-import com.sohee.boostcourse_pjt.network.NetworkStatus;
 import com.sohee.boostcourse_pjt.ui.movie.get.GetMovieListResponse;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.ui.movie.adapter.MovieListAdapter;
@@ -31,6 +34,8 @@ import com.sohee.boostcourse_pjt.ui.movie.item.MovieItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.sohee.boostcourse_pjt.network.NetworkStatus.hasInternetConnection;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MovieDetailFragment.onReplaceFragmentListener, MovieListFragment.onFragmentChangeListener {
@@ -43,13 +48,14 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<MovieItem> movieItems = new ArrayList<MovieItem>();
     private MovieListAdapter adapter;
 
-    private int status;
-
+    private boolean status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        status = hasInternetConnection(getApplicationContext());
 
         setDB();
 
@@ -80,8 +86,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getMovieListResponse() {
-        status = NetworkStatus.getConnectivityStatus(getApplicationContext());
-        if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+        Log.d("Status"," is !!!"+ status);
+        if (status) {
             StringRequest request = new StringRequest(
                     Request.Method.GET,
                     baseUrl + "/movie/readMovieList?type=1",
@@ -122,7 +128,8 @@ public class MainActivity extends AppCompatActivity
         Gson gson = new Gson();
         GetMovieListResponse getMovieListResponse = gson.fromJson(response, GetMovieListResponse.class);
 
-        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+        if (status) {
+            Log.d("Status"," is true !!!"+ status);
             if (getMovieListResponse != null) {
                 Log.d("GetMovieListResponse", getMovieListResponse.result.toString());
                 movieItems = getMovieListResponse.result;
@@ -210,9 +217,9 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void onFragmentChange(int id,String title) {
+    public void onFragmentChange(int id, String title) {
 
-        MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(id,title);
+        MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(id, title);
 
         getSupportFragmentManager()
                 .beginTransaction()

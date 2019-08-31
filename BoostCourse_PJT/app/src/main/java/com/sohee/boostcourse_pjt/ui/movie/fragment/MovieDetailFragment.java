@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,7 +25,6 @@ import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.*;
 import com.sohee.boostcourse_pjt.network.AppHelper;
 import com.sohee.boostcourse_pjt.network.DBHelper;
-import com.sohee.boostcourse_pjt.network.NetworkStatus;
 import com.sohee.boostcourse_pjt.ui.movie.get.GetMovieDetailResponse;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
 import com.sohee.boostcourse_pjt.ui.review.ReviewDetailActivity;
@@ -36,6 +37,8 @@ import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.sohee.boostcourse_pjt.network.NetworkStatus.hasInternetConnection;
 
 public class MovieDetailFragment extends Fragment {
     private onReplaceFragmentListener mListener;
@@ -73,8 +76,6 @@ public class MovieDetailFragment extends Fragment {
     private String title;
     private MovieDetailItem item;
     private ArrayList<MovieDetailItem> DetailItems;
-
-    private int status;
 
     public MovieDetailFragment() {
 
@@ -235,8 +236,9 @@ public class MovieDetailFragment extends Fragment {
         this.id = id;
         this.title = title;
         Log.d("DBHelper", title);
-        status = NetworkStatus.getConnectivityStatus(getContext());
-        if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+
+        Log.d("Status", " is !!!" + hasInternetConnection(getContext()));
+        if (hasInternetConnection(getContext())) {
             StringRequest request = new StringRequest(
                     Request.Method.GET,
                     AppHelper.baseUrl + "movie/readMovie?id=" + id,
@@ -285,7 +287,7 @@ public class MovieDetailFragment extends Fragment {
         Gson gson = new Gson();
         GetMovieDetailResponse getMovieDetailResponse = gson.fromJson(response, GetMovieDetailResponse.class);
 
-        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+        if (hasInternetConnection(getContext())) {
             if (getMovieDetailResponse != null) {
                 Log.d("GetMovieListResponse", getMovieDetailResponse.result.toString());
                 item = getMovieDetailResponse.result.get(0);
@@ -397,7 +399,7 @@ public class MovieDetailFragment extends Fragment {
         btnWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+                if (hasInternetConnection(getContext())) {
                     startWriteReviewAct(item);
                 } else {
                     Toast.makeText(getContext(), "인터넷 연결을 확인하세요.", Toast.LENGTH_SHORT).show();
@@ -416,7 +418,7 @@ public class MovieDetailFragment extends Fragment {
     private void getReviewItemResponse(int id) {
         this.id = id;
 
-        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+        if (hasInternetConnection(getContext())) {
             StringRequest request = new StringRequest(
                     Request.Method.GET,
                     AppHelper.baseUrl + "movie/readCommentList?id=" + id + "&limit=2",
@@ -461,7 +463,7 @@ public class MovieDetailFragment extends Fragment {
     private void processReviewResponse(String response) {
         Gson gson = new Gson();
         GetReviewListResponse getReviewListResponse = gson.fromJson(response, GetReviewListResponse.class);
-        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+        if (hasInternetConnection(getContext())) {
 
             if (getReviewListResponse != null) {
                 Log.d("getReviewLimitRes", getReviewListResponse.result.toString());
@@ -490,7 +492,7 @@ public class MovieDetailFragment extends Fragment {
     }
 
     public void startWriteReviewAct(MovieDetailItem item) {
-        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+        if (hasInternetConnection(getContext())) {
             Intent intent = new Intent(getContext(), WriteReviewActivity.class);
             intent.putExtra("MovieDetailItem", item);
 
@@ -503,7 +505,7 @@ public class MovieDetailFragment extends Fragment {
     public void startReviewDetailAct(MovieDetailItem item) {
         Intent intent = new Intent(getContext(), ReviewDetailActivity.class);
         intent.putExtra("MovieDetailItem", item);
-        intent.putExtra("title",title);
+        intent.putExtra("title", title);
 
         startActivityForResult(intent, 102);
     }

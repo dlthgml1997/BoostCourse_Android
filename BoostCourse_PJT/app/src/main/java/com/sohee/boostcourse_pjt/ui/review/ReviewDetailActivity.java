@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.sohee.boostcourse_pjt.network.NetworkStatus.hasInternetConnection;
+
 public class ReviewDetailActivity extends AppCompatActivity {
 
     private TextView btnWriteReview;
@@ -43,7 +45,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
     private ReviewAdapter adapter;
 
-    private int status;
+    private boolean status;
 
     private String title;
 
@@ -56,7 +58,8 @@ public class ReviewDetailActivity extends AppCompatActivity {
         item = getIntent().getExtras().getParcelable("MovieDetailItem");
         title = getIntent().getStringExtra("title");
 
-        status = NetworkStatus.getConnectivityStatus(getApplicationContext());
+        status = hasInternetConnection(getApplicationContext());
+        Log.d("Status"," is !!!"+ status);
 
         txtTitle = findViewById(R.id.txt_review_detail_title);
         imgGrade = findViewById(R.id.img_review_detail_act_grade);
@@ -103,9 +106,8 @@ public class ReviewDetailActivity extends AppCompatActivity {
     }
 
     private void getReviewItemLimitResponse(int id) {
-        status = NetworkStatus.getConnectivityStatus(getApplicationContext());
-        if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
-
+        Log.d("Status"," is !!!"+ status);
+        if (status) {
             StringRequest request = new StringRequest(
                     Request.Method.GET,
                     AppHelper.baseUrl + "movie/readCommentList?id=" + id + "&startIndex=0&length=20",
@@ -152,7 +154,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
         Gson gson = new Gson();
         GetReviewListResponse getReviewListResponse = gson.fromJson(response, GetReviewListResponse.class);
 
-        if (status == NetworkStatus.TYPE_WIFI || status == NetworkStatus.TYPE_MOBILE) {
+        if (status) {
             if (getReviewListResponse != null) {
                 Log.d("getReviewRes", getReviewListResponse.result.toString());
 
@@ -187,7 +189,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
         btnWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+                if (status) {
                     Intent intent = new Intent(getApplicationContext(), WriteReviewActivity.class);
                     intent.putExtra("MovieDetailItem", item);
                     startActivityForResult(intent, 1004);

@@ -2,28 +2,22 @@ package com.sohee.boostcourse_pjt.network;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 
 public class NetworkStatus {
 
-    public static final int TYPE_WIFI = 1;
-    public static final int TYPE_MOBILE = 2;
-    public static final int TYPE_NOT_CONNECTED = 3;
+    public static boolean hasInternetConnection(Context context) {
 
-
-    public static int getConnectivityStatus(Context context) {
-
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-        if (networkInfo != null) {
-            int type = networkInfo.getType();
-            if (type == ConnectivityManager.TYPE_MOBILE) {
-                return TYPE_MOBILE;
-            } else if (type == ConnectivityManager.TYPE_WIFI) {
-                return TYPE_WIFI;
-            }
-        }
-        return TYPE_NOT_CONNECTED;
+        ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        Network network;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            network = connectivityManager.getActiveNetwork();
+        } else
+            return true;
+        NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(network);
+        return capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
     }
+
 }
