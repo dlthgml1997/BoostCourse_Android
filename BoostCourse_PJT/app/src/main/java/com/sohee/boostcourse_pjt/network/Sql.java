@@ -10,7 +10,7 @@ public class Sql {
             + "(" +
             "    _id integer PRIMARY KEY autoincrement, " +
             "    id integer, " +
-            "    title text, " +
+            "    title text UNIQUE, " +
             "    title_eng text, " +
             "    date_value text, " +
             "    user_rating float, " +
@@ -24,7 +24,7 @@ public class Sql {
             ")";
 
     public static String insertOutlineSql
-            = "insert into outline(id, title, title_eng, date_value, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image) " +
+            = "insert or replace into outline(id, title, title_eng, date_value, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image) " +
             "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public static String selectOutlineSql
@@ -62,7 +62,7 @@ public class Sql {
             ")";
 
     public static String insertInlineSql
-            = "insert into inline(id, title, date_value, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image, photos, videos, outlinks, genre, duration, audience, synopsis, director, actor,like_value, dislike) " +
+            = "insert or replace into inline(id, title, date_value, user_rating, audience_rating, reviewer_rating, reservation_rate, reservation_grade, grade, thumb, image, photos, videos, outlinks, genre, duration, audience, synopsis, director, actor,like_value, dislike) " +
             "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
     public static String selectInlineSql
@@ -79,15 +79,15 @@ public class Sql {
             "    writer text, " +
             "    review_id int, " +
             "    writer_image text, " +
-            "    time text, " +
-            "    time_stamp text, " +
+            "    time text UNIQUE, " +
+            "    time_stamp text UNIQUE, " +
             "    rating float, " +
             "    contents text, " +
             "    recommend integer" +
             ")";
 
     public static String insertReviewSql
-            = "insert into review(movie_title, total, writer, review_id, writer_image, time, time_stamp, rating, contents, recommend) " +
+            = "insert or replace into review(movie_title, total, writer, review_id, writer_image, time, time_stamp, rating, contents, recommend) " +
             "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public static String selectReviewSql

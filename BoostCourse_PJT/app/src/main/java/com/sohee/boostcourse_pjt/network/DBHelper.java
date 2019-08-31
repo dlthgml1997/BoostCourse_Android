@@ -53,7 +53,7 @@ public class DBHelper {
      */
     public static void createTable(String tableName) {
         println("createTable 호출됨 : " + tableName);
-
+//        database.execSQL("drop table if exists "+tableName);
         if (database != null) {
             switch (tableName) {
                 default:

@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getMovieListResponse() {
-        Log.d("Status"," is !!!"+ status);
         if (status) {
             StringRequest request = new StringRequest(
                     Request.Method.GET,
@@ -129,13 +128,12 @@ public class MainActivity extends AppCompatActivity
         GetMovieListResponse getMovieListResponse = gson.fromJson(response, GetMovieListResponse.class);
 
         if (status) {
-            Log.d("Status"," is true !!!"+ status);
             if (getMovieListResponse != null) {
                 Log.d("GetMovieListResponse", getMovieListResponse.result.toString());
                 movieItems = getMovieListResponse.result;
                 setAdapter(movieItems);
 
-                if (DBHelper.selectTable("outline").size() < getMovieListResponse.result.size())
+//                if (DBHelper.selectTable("outline").size() < getMovieListResponse.result.size())
                     DBHelper.insertOutlineData(movieItems);
             }
         }

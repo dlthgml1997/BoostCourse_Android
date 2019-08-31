@@ -59,7 +59,6 @@ public class ReviewDetailActivity extends AppCompatActivity {
         title = getIntent().getStringExtra("title");
 
         status = hasInternetConnection(getApplicationContext());
-        Log.d("Status"," is !!!"+ status);
 
         txtTitle = findViewById(R.id.txt_review_detail_title);
         imgGrade = findViewById(R.id.img_review_detail_act_grade);
@@ -106,7 +105,6 @@ public class ReviewDetailActivity extends AppCompatActivity {
     }
 
     private void getReviewItemLimitResponse(int id) {
-        Log.d("Status"," is !!!"+ status);
         if (status) {
             StringRequest request = new StringRequest(
                     Request.Method.GET,

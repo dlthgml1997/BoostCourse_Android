@@ -237,7 +237,6 @@ public class MovieDetailFragment extends Fragment {
         this.title = title;
         Log.d("DBHelper", title);
 
-        Log.d("Status", " is !!!" + hasInternetConnection(getContext()));
         if (hasInternetConnection(getContext())) {
             StringRequest request = new StringRequest(
                     Request.Method.GET,
