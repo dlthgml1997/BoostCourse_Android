@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.*;
 import com.sohee.boostcourse_pjt.network.AppHelper;
-import com.sohee.boostcourse_pjt.network.DBHelper;
+import com.sohee.boostcourse_pjt.db.DBHelper;
 import com.sohee.boostcourse_pjt.ui.movie.get.GetMovieDetailResponse;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
 import com.sohee.boostcourse_pjt.ui.review.ReviewDetailActivity;

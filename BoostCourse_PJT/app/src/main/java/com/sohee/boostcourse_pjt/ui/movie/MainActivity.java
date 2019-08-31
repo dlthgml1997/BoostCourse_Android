@@ -24,7 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.network.AppHelper;
-import com.sohee.boostcourse_pjt.network.DBHelper;
+import com.sohee.boostcourse_pjt.db.DBHelper;
 import com.sohee.boostcourse_pjt.ui.movie.get.GetMovieListResponse;
 import com.sohee.boostcourse_pjt.R;
 import com.sohee.boostcourse_pjt.ui.movie.adapter.MovieListAdapter;

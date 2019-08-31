@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt.network;
+package com.sohee.boostcourse_pjt.db;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,15 +11,15 @@ import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 
 import java.util.ArrayList;
 
-import static com.sohee.boostcourse_pjt.network.Sql.creatTableReviewSql;
-import static com.sohee.boostcourse_pjt.network.Sql.createTableInlineSql;
-import static com.sohee.boostcourse_pjt.network.Sql.createTableOutlineSql;
-import static com.sohee.boostcourse_pjt.network.Sql.insertInlineSql;
-import static com.sohee.boostcourse_pjt.network.Sql.insertOutlineSql;
-import static com.sohee.boostcourse_pjt.network.Sql.insertReviewSql;
-import static com.sohee.boostcourse_pjt.network.Sql.selectInlineSql;
-import static com.sohee.boostcourse_pjt.network.Sql.selectOutlineSql;
-import static com.sohee.boostcourse_pjt.network.Sql.selectReviewSql;
+import static com.sohee.boostcourse_pjt.db.Sql.creatTableReviewSql;
+import static com.sohee.boostcourse_pjt.db.Sql.createTableInlineSql;
+import static com.sohee.boostcourse_pjt.db.Sql.createTableOutlineSql;
+import static com.sohee.boostcourse_pjt.db.Sql.insertInlineSql;
+import static com.sohee.boostcourse_pjt.db.Sql.insertOutlineSql;
+import static com.sohee.boostcourse_pjt.db.Sql.insertReviewSql;
+import static com.sohee.boostcourse_pjt.db.Sql.selectInlineSql;
+import static com.sohee.boostcourse_pjt.db.Sql.selectOutlineSql;
+import static com.sohee.boostcourse_pjt.db.Sql.selectReviewSql;
 
 public class DBHelper {
 
@@ -53,7 +53,6 @@ public class DBHelper {
      */
     public static void createTable(String tableName) {
         println("createTable 호출됨 : " + tableName);
-//        database.execSQL("drop table if exists "+tableName);
         if (database != null) {
             switch (tableName) {
                 default:

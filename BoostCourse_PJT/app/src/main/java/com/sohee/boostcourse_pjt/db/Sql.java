@@ -1,4 +1,4 @@
-package com.sohee.boostcourse_pjt.network;
+package com.sohee.boostcourse_pjt.db;
 
 public class Sql {
 
