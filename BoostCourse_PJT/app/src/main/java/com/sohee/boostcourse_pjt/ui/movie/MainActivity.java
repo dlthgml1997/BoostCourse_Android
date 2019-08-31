@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity
                 movieItems = getMovieListResponse.result;
                 setAdapter(movieItems);
 
-//                if (DBHelper.selectTable("outline").size() < getMovieListResponse.result.size())
                     DBHelper.insertOutlineData(movieItems);
             }
         }
