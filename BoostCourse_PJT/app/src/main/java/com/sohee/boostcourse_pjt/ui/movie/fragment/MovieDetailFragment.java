@@ -359,7 +359,6 @@ public class MovieDetailFragment extends Fragment {
     }
 
     private void setGalleryAdapterClickListener(GalleryItem item) {
-                Log.d("갤러리어댑터 클릭리스너 ; ","클릭됨.");
                 if(item.isVideo()){
                     String link = item.getLink();
 
