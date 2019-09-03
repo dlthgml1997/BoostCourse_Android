@@ -50,7 +50,7 @@ public class MovieItem implements Parcelable {
                 ", reservation_grade=" + reservation_grade +
                 ", grade=" + grade +
                 ", thumb='" + thumb + '\'' +
-                ", image='" + image + '\'' +
+                ", photo='" + image + '\'' +
                 '}';
     }
 

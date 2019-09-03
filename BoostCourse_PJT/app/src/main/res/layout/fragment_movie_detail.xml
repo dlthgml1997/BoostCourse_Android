@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".ui.movie.fragment.MovieDetailFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.movie.fragment.MovieDetailFragment">
+
     <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
         <LinearLayout
-                android:background="@color/colorWhite"
                 android:layout_width="wrap_content"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
 
             <!-- 영화 포스터 및 좋아요/싫어요 -->
 
@@ -28,338 +30,409 @@
                         android:layout_height="320dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="8dp"
-                        android:src="@drawable/image11"/>
+                        android:src="@drawable/image11" />
+
                 <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="64dp"
-                        android:layout_toRightOf="@+id/img_poster_main"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_toRightOf="@+id/img_poster_main">
+
                     <TextView
-                            style="@style/boldWhiteStyle"
                             android:id="@+id/txt_movie_detail_movietitle"
+                            style="@style/boldWhiteStyle"
                             android:text="군도"
-                            android:textSize="24sp"/>
+                            android:textSize="24sp" />
+
                     <ImageView
                             android:id="@+id/img_movie_detail_frag_grade"
-                            android:layout_marginLeft="8dp"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/txt_movie_detail_movietitle"
-                            android:src="@drawable/ic_15"/>
+                            android:src="@drawable/ic_15" />
+
                     <TextView
                             android:id="@+id/txt_opendate_main"
                             style="@style/regularWhiteStyle"
+                            android:layout_below="@+id/txt_movie_detail_movietitle"
                             android:layout_marginTop="8dp"
-                            android:textSize="16sp"
                             android:text="2014.07.23 개봉"
-                            android:layout_below="@+id/txt_movie_detail_movietitle"/>
+                            android:textSize="16sp" />
+
                     <TextView
                             android:id="@+id/txt_movieinfo_main"
                             style="@style/regularWhiteStyle"
+                            android:layout_below="@+id/txt_opendate_main"
                             android:layout_marginTop="8dp"
-                            android:textSize="16sp"
                             android:text="액션 / 137분"
-                            android:layout_below="@+id/txt_opendate_main"/>
+                            android:textSize="16sp" />
 
                     <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="40dp"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:orientation="horizontal">
+
                         <ImageView
                                 android:id="@+id/btn_main_act_thumb_up"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/selector_thumb_up"/>
+                                android:background="@drawable/selector_thumb_up" />
+
                         <TextView
                                 android:id="@+id/txt_main_act_thumb_up"
+                                style="@style/regularWhiteStyle"
                                 android:layout_marginLeft="2dp"
                                 android:inputType="number"
-                                style="@style/regularWhiteStyle"
-                                android:textSize="16sp"
-                                android:text="0"/>
+                                android:text="0"
+                                android:textSize="16sp" />
+
                         <ImageView
                                 android:id="@+id/btn_main_act_thumb_down"
-                                android:layout_marginLeft="24dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/selector_thumb_down"
-                        />
+                                android:layout_marginLeft="24dp"
+                                android:background="@drawable/selector_thumb_down" />
+
                         <TextView
                                 android:id="@+id/txt_main_act_thumb_down"
+                                style="@style/regularWhiteStyle"
                                 android:layout_marginLeft="2dp"
                                 android:inputType="number"
-                                style="@style/regularWhiteStyle"
-                                android:textSize="16sp"
-                                android:text="0"/>
+                                android:text="0"
+                                android:textSize="16sp" />
                     </LinearLayout>
+
                 </RelativeLayout>
             </RelativeLayout>
             <!-- 예매율,평점,누적관객수 -->
             <LinearLayout
                     android:id="@+id/ll_movie_detail"
-                    android:background="@color/colorWhite"
-                    android:layout_below="@+id/rl_movie_detail"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="88dp">
+                    android:layout_height="88dp"
+                    android:layout_below="@+id/rl_movie_detail"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
                 <RelativeLayout
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
                     <TextView
                             style="@style/regularBlackStyle"
                             android:layout_alignParentTop="true"
-                            android:text="@string/reservation_grade"
-                            android:layout_marginTop="16dp"
                             android:layout_centerHorizontal="true"
-                            android:textSize="16sp"/>
+                            android:layout_marginTop="16dp"
+                            android:text="@string/reservation_grade"
+                            android:textSize="16sp" />
+
                     <TextView
                             android:id="@+id/txt_movie_detail_frag_reservation_rate"
                             style="@style/regularBlackStyle"
                             android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginBottom="16dp"
                             android:text="5위 1.8%"
-                            android:layout_centerHorizontal="true"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
                 </RelativeLayout>
+
                 <View
                         android:layout_width="2dp"
                         android:layout_height="match_parent"
-                        android:background="#EAEAEA"
-                />
+                        android:background="#EAEAEA" />
+
                 <RelativeLayout
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
                     <TextView
                             style="@style/regularBlackStyle"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginTop="16dp"
                             android:text="@string/rating"
-                            android:layout_centerHorizontal="true"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
+
                     <RatingBar
                             android:id="@+id/rb_movie_detail_frag_rating"
+                            style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="16dp"
-                            android:rating="4.2"
                             android:layout_alignParentLeft="true"
-                            style="?android:attr/ratingBarStyleSmall"
-                            android:layout_marginBottom="16dp"
-                            android:layout_marginHorizontal="8dp"
-                            android:stepSize="0.1"
-                            android:numStars="5"
-                            android:isIndicator="false"
                             android:layout_alignParentBottom="true"
-                    />
+                            android:layout_marginHorizontal="8dp"
+                            android:layout_marginBottom="16dp"
+                            android:isIndicator="false"
+                            android:numStars="5"
+                            android:rating="4.2"
+                            android:stepSize="0.1" />
+
                     <TextView
                             android:id="@+id/txt_movie_detail_frag_rating"
                             style="@style/regularBlackStyle"
-                            android:text="8.2"
-                            android:textSize="16sp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="16dp"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="8dp"/>
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="16dp"
+                            android:text="8.2"
+                            android:textSize="16sp" />
                 </RelativeLayout>
+
                 <View
                         android:layout_width="2dp"
                         android:layout_height="match_parent"
-                        android:background="#EAEAEA"
-                />
+                        android:background="#EAEAEA" />
+
                 <RelativeLayout
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
                     <TextView
                             style="@style/regularBlackStyle"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginTop="16dp"
                             android:text="@string/number_of_people"
-                            android:layout_centerHorizontal="true"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
+
                     <TextView
                             android:id="@+id/txt_movie_detail_frag_audience"
                             style="@style/regularBlackStyle"
-                            android:layout_marginTop="16dp"
-                            android:text="839,399"
-                            android:layout_marginBottom="16dp"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
-                            android:textSize="16sp"/>
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:text="839,399"
+                            android:textSize="16sp" />
                 </RelativeLayout>
 
             </LinearLayout>
+
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:background="@color/colorLightGray"
-                    android:layout_below="@id/ll_movie_detail"/>
+                    android:layout_below="@id/ll_movie_detail"
+                    android:background="@color/colorLightGray" />
             <!-- 줄거리 -->
             <LinearLayout
-                    android:paddingHorizontal="16dp"
-                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@color/colorWhite"
-                    android:layout_width="match_parent" android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
+
                 <TextView
                         style="@style/boldBlackStyle"
-                        android:textSize="16sp"
                         android:layout_marginVertical="16dp"
-                        android:text="@string/story"/>
+                        android:text="@string/story"
+                        android:textSize="16sp" />
+
                 <TextView
                         android:id="@+id/txt_movie_detail_frag_synopsis"
                         style="@style/regularBlackStyle"
                         android:layout_marginBottom="16dp"
-                        android:textSize="16sp"
-                        android:text="@string/story_content"/>
+                        android:text="@string/story_content"
+                        android:textSize="16sp" />
             </LinearLayout>
+
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:background="@color/colorLightGray"/>
+                    android:background="@color/colorLightGray" />
 
             <!-- 감독/출연 -->
 
             <LinearLayout
-                    android:paddingHorizontal="16dp"
-                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@color/colorWhite"
-                    android:layout_width="match_parent" android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
+
                 <TextView
                         style="@style/boldBlackStyle"
-                        android:textSize="16sp"
                         android:layout_marginVertical="16dp"
-                        android:text="@string/director_and_actor"/>
-                <RelativeLayout android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                        android:text="@string/director_and_actor"
+                        android:textSize="16sp" />
+
+                <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
                     <TextView
-                            style="@style/boldBlackStyle"
                             android:id="@+id/txt_director"
-                            android:text="@string/director"
+                            style="@style/boldBlackStyle"
                             android:layout_alignParentLeft="true"
-                            android:textSize="16sp"/>
+                            android:text="@string/director"
+                            android:textSize="16sp" />
+
                     <TextView
                             android:id="@+id/txt_movie_detail_frag_director"
                             style="@style/regularBlackStyle"
-                            android:text="윤종빈"
-                            android:layout_toRightOf="@+id/txt_director"
                             android:layout_marginLeft="16dp"
-                            android:textSize="16sp"/>
+                            android:layout_toRightOf="@+id/txt_director"
+                            android:text="윤종빈"
+                            android:textSize="16sp" />
                 </RelativeLayout>
+
                 <RelativeLayout
-                        android:layout_marginVertical="16dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="16dp">
+
                     <TextView
-                            style="@style/boldBlackStyle"
                             android:id="@+id/txt_actor"
-                            android:text="@string/actor"
+                            style="@style/boldBlackStyle"
                             android:layout_alignParentLeft="true"
-                            android:textSize="16sp"/>
+                            android:text="@string/actor"
+                            android:textSize="16sp" />
+
                     <TextView
                             android:id="@+id/txt_movie_detail_frag_actor"
                             style="@style/regularBlackStyle"
-                            android:text="하정우(도치),강동원(조윤)"
-                            android:layout_toRightOf="@+id/txt_actor"
                             android:layout_marginLeft="16dp"
-                            android:textSize="16sp"/>
+                            android:layout_toRightOf="@+id/txt_actor"
+                            android:text="하정우(도치),강동원(조윤)"
+                            android:textSize="16sp" />
                 </RelativeLayout>
             </LinearLayout>
+
+            <!-- 갤러리 -->
+
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:background="#EAEAEA"/>
+                    android:background="#EAEAEA" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="16dp">
+
+                <TextView
+                        style="@style/boldBlackStyle"
+                        android:text="@string/gallery"
+                        android:textSize="16sp" />
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_frag_movie_detail_gallery"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:background="#EAEAEA" />
 
             <!-- 한줄평 -->
 
             <RelativeLayout
-                    android:paddingTop="32dp"
-                    android:background="@color/colorWhite"
-                    android:paddingBottom="16dp"
-                    android:paddingHorizontal="24dp"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp">
+                    android:layout_height="400dp"
+                    android:background="@color/colorWhite"
+                    android:paddingHorizontal="24dp"
+                    android:paddingTop="32dp"
+                    android:paddingBottom="16dp">
+
                 <TextView
                         style="@style/boldBlackStyle"
-                        android:textSize="16sp"
-                        android:text="@string/review_oneline"
+                        android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
-                        android:layout_alignParentLeft="true"/>
+                        android:text="@string/review_oneline"
+                        android:textSize="16sp" />
 
                 <RelativeLayout
                         android:id="@+id/rl_write"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content">
-                    <ImageView android:layout_width="18dp" android:layout_height="18dp"
-                               android:layout_toLeftOf="@+id/txt_write"
-                               android:src="@drawable/ic_review_selected"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_toLeftOf="@+id/txt_write"
+                            android:src="@drawable/ic_review_selected" />
+
                     <TextView
                             android:id="@+id/txt_write"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/write_review"
-                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:text="@string/write_review"
                             android:textColor="@color/colorRed"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
                 </RelativeLayout>
+
                 <ListView
                         android:id="@+id/lv_main_act_review"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="16dp"
-                        android:layout_below="@+id/rl_write"/>
+                        android:layout_below="@+id/rl_write"
+                        android:layout_marginVertical="16dp" />
+
                 <Button
-                        android:layout_alignParentBottom="true"
                         android:id="@+id/btn_main_act_detail"
-                        android:background="@drawable/purple_border"
-                        android:layout_marginHorizontal="8dp"
-                        android:textSize="16sp"
-                        android:text="@string/detail"
-                        android:textStyle="bold"
-                        android:textColor="#DA70D6"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginHorizontal="8dp"
+                        android:background="@drawable/purple_border"
+                        android:text="@string/detail"
+                        android:textColor="#DA70D6"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
             </RelativeLayout>
 
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:background="@color/colorLightGray"/>
+                    android:background="@color/colorLightGray" />
 
             <!-- SNS 공유 및 예매하기 버튼 -->
 
             <LinearLayout
-                    android:paddingHorizontal="32dp"
-                    android:paddingVertical="8dp"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="32dp"
+                    android:paddingVertical="8dp">
+
                 <ImageView
-                        android:padding="8dp"
-                        android:src="@drawable/ic_facebook"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_facebook" />
+
                 <ImageView
-                        android:padding="8dp"
-                        android:src="@drawable/ic_kakao"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_kakao" />
+
                 <Button
                         android:id="@+id/btn_main_act_reserve"
-                        android:layout_marginLeft="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#FF4500"
-                        android:textColor="@color/colorWhite"
-                        android:text="@string/reserve"
                         android:layout_marginVertical="4dp"
-                        android:textStyle="bold"
-                        android:textSize="24dp"/>
+                        android:layout_marginLeft="8dp"
+                        android:background="#FF4500"
+                        android:text="@string/reserve"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="24dp"
+                        android:textStyle="bold" />
             </LinearLayout>
+
             <View
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:background="@color/colorLightGray"/>
+                    android:background="@color/colorLightGray" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

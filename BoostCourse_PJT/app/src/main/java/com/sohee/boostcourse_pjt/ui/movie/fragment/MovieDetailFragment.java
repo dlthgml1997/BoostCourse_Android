@@ -13,6 +13,8 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,7 +27,9 @@ import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.*;
 import com.sohee.boostcourse_pjt.network.AppHelper;
 import com.sohee.boostcourse_pjt.db.DBHelper;
+import com.sohee.boostcourse_pjt.ui.movie.adapter.GalleryRVAdapter;
 import com.sohee.boostcourse_pjt.ui.movie.get.GetMovieDetailResponse;
+import com.sohee.boostcourse_pjt.ui.movie.item.GalleryItem;
 import com.sohee.boostcourse_pjt.ui.movie.item.MovieDetailItem;
 import com.sohee.boostcourse_pjt.ui.review.ReviewDetailActivity;
 import com.sohee.boostcourse_pjt.ui.review.WriteReviewActivity;
@@ -34,8 +38,11 @@ import com.sohee.boostcourse_pjt.ui.review.get.GetReviewListResponse;
 import com.sohee.boostcourse_pjt.ui.review.get.GetStatusResponse;
 import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 
+import java.io.StringBufferInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.sohee.boostcourse_pjt.network.NetworkStatus.hasInternetConnection;
@@ -76,6 +83,13 @@ public class MovieDetailFragment extends Fragment {
     private String title;
     private MovieDetailItem item;
     private ArrayList<MovieDetailItem> DetailItems;
+
+    private RecyclerView galleryRV;
+
+    private GalleryRVAdapter galleryRVAdapter;
+
+    ArrayList<GalleryItem> galleryItems;
+
 
     public MovieDetailFragment() {
 
@@ -135,6 +149,8 @@ public class MovieDetailFragment extends Fragment {
         txtSynopsis = view.findViewById(R.id.txt_movie_detail_frag_synopsis);
         txtDirector = view.findViewById(R.id.txt_movie_detail_frag_director);
         txtActor = view.findViewById(R.id.txt_movie_detail_frag_actor);
+
+        galleryRV = view.findViewById(R.id.rv_frag_movie_detail_gallery);
 
         return view;
     }
@@ -292,9 +308,61 @@ public class MovieDetailFragment extends Fragment {
                 item = getMovieDetailResponse.result.get(0);
                 setContent(item);
 
+                setGalleryItem(item);
+
                 DBHelper.insertInlineData(item);
             }
         }
+    }
+
+    private void setGalleryItem(MovieDetailItem item) {
+        String photos = item.getPhotos();
+        String videos = item.getVideos();
+
+        try {
+            List<String> photoList = Arrays.asList(photos.split(","));
+            List<String> videoLink = Arrays.asList(videos.split(","));
+
+            galleryItems = new ArrayList<>();
+
+            for (int i = 0; i < photoList.size(); i++) {
+                galleryItems.add(new GalleryItem(false, photoList.get(i)));
+            }
+
+            for (int i = 0; i < videoLink.size(); i++) {
+                galleryItems.add(new GalleryItem(true, videoLink.get(i)));
+            }
+
+            setGalleryAdapter();
+
+        }catch (Exception e){ e.printStackTrace(); }
+    }
+
+    private void setGalleryAdapter() {
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        galleryRV.setLayoutManager(layoutManager);
+
+        galleryRVAdapter = new GalleryRVAdapter(getContext());
+        galleryRV.setAdapter(galleryRVAdapter);
+
+        galleryRVAdapter.addItems(galleryItems);
+
+        setGalleryAdapterClickListener(galleryRVAdapter);
+    }
+
+    private void setGalleryAdapterClickListener(final GalleryRVAdapter galleryRVAdapter) {
+        galleryRVAdapter.setOnItemClickListener(new GalleryRVAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(GalleryRVAdapter.ViewHolder holder, View view, int position) {
+                GalleryItem item = (GalleryItem) galleryRVAdapter.getItem(position);
+                if(item.isVideo()){
+                    // 유튜브로 연결
+                }else{
+                    // 액티비티
+                }
+            }
+        });
     }
 
     private void setContent(MovieDetailItem item) {

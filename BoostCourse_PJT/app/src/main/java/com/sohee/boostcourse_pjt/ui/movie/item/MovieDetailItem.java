@@ -108,7 +108,7 @@ public class MovieDetailItem implements Parcelable {
                 ", reservation_grade=" + reservation_grade +
                 ", grade=" + grade +
                 ", thumb='" + thumb + '\'' +
-                ", image='" + image + '\'' +
+                ", photo='" + image + '\'' +
                 ", photos='" + photos + '\'' +
                 ", videos='" + videos + '\'' +
                 ", outlinks='" + outlinks + '\'' +
