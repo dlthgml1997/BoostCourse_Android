@@ -12,7 +12,6 @@
             android:roundIcon="@drawable/ic_app"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ui.movie.GalleryDetailActivity"></activity>
         <activity
                 android:name=".ui.movie.MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
@@ -28,6 +27,9 @@
         <activity
                 android:name=".ui.review.ReviewDetailActivity"
                 android:label="한줄평 목록" />
+        <activity
+                android:name=".ui.movie.GalleryDetailActivity"
+                android:label="사진 보기"/>
     </application>
 
 </manifest>

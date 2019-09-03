@@ -1,7 +1,6 @@
 package com.sohee.boostcourse_pjt.ui.movie.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +22,13 @@ public class GalleryRVAdapter extends RecyclerView.Adapter<GalleryRVAdapter.View
 
     OnItemClickListener listener;
 
-    public static interface OnItemClickListener {
-        public void onItemClick(ViewHolder holder, View view, int position);
+    public interface OnItemClickListener {
+        void onItemClick(ViewHolder holder, View view, int position);
     }
 
-    public GalleryRVAdapter(Context context) {
+    public GalleryRVAdapter(Context context,OnItemClickListener listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -42,11 +42,16 @@ public class GalleryRVAdapter extends RecyclerView.Adapter<GalleryRVAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         GalleryItem item = items.get(position);
         holder.setItem(context, item);
 
-        holder.setOnItemClickListener(listener);
+        holder.photo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(holder,view,position);
+            }
+        });
     }
 
     @Override
@@ -66,15 +71,10 @@ public class GalleryRVAdapter extends RecyclerView.Adapter<GalleryRVAdapter.View
         return items.get(position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-
-    }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView photo;
         ImageView playImg;
 
-        OnItemClickListener listener;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,40 +82,22 @@ public class GalleryRVAdapter extends RecyclerView.Adapter<GalleryRVAdapter.View
             photo = (ImageView) itemView.findViewById(R.id.img_gallery_item_photo);
             playImg = (ImageView) itemView.findViewById(R.id.img_gallery_item_video_play);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-
-                    if (listener != null) {
-                        listener.onItemClick(ViewHolder.this, view, position);
-                    }
-                }
-            });
-
         }
 
         public void setItem(Context context, GalleryItem item) {
 
             if (item.isVideo()) {
-                //  비디오
                 String videoId = item.getLink().substring(item.getLink().lastIndexOf("/"));
-                Log.d("Gallery22", videoId + "트로올펄스 : "+ item.isVideo());
 
                 Glide.with(context).load("https://img.youtube.com/vi" + videoId + "/0.jpg").into(photo);
 
                 playImg.setVisibility(View.VISIBLE);
             } else {
-                //  비디오 아님
                 Glide.with(context).load(item.getLink()).into(photo);
                 playImg.setVisibility(View.INVISIBLE);
             }
         }
 
-
-        public void setOnItemClickListener(OnItemClickListener listener) {
-            this.listener = listener;
-        }
     }
 
 }

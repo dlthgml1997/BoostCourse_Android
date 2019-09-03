@@ -3,6 +3,7 @@ package com.sohee.boostcourse_pjt.ui.movie.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.google.gson.Gson;
 import com.sohee.boostcourse_pjt.*;
 import com.sohee.boostcourse_pjt.network.AppHelper;
 import com.sohee.boostcourse_pjt.db.DBHelper;
+import com.sohee.boostcourse_pjt.ui.movie.GalleryDetailActivity;
 import com.sohee.boostcourse_pjt.ui.movie.adapter.GalleryRVAdapter;
 import com.sohee.boostcourse_pjt.ui.movie.get.GetMovieDetailResponse;
 import com.sohee.boostcourse_pjt.ui.movie.item.GalleryItem;
@@ -38,7 +40,6 @@ import com.sohee.boostcourse_pjt.ui.review.get.GetReviewListResponse;
 import com.sohee.boostcourse_pjt.ui.review.get.GetStatusResponse;
 import com.sohee.boostcourse_pjt.ui.review.item.ReviewItem;
 
-import java.io.StringBufferInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -343,26 +344,34 @@ public class MovieDetailFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         galleryRV.setLayoutManager(layoutManager);
 
-        galleryRVAdapter = new GalleryRVAdapter(getContext());
+        galleryRVAdapter = new GalleryRVAdapter(getContext(), new GalleryRVAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(GalleryRVAdapter.ViewHolder holder, View view, int position) {
+                GalleryItem item = (GalleryItem) galleryRVAdapter.getItem(position);
+                setGalleryAdapterClickListener(item);
+            }
+        });
+
         galleryRV.setAdapter(galleryRVAdapter);
 
         galleryRVAdapter.addItems(galleryItems);
 
-        setGalleryAdapterClickListener(galleryRVAdapter);
     }
 
-    private void setGalleryAdapterClickListener(final GalleryRVAdapter galleryRVAdapter) {
-        galleryRVAdapter.setOnItemClickListener(new GalleryRVAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(GalleryRVAdapter.ViewHolder holder, View view, int position) {
-                GalleryItem item = (GalleryItem) galleryRVAdapter.getItem(position);
+    private void setGalleryAdapterClickListener(GalleryItem item) {
+                Log.d("갤러리어댑터 클릭리스너 ; ","클릭됨.");
                 if(item.isVideo()){
-                    // 유튜브로 연결
+                    String link = item.getLink();
+
+                    Intent intent  = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                    startActivity(intent);
+
                 }else{
-                    // 액티비티
+                    Intent intent = new Intent(getActivity(), GalleryDetailActivity.class);
+                    intent.putExtra("photo",item.getLink());
+
+                    startActivity(intent);
                 }
-            }
-        });
     }
 
     private void setContent(MovieDetailItem item) {
